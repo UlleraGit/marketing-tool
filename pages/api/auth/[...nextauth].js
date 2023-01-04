@@ -3,7 +3,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import clientPromise from "/lib/mongodb"
 import CredentialsProvider from "next-auth/providers/credentials"
 
-CredentialsProvider({ 
+/*CredentialsProvider({ 
   name: "Credentials",
   credentials: {
     username: { label: "Username", type: "text", placeholder: "jsmith" },
@@ -19,4 +19,17 @@ CredentialsProvider({
 // https://next-auth.js.org/configuration/options
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise)
+})*/
+import NextAuth from 'next-auth'
+import Providers from 'next-auth/providers'
+
+export default NextAuth({
+  providers: [
+    Providers.Cognito({
+      clientId: process.env.COGNITO_CLIENT_ID,
+      clientSecret: process.env.COGNITO_CLIENT_SECRET,
+      domain: process.env.COGNITO_DOMAIN,
+    })
+  ],
+  debug: process.env.NODE_ENV === 'development' ? true : false
 })
