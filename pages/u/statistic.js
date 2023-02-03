@@ -11,7 +11,7 @@ export default () => {
     const pdfRef = useRef(null);
 
     const handleGeneratePdf = () => {
-        const doc = new jsPDF("l","px");
+        const doc = new jsPDF("p","px");
 
         // Adding the fonts
         doc.setFont("Anton-Regular", "normal");
@@ -78,7 +78,7 @@ export default () => {
                         <p style={{ textDecoration: "underline" }} >
                             Statistik:
                         </p>
-                        <div style={{ height: "200px", width: "200px", }}>
+                        <div style={{ height: "400px", width: "400px", }}>
                             <PieChart data={[50, 50]} labels={["Männer", "Frauen"]} />
                         </div>
                     </div>
@@ -86,17 +86,15 @@ export default () => {
                         <p style={{ textDecoration: "underline" }} >
                             Geschlecht:
                         </p>
-                        <div style={{ height: "300", width: "300px", }}>
-                            <div style={{ height: "1200px", width: "1200px", }}>
+                        <div style={{ height: "400px", width: "400px", }}>
                                 <PieChart data={[70, 30]} labels={["Männer", "Frauen"]} />
-                            </div>
                         </div>
                     </div>
                     <div>
                         <p style={{ textDecoration: "underline" }} >
                             Herkunft der Befragten:
                         </p>
-                        <div style={{ height: "1200px", width: "600px", }}>
+                        <div style={{ height: "300px", width: "600px", }}>
                             <BarChart data={[0.1, 0.4, 0.4, 0.4, 0.3, 0.5, 0.8]} labels={["January", "Feb", "March", "Apr", "May", "May", "May"]} style={{ backgroundColor: '#fff' }} />
                         </div>
                     </div>

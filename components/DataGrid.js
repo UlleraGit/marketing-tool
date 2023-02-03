@@ -6,31 +6,52 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from "next/link"
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
   {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
+    field: 'id',
+    headerName: 'ID',
+    width: 90,
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
   },
   {
-    field: 'lastName',
-    headerName: 'Last name',
+    field: 'title',
+    headerName: 'Titel der Umfrage',
     width: 150,
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
+  },
+  {
+    field: 'question',
+    headerName: 'Fragestellung',
+    width: 150,
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
   },
   {
     field: 'age',
-    headerName: 'Age',
+    headerName: 'Alter',
     type: 'number',
     width: 110,
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
+    field: 'region',
+    headerName: 'Land/Region',
     sortable: false,
     width: 160,
     valueGetter: (params) =>
       `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
+  },
+  {
+    field: 'numberofasked',
+    headerName: 'Anzahl der Befragten (n)',
+    type: 'number',
+    width: 200,
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
   },
   {
     field: 'download',
@@ -38,10 +59,12 @@ const columns = [
     sortable: false,
     width: 40,
     renderCell: () => (
-      <Link href={{pathname:"/u/statistic",query:{}}}>
+      <Link href={{ pathname: "/u/statistic", query: {} }}>
         <ArrowForwardIcon />
       </Link>
-    )
+    ),
+    headerClassName: 'super-app-theme--header',
+    headerAlign: 'center',
   }
 ];
 
@@ -69,7 +92,11 @@ const rows = [
 export default (props) => {
   const [pageSize, setPageSize] = React.useState(5);
   return (
-    <Box sx={{ height: 600, width: '100%' }}>
+    <Box sx={{
+      height: 600, width: '100%', '& .MuiDataGrid-columnHeaders': {
+        backgroundColor: 'rgba(90, 90, 90,1)', color: '#fff'
+      }
+    }}>
       <DataGrid
         rows={rows}
         columns={columns}
