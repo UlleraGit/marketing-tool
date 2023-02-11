@@ -1,10 +1,10 @@
 import { Authentication } from "../../../util/loginLogic";
 export default async function handler(req, res) {
-  const authenticate = new Authentication(req.body);
+  const authenticate = new Authentication(JSON.parse(req.body));
   const result = await authenticate.authenticate();
   console.log(result);
-  if (result.state == "newPasswordRequired") {
-    res.redirect(308, '/u/resetpassword').json()
+  if (result.state == "newpassword") {
+    res.json(result)
   } else if (result.state == "success") {
 
   } else {
