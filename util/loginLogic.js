@@ -7,11 +7,19 @@ import {
 import UserPool from "./UserPool";
 
 export class Authentication {
-  constructor(authenticationData) {
+  authenticationDetails;
+  userData;
+  cognitoUser;
+
+  setauthenticationDetails(authenticationData) {
     this.authenticationDetails = new AuthenticationDetails(authenticationData);
+  }
+
+  setuserData(authenticationData) {
     this.userData = { Username: authenticationData.Username, Pool: UserPool };
     this.cognitoUser = new CognitoUser(this.userData);
   }
+
   authenticate() {
     return new Promise((resolve, reject) => {
       this.cognitoUser.authenticateUser(this.authenticationDetails, {
@@ -44,10 +52,10 @@ export class Authentication {
       });
     });
   }
+
   handleNewPassword(newPassword, sessionUserAttributes) {
-    this.cognitoUser.completeNewPasswordChallenge(
-      newPassword,
-      sessionUserAttributes, {
+    return new Promise((resolve, reject) => {
+      this.cognitoUser.completeNewPasswordChallenge(newPassword, UserAttributes:{name:''}, {
         onSuccess: function (result) {
           var accessToken = result.getAccessToken().getJwtToken();
           AWS.config.region = process.env.COGNITO_REGION;
@@ -70,7 +78,39 @@ export class Authentication {
         onFailure: function (err) {
           resolve({ state: "failure", err: JSON.stringify(err) });
         },
-      }
-    );
+      });
+    });
+    /*return new Promise((resolve, reject) => {
+      this.cognitoUser.authenticateUser(this.authenticationDetails, {
+        onSuccess: function (result) {
+          var accessToken = result.getAccessToken().getJwtToken();
+          AWS.config.region = process.env.COGNITO_REGION;
+          AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: process.env.COGNITO_USER_POOL_ID,
+            Logins: {
+              "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_daOY6Fu4E":
+                result.getIdToken().getJwtToken(),
+            },
+          });
+          AWS.config.credentials.refresh((error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log("Successfully logged!");
+            }
+          });
+          resolve({ state: "success", Token: accessToken });
+        },
+        onFailure: function (err) {
+          resolve({ state: "failure", err: JSON.stringify(err) });
+        },
+        newPasswordRequired: function (userAttributes, requiredAttributes) {
+          console.log(userAttributes)
+          delete userAttributes.email_verified;
+          cognitoUser.completeNewPasswordChallenge(newPassword, {name:''}, this.handleNewPassword())
+        },
+      });
+    });
+  }*/
   }
 }

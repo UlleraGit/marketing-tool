@@ -1,6 +1,9 @@
 import { Authentication } from "../../../util/loginLogic";
 export default async function handler(req, res) {
-  const authenticate = new Authentication(JSON.parse(req.body));
+  const values = JSON.parse(req.body);
+  const authenticate = new Authentication();
+  authenticate.setauthenticationDetails(values);
+  authenticate.setuserData(values);
   const result = await authenticate.authenticate();
   console.log(result);
   if (result.state == "newpassword") {
