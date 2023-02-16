@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (result.state == "newpassword") {
     res.json(result)
   } else if (result.state == "success") {
-
+    res.status(200).json(result.accessToken, result.idToken, result.refreshToken)
   } else {
     res.status(501).json(result.err);
   }

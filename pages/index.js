@@ -64,8 +64,8 @@ export default function SignIn() {
         method: "POST",
         body: JSON.stringify({
           Username: username,
+          Password: password,
           NewPassword: newPassword,
-          UserAttributes: userAttributes,
         }),
       })
         .then((response) => response.json())
