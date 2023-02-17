@@ -7,9 +7,9 @@ export default async function handler(req, res) {
   const result = await authenticate.authenticate();
   console.log(result);
   if (result.state == "newpassword") {
-    res.json(result)
+    res.json(result);
   } else if (result.state == "success") {
-    res.status(200).json(result.accessToken, result.idToken, result.refreshToken)
+    res.status(200).json({ state: result.state, token: result.accessToken });
   } else {
     res.status(501).json(result.err);
   }

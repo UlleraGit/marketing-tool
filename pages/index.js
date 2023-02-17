@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import backgroundPicture from "../public/ZgefragtHintergrund.png";
 import * as AWS from "aws-sdk/global";
+import Cookies from "js-cookie"
 
 function Copyright(props) {
   return (
@@ -50,6 +51,9 @@ export default function SignIn() {
           setNewPasswordRequired(true);
           console.log(response.userAttributes);
           setUserAttributes(response.userAttributes);
+        }
+        else if(response.state == "success"){
+          Cookies.set('Token', response.token)
         }
       })
       .catch((err) => {
