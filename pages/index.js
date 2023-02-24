@@ -54,6 +54,7 @@ export default function SignIn() {
         }
         else if(response.state == "success"){
           Cookies.set('Token', response.token)
+          window.location.replace("/u/dashboard")
         }
       })
       .catch((err) => {
