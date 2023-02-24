@@ -53,7 +53,9 @@ export default function SignIn() {
           setUserAttributes(response.userAttributes);
         }
         else if(response.state == "success"){
-          Cookies.set('Token', response.token)
+          Cookies.set('AccessToken', response.accessToken)
+          Cookies.set('IdToken', response.idToken)
+          Cookies.set('RefreshToken', response.refreshToken)
           window.location.replace("/u/dashboard")
         }
       })
