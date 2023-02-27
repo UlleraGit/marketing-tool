@@ -1,4 +1,3 @@
-import * as AWS from "aws-sdk/global";
 import {
   CognitoUserAttribute,
   CognitoUser,
@@ -12,13 +11,13 @@ export class Authentication {
   authenticationDetails;
   userData;
   cognitoUser;
-  CookieStorage
+  CookieStorage;
   setauthenticationDetails(authenticationData) {
     this.authenticationDetails = new AuthenticationDetails(authenticationData);
   }
 
   setuserData(authenticationData) {
-    this.userData = { Username: authenticationData.Username, Pool: UserPool,};
+    this.userData = { Username: authenticationData.Username, Pool: UserPool };
     this.cognitoUser = new CognitoUser(this.userData);
   }
 
@@ -44,7 +43,7 @@ export class Authentication {
               console.log("Successfully logged!");
             }
           });*/
-          resolve({ state: "success", accessToken, idToken, refreshToken});
+          resolve({ state: "success", accessToken, idToken, refreshToken });
         },
         onFailure: function (err) {
           resolve({ state: "failure", err: err });
@@ -61,13 +60,11 @@ export class Authentication {
       let cognitoUser = this.cognitoUser;
       cognitoUser.authenticateUser(this.authenticationDetails, {
         newPasswordRequired: function (userAttributes, requiredAttributes) {
-          console.log(userAttributes);
           cognitoUser.completeNewPasswordChallenge(
             newPassword,
             userAttributes,
             {
               onSuccess: function (result) {
-                console.log(result);
                 resolve({ state: "successNewPassword", result });
               },
               onFailure: function (err) {

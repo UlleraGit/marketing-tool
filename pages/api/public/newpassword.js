@@ -1,6 +1,5 @@
 import { Authentication } from "../../../util/loginLogic";
 export default async function handler(req, res) {
-  console.log(req.body);
   const values = JSON.parse(req.body);
   const authenticate = new Authentication();
   authenticate.setauthenticationDetails({
@@ -12,7 +11,6 @@ export default async function handler(req, res) {
     values.NewPassword,
     values.UserAttributes
   );
-  console.log(result);
   if (result.state == "sucessNewPassword") {
     res.status(200).json(result);
   } else {

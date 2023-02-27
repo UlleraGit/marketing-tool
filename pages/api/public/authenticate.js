@@ -5,7 +5,6 @@ export default async function handler(req, res) {
   authenticate.setauthenticationDetails(values);
   authenticate.setuserData(values);
   const result = await authenticate.authenticate();
-  console.log(result);
   if (result.state == "newpassword") {
     res.json(result);
   } else if (result.state == "success") {

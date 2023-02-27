@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import backgroundPicture from "../public/ZgefragtHintergrund.png";
-import * as AWS from "aws-sdk/global";
 import Cookies from "js-cookie"
 
 function Copyright(props) {
@@ -49,7 +48,6 @@ export default function SignIn() {
       .then((response) => {
         if (response.state == "newpassword") {
           setNewPasswordRequired(true);
-          console.log(response.userAttributes);
           setUserAttributes(response.userAttributes);
         }
         else if(response.state == "success"){
@@ -66,7 +64,6 @@ export default function SignIn() {
   const handleNewPassword = (event) => {
     event.preventDefault();
     if (newPassword == newPasswordConfirmation) {
-      console.log(userAttributes);
       fetch("/api/public/newpassword", {
         method: "POST",
         body: JSON.stringify({

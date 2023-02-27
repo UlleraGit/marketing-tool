@@ -1,0 +1,95 @@
+import { NextResponse } from "next/server";
+import { CognitoJwtVerifier } from "aws-jwt-verify";
+import { getCookie } from "cookies-next";
+import {
+  CognitoUserAttribute,
+  CognitoUser,
+  AuthenticationDetails,
+  CognitoUserPool,
+  CookieStorage,
+  CognitoUserSession,
+  CognitoAccessToken,
+  CognitoIdToken,
+  CognitoRefreshToken,
+} from "amazon-cognito-identity-js";
+import UserPool from "./util/UserPool";
+//import * as AWS from "aws-sdk";
+
+export async function middleware(request) {
+  //var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({region:process.env.COGNITO_REGION}); 
+ 
+  let tokenValid;
+  const verifier = await CognitoJwtVerifier.create({
+    userPoolId: "eu-central-1_HYkj5z08r",
+    tokenUse: "access",
+    clientId: "6gapt5uqq79fome27kngjuetht",
+  });
+
+  const payload = await verifier.verify(
+    request.cookies.get("AccessToken").value
+  );
+  const cognitoUser = new CognitoUser({
+    Username: payload.username,
+    Pool: UserPool,
+  });
+
+  const accessToken = new CognitoAccessToken(
+    request.cookies.get("AccessToken").value
+  );
+  const idToken = new CognitoIdToken(request.cookies.get("IdToken").value);
+  const refreshToken = new CognitoRefreshToken(
+    request.cookies.get("RefreshToken").value
+  );
+  const userSession = new CognitoUserSession({
+    AccessToken: accessToken,
+    IdToken: idToken,
+    RefreshToken: refreshToken,
+  });
+
+
+  await cognitoUser.setSignInUserSession(userSession);
+  await cognitoUser.getSession(
+    (err, session) => {
+      console.log(err)
+      if (session.isValid()) {
+        console.log("valid");
+      } else {
+        console.log("invalid");
+      }
+    }
+
+    await fetch("https://<your-user-pool-domain>/oauth2/userInfo", {
+    headers: {Authentication: `Bearer ${}` }
+  })
+    /*{ AccessToken: Token },
+      (err, data) => {
+        if (err) console.log(err, err.stack); // an error occurred
+        else console.log(data); // successful response
+      }*/
+  );
+  /*  tokenValid = true;
+  } catch {
+    tokenValid = false;
+  }
+  if (tokenValid) {
+    return;
+  } else {
+    return NextResponse.redirect(new URL("http://localhost:3000/"));
+  }*/
+  return;
+}
+
+export const config = {
+  matcher: ["/u/:path*", "/api/private/:path*"],
+};
+
+    /*await fetch(
+      "https://market.auth.eu-central-1.amazoncognito.com/oauth2/userInfo",
+      {
+        headers: {
+          'Authorization': 'Bearer eyJraWQiOiJ6eUxBU3F3T25XVlVaOHozdHNxeXpYamVydURKZE1RaHVKbk05TUJlWWZJPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJkOTk5YWY4ZS0wZGViLTRlYzQtYTQzZS05OGEzOGYxOWIyZjUiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtY2VudHJhbC0xLmFtYXpvbmF3cy5jb21cL2V1LWNlbnRyYWwtMV9IWWtqNXowOHIiLCJjbGllbnRfaWQiOiI2Z2FwdDV1cXE3OWZvbWUyN2tuZ2p1ZXRodCIsIm9yaWdpbl9qdGkiOiIyYmMxM2Y4Zi1lMTAxLTQ5MzgtOTMxYy03MTNjZDJhZGRkM2YiLCJldmVudF9pZCI6IjlkMzk3MmRmLTc2NmUtNGYzNC1hZGRiLWU4N2M0Njk2M2QwMiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2Nzc1MDY4NTIsImV4cCI6MTY3NzUxMDQ1MiwiaWF0IjoxNjc3NTA2ODUyLCJqdGkiOiI1NjVkNTAyZC0xZGJiLTQ2MDgtOTA3NC01NzQ0MTkwOTU4NDkiLCJ1c2VybmFtZSI6InNldmVyaW4ifQ.Mk2UVlHA7_kkdTFQEJ5ADcleQ19rVafSlhMczXs_VGz15tEAMuFCKB-JsSUaCAbALLk5Du38Eb_VsRzqXRKxgC1J9ZS0pQ4-Ls8xJ579igaJl1jEje28IJc7gJc6sMIrXmX-3w-nCfrc1MAzNi55nrwvXsz_8QLZvhEpmp1ERz8vJ_B6ohxFhC51zUeAn53oidCxw79JIUM623D0LAHRdTZVXYgi9Fe-FTj_px-Lg8qNgjtB9VyFj7eqac0-CHMfcLUA6RevDIqUsc7gNDaTEGymTbgYgzuNE-U8LWk-8HQsGCWxRAOcgk4ZEtJ30MBRh0L3XFwSdAKhKP27KvfGag'
+        },
+      }
+    ).then((res) => {
+      console.log(res);
+    });*/

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.279.0",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
@@ -20,7 +21,6 @@
     "@next-auth/mongodb-adapter": "^1.1.1",
     "amazon-cognito-identity-js": "^6.1.2",
     "aws-jwt-verify": "^3.4.0",
-    "aws-sdk": "^2.1289.0",
     "base-64": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.2",
