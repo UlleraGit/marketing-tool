@@ -16,12 +16,10 @@ export async function middleware(request) {
   });
   let tokenValid;
   let adminStatus;
-
+  let res;
   try {
-    const payload = await verifier.verify(
-      request.cookies.get("AccessToken").value
-    );
-    const res = await provider.getUser({
+    await verifier.verify(request.cookies.get("AccessToken").value);
+     res = await provider.getUser({
       AccessToken: request.cookies.get("AccessToken").value,
     });
     console.log(res);
@@ -31,7 +29,13 @@ export async function middleware(request) {
     console.log(e);
   }
   if (tokenValid) {
-    return;
+    if (res.UserAttributes[1].Value) {
+      console.log("admin")
+      return;
+    } else {
+      console.log("not admin")
+      return;
+    }
   } else {
     return NextResponse.redirect(new URL("http://localhost:3000/"));
   }

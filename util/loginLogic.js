@@ -12,6 +12,7 @@ export class Authentication {
   userData;
   cognitoUser;
   CookieStorage;
+
   setauthenticationDetails(authenticationData) {
     this.authenticationDetails = new AuthenticationDetails(authenticationData);
   }
@@ -28,21 +29,6 @@ export class Authentication {
           var idToken = result.getIdToken().getJwtToken();
           var refreshToken = result.getRefreshToken().getToken();
           var accessToken = result.getAccessToken().getJwtToken();
-          /*      AWS.config.region = process.env.COGNITO_REGION;
-          AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: process.env.COGNITO_USER_POOL_ID,
-            Logins: {
-              "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_HYkj5z08r":
-                result.getIdToken().getJwtToken(),
-            },
-          });
-          AWS.config.credentials.refresh((error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              console.log("Successfully logged!");
-            }
-          });*/
           resolve({ state: "success", accessToken, idToken, refreshToken });
         },
         onFailure: function (err) {
@@ -55,10 +41,9 @@ export class Authentication {
       });
     });
   }
-  handleNewPassword(newPassword, sessionUserAttributes) {
+  handleNewPassword(newPassword) {
     return new Promise((resolve, reject) => {
-      let cognitoUser = this.cognitoUser;
-      cognitoUser.authenticateUser(this.authenticationDetails, {
+      this.cognitoUser.authenticateUser(this.authenticationDetails, {
         newPasswordRequired: function (userAttributes, requiredAttributes) {
           cognitoUser.completeNewPasswordChallenge(
             newPassword,

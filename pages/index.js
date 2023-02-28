@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import backgroundPicture from "../public/ZgefragtHintergrund.png";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 function Copyright(props) {
   return (
@@ -49,12 +49,10 @@ export default function SignIn() {
         if (response.state == "newpassword") {
           setNewPasswordRequired(true);
           setUserAttributes(response.userAttributes);
-        }
-        else if(response.state == "success"){
-          Cookies.set('AccessToken', response.accessToken)
-          Cookies.set('IdToken', response.idToken)
-          Cookies.set('RefreshToken', response.refreshToken)
-          window.location.replace("/u/dashboard")
+        } else if (response.state == "success") {
+          Cookies.set("AccessToken", response.accessToken);
+          Cookies.set("RefreshToken", response.refreshToken);
+          window.location.replace("/u/dashboard");
         }
       })
       .catch((err) => {
