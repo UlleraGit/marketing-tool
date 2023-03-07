@@ -41,9 +41,10 @@ export class Authentication {
       });
     });
   }
-  handleNewPassword(newPassword) {
+  handleNewPassword(newPassword, sessionUserAttributes) {
     return new Promise((resolve, reject) => {
-      this.cognitoUser.authenticateUser(this.authenticationDetails, {
+      let cognitoUser = this.cognitoUser;
+      cognitoUser.authenticateUser(this.authenticationDetails, {
         newPasswordRequired: function (userAttributes, requiredAttributes) {
           cognitoUser.completeNewPasswordChallenge(
             newPassword,

@@ -11,6 +11,7 @@ export default async function handler(req, res) {
     values.NewPassword,
     values.UserAttributes
   );
+  console.log(result)
   if (result.state == "sucessNewPassword") {
     res.status(200).json(result);
   } else {

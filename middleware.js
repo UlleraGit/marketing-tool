@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import { CognitoJwtVerifier } from "aws-jwt-verify";
-import { getCookie } from "cookies-next";
-import {
-  CognitoIdentityProvider,
-  AddCustomAttributesCommand,
-} from "@aws-sdk/client-cognito-identity-provider";
+import { CognitoIdentityProvider } from "@aws-sdk/client-cognito-identity-provider";
 import UserPool from "./util/UserPool";
 
 export async function middleware(request) {
+  const requestHeaders = new Headers(request.headers);
   const provider = new CognitoIdentityProvider({ region: "eu-central-1" });
   const verifier = await CognitoJwtVerifier.create({
     userPoolId: "eu-central-1_HYkj5z08r",
@@ -15,29 +12,30 @@ export async function middleware(request) {
     clientId: "6gapt5uqq79fome27kngjuetht",
   });
   let tokenValid;
-  let adminStatus;
   let res;
   try {
     await verifier.verify(request.cookies.get("AccessToken").value);
-     res = await provider.getUser({
+    res = await provider.getUser({
       AccessToken: request.cookies.get("AccessToken").value,
     });
-    console.log(res);
     tokenValid = true;
+    if (tokenValid) {
+      if (tokenValid) {
+        if (res.UserAttributes[1].Value) {
+          requestHeaders.set("x-admin-state", true);
+          
+          return NextResponse.next({ request: { headers: requestHeaders } });
+        } else {
+          requestHeaders.set("x-admin-state", false);
+          return NextResponse.next({ request: { headers: requestHeaders } });
+        }
+      }
+    } else {
+      return NextResponse.redirect(new URL("http://localhost:3000/"));
+    }
   } catch (e) {
     tokenValid = false;
     console.log(e);
-  }
-  if (tokenValid) {
-    if (res.UserAttributes[1].Value) {
-      console.log("admin")
-      return;
-    } else {
-      console.log("not admin")
-      return;
-    }
-  } else {
-    return NextResponse.redirect(new URL("http://localhost:3000/"));
   }
 }
 
