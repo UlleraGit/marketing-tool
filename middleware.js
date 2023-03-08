@@ -19,23 +19,23 @@ export async function middleware(request) {
       AccessToken: request.cookies.get("AccessToken").value,
     });
     tokenValid = true;
-    if (tokenValid) {
-      if (tokenValid) {
-        if (res.UserAttributes[1].Value) {
-          requestHeaders.set("x-admin-state", true);
-          
-          return NextResponse.next({ request: { headers: requestHeaders } });
-        } else {
-          requestHeaders.set("x-admin-state", false);
-          return NextResponse.next({ request: { headers: requestHeaders } });
-        }
-      }
-    } else {
-      return NextResponse.redirect(new URL("http://localhost:3000/"));
-    }
   } catch (e) {
     tokenValid = false;
     console.log(e);
+  }
+  if (tokenValid) {
+    if (tokenValid) {
+      if (res.UserAttributes[1].Value) {
+        requestHeaders.set("x-admin-state", true);
+        
+        return NextResponse.next({ request: { headers: requestHeaders } });
+      } else {
+        requestHeaders.set("x-admin-state", false);
+        return NextResponse.next({ request: { headers: requestHeaders } });
+      }
+    }
+  } else {
+    return NextResponse.redirect(new URL("http://localhost:3000/"));
   }
 }
 
