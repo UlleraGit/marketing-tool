@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
@@ -6,6 +7,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Link from "next/link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { css } from "@emotion/react";
 
 const columns = [
   {
@@ -19,13 +21,19 @@ const columns = [
     field: "status",
     align: "center",
     headerName: "User status",
-    renderCell({ row }) {
-      return (
-        <Menu>
-          <MenuItem children="ACTIVE" />
-          <MenuItem children="INACTIVE" />
-        </Menu>
-      );
+    cellClassName: (params) => {
+      switch (params.row.status) {
+        case "FERTIG":
+          return "facebook-data-finished";
+        case "AKTIV":
+          return "facebook-data-active";
+        case "ÜBERPRÜFUNG":
+          return "facebook-data-verifying";
+        case "ABGELEHNT":
+          return "facebook-data-declined";
+        default:
+          return "";
+      }
     },
   },
   {
@@ -84,24 +92,120 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 10, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 11, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 12, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 13, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 14, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 15, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 16, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 17, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 18, lastName: "Roxie", firstName: "Harvey", age: 65 },
+  { id: 1, status: "AKTIV", lastName: "Snow", firstName: "Jon", age: 35 },
+  {
+    id: 2,
+    status: "FERTIG",
+    lastName: "Lannister",
+    firstName: "Cersei",
+    age: 42,
+  },
+  {
+    id: 3,
+    status: "ÜBERPRÜFUNG",
+    lastName: "Lannister",
+    firstName: "Jaime",
+    age: 45,
+  },
+  { id: 4, status: "ABGELEHNT", lastName: "Stark", firstName: "Arya", age: 16 },
+  {
+    id: 5,
+    status: "ABGELEHNT",
+    lastName: "Targaryen",
+    firstName: "Daenerys",
+    age: null,
+  },
+  {
+    id: 6,
+    status: "ABGELEHNT",
+    lastName: "Melisandre",
+    firstName: null,
+    age: 150,
+  },
+  {
+    id: 7,
+    status: "ABGELEHNT",
+    lastName: "Clifford",
+    firstName: "Ferrara",
+    age: 44,
+  },
+  {
+    id: 8,
+    status: "ABGELEHNT",
+    lastName: "Frances",
+    firstName: "Rossini",
+    age: 36,
+  },
+  {
+    id: 9,
+    status: "ABGELEHNT",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 10,
+    status: "ABGELEHNT",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 11,
+    status: "ABGELEHNT",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 12,
+    status: "ABGELEHNT",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 13,
+    status: "ABGELEHNT",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 14,
+    status: "ABGELEHNT",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 15,
+    status: "ÜBERPRÜFUNG",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 16,
+    status: "ÜBERPRÜFUNG",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 17,
+    status: "ÜBERPRÜFUNG",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
+  {
+    id: 18,
+    status: "ÜBERPRÜFUNG",
+    lastName: "Roxie",
+    firstName: "Harvey",
+    age: 65,
+  },
 ];
 
 export default (props) => {
@@ -114,6 +218,23 @@ export default (props) => {
         "& .MuiDataGrid-columnHeaders": {
           backgroundColor: "rgba(90, 90, 90,1)",
           color: "#fff",
+        },
+        "& .facebook-data-finished": {
+          backgroundColor: "#EB0388",
+          border: "2px solid #EB0388",
+          borderradius: "10px",
+        },
+        "& .facebook-data-active": {
+          backgroundColor: "#2bfa20",
+          border: "2px solid #2bfa20",
+        },
+        "& .facebook-data-verifying": {
+          backgroundColor: "#f7a120",
+          border: "2px solid #f7a120",
+        },
+        "& .facebook-data-declined": {
+          backgroundColor: "#f52525",
+          border: "2px solid #f52525",
         },
       }}
     >
