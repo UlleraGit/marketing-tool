@@ -6,18 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  * @flow
  */
+
 const bizSdk = require('facebook-nodejs-business-sdk');
 const AdAccount = bizSdk.AdAccount;
-const Campaign = bizSdk.Campaign;
-const AdSet = bizSdk.AdSet;
-const AdCreative = bizSdk.AdCreative;
-const Ad = bizSdk.Ad;
-const AdPreview = bizSdk.AdPreview;
+const AdsInsights = bizSdk.AdsInsights;
 
-let access_token = 'EAAZA7BZCwWkmUBAJRSitBi7KdA5lM7jeaMR4WbSlhq40kTgFXyycvbQR75KJ2eDTdon0VPMbss64RbR8hZAwtPo1L32CO2y6Ii6pyl4k7zrU5peufqos5rcIaylQCfFhiPHtr7MKePxvSMnubjMUWZALLnkMudOZAFdHGIVZA7zFm49gIaQDKB1ZAkPB8Tf9EMZD';
+let access_token = 'EAAZA7BZCwWkmUBANy3rwlZAXO7Pih5Ia6yCXd3uNcf8rfFZAXZCYV8okits8mkK5ZA25JiY0FlhC3FDZBej4OMvn55Gs9wvuaK4Tl0EUV1PZCk6Yjp75Ywy0rPLrYuvUvf3oT3vNng5j1JuWCL9atdcZBqAoU40R6eOA2EpNMZCPZAivMNRBX36fzBYuXpkjaizK7EZD';
 let ad_account_id = 'act_2219999991505258';
 let app_secret = '6f9c20a5232c83f4cc8352202284308a';
-let page_id = '101217845351407';
 let app_id = '1824124084589157';
 const api = bizSdk.FacebookAdsApi.init(access_token);
 const account = new AdAccount(ad_account_id);
@@ -26,16 +22,8 @@ if (showDebugingInfo) {
   api.setDebug(true);
 }
 
-let campaign;
-let campaign_id;
-let ad_set;
-let ad_set_id;
-let creative;
-let creative_id;
-let ad;
-let ad_id;
-let adpreview;
-let adpreview_id;
+let ads_insights;
+let ads_insights_id;
 
 const logApiCallResult = (apiCallName, data) => {
   console.log(apiCallName);
@@ -45,91 +33,26 @@ const logApiCallResult = (apiCallName, data) => {
 };
 
 const fields = [
+  'results',
+  'result_rate',
+  'campaign_group_name',
+  'adgroup_name',
+  'campaign_name',
 ];
 const params = {
-  'name': 'My Campaign',
-  'buying_type': 'AUCTION',
-  'objective': 'PAGE_LIKES',
-  'status': 'PAUSED',
-  'special_ad_categories': [],
+  'time_range' : {'since':'2023-02-09','until':'2023-03-11'},
+  'filtering' : [],
+  'level' : 'ad',
+  'breakdowns' : ['age','gender'],
 };
-campaign = (new AdAccount(ad_account_id)).createCampaign(
+ (new AdAccount(ad_account_id)).getInsights(
   fields,
   params
-
-);
-campaign
-  .then((result) => {
-    logApiCallResult('campaign api call complete.', result);
-    campaign_id = result.id;
-    const fields = [
-    ];
-    const params = {
-      'name': 'My AdSet',
-      'optimization_goal': 'PAGE_LIKES',
-      'billing_event': 'IMPRESSIONS',
-      'bid_amount': '20',
-      'promoted_object': { 'page_id': page_id },
-      'daily_budget': '1000',
-      'campaign_id': campaign_id,
-      'targeting': { 'geo_locations': { 'countries': ['US'] } },
-      'status': 'PAUSED',
-    };
-    return (new AdAccount(ad_account_id)).createAdSet(
-      fields,
-      params
-    );
-  })
-  .then((result) => {
-    logApiCallResult('ad_set api call complete.', result);
-    ad_set_id = result.id;
-    const fields = [
-    ];
-    const params = {
-      'name': 'My Creative',
-      'object_id': page_id,
-      'title': 'My Page Like Ad',
-      'body': 'Like My Page',
-      'image_url': 'http://www.facebookmarketingdevelopers.com/static/images/resource_1.jpg',
-    };
-    return (new AdAccount(ad_account_id)).createAdCreative(
-      fields,
-      params
-    );
-  })
-  .then((result) => {
-    logApiCallResult('creative api call complete.', result);
-    creative_id = result.id;
-    const fields = [
-    ];
-    const params = {
-      'name': 'My Ad',
-      'adset_id': ad_set_id,
-      'creative': { 'creative_id': creative_id },
-      'status': 'PAUSED',
-    };
-    return (new AdAccount(ad_account_id)).createAd(
-      fields,
-      params
-    );
-  })
-  .then((result) => {
-    logApiCallResult('ad api call complete.', result);
-    ad_id = result.id;
-    const fields = [
-    ];
-    const params = {
-      'ad_format': 'DESKTOP_FEED_STANDARD',
-    };
-    return (new Ad(ad_id)).getPreviews(
-      fields,
-      params
-    );
-  })
-  .then((result) => {
-    logApiCallResult('adpreview api call complete.', result);
-    adpreview_id = result[0].id;
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+)
+.then((result) => {
+  logApiCallResult('ads_insights api call complete.', result);
+  ads_insights_id = result[0].id;
+})
+.catch((error) => {
+  console.log(error);
+});
