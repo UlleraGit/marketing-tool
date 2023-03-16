@@ -15,7 +15,7 @@ const AdCreative = bizSdk.AdCreative;
 const Ad = bizSdk.Ad;
 const AdPreview = bizSdk.AdPreview;
 
-let access_token = 'EAAZA7BZCwWkmUBANy3rwlZAXO7Pih5Ia6yCXd3uNcf8rfFZAXZCYV8okits8mkK5ZA25JiY0FlhC3FDZBej4OMvn55Gs9wvuaK4Tl0EUV1PZCk6Yjp75Ywy0rPLrYuvUvf3oT3vNng5j1JuWCL9atdcZBqAoU40R6eOA2EpNMZCPZAivMNRBX36fzBYuXpkjaizK7EZD';
+let access_token = 'EAAZA7BZCwWkmUBAA21Tpr1A8r8nJW48fvJGPZB2BLTHIJzGAMgKRZCdSCdZC8TZCcXCbNZBZAxiS5wxIZB4riVO1OEZA7MOqlnnn01p1DX1BQqxbnUUANk0A9iAEBsZAY33OqJnP0XTZBb5NcrS2zsiC467I0ZCIX3nls6HAnmSZBNJUZCkyJTvZClMWL6gLZBZArkvRWA224Qe4jZCeFtgFQZDZD';
 let ad_account_id = 'act_2219999991505258';
 let app_secret = '6f9c20a5232c83f4cc8352202284308a';
 let page_id = '101217845351407';
@@ -52,6 +52,7 @@ const params = {
   'buying_type' : 'AUCTION',
   'objective' : 'PAGE_LIKES',
   'status' : 'PAUSED',
+  'special_ad_categories':'NONE'
 };
 campaign =  (new AdAccount(ad_account_id)).createCampaign(
   fields,
@@ -65,14 +66,20 @@ campaign
   const fields = [
   ];
   const params = {
-    'name' : 'My AdSet',
-    'optimization_goal' : 'PAGE_LIKES',
-    'billing_event' : 'IMPRESSIONS',
-    'bid_amount' : '20',
-    'promoted_object' : {'page_id': page_id},
-    'daily_budget' : '1000',
-    'campaign_id' : campaign_id,
-    'targeting' : {'geo_locations':{'countries':['US']}},
+    name: "AdTest",
+    bid_strategy: "LOWEST_COST_WITHOUT_CAP",
+    daily_budget: "500",
+    billing_event: "IMPRESSIONS",
+    optimization_goal: "REACH",
+    campaign_id: campagne_id,
+    promoted_object: { page_id: "101217845351407" },
+    targeting: {
+      geo_locations: { countries: ["AT", "DE", "CH"] },
+      age_min: 13,
+      age_max: 27,
+      publisher_platforms: ["instagram"],
+      instagram_positions: ["story"],
+    },
     'status' : 'PAUSED',
   };
   return (new AdAccount(ad_account_id)).createAdSet(
@@ -90,7 +97,7 @@ campaign
     'object_id' : page_id,
     'title' : 'My Page Like Ad',
     'body' : 'Like My Page',
-    'image_url' : 'http://www.facebookmarketingdevelopers.com/static/images/resource_1.jpg',
+    
   };
   return (new AdAccount(ad_account_id)).createAdCreative(
     fields,

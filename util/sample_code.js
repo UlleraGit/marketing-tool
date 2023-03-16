@@ -11,8 +11,8 @@ const bizSdk = require('facebook-nodejs-business-sdk');
 const AdAccount = bizSdk.AdAccount;
 const AdsInsights = bizSdk.AdsInsights;
 
-let access_token = 'EAAZA7BZCwWkmUBANy3rwlZAXO7Pih5Ia6yCXd3uNcf8rfFZAXZCYV8okits8mkK5ZA25JiY0FlhC3FDZBej4OMvn55Gs9wvuaK4Tl0EUV1PZCk6Yjp75Ywy0rPLrYuvUvf3oT3vNng5j1JuWCL9atdcZBqAoU40R6eOA2EpNMZCPZAivMNRBX36fzBYuXpkjaizK7EZD';
-let ad_account_id = 'act_2219999991505258';
+let access_token = 'EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4';
+let ad_account_id = 'act_394803416105034';
 let app_secret = '6f9c20a5232c83f4cc8352202284308a';
 let app_id = '1824124084589157';
 const api = bizSdk.FacebookAdsApi.init(access_token);

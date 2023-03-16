@@ -13,6 +13,17 @@ import HeaderAdmin from "/components/HeaderAdmin";
 import FooterUser from "/components/FooterUser";
 
 export default function CreateSurvy({ data }) {
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch("/api/private/startcampagne")
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((err) => {
+        setErr(err.err);
+      });
+  };
   return (
     <div style={{ backgroundColor: "#f2f2f2" }}>
       {data ? <HeaderAdmin /> : <HeaderUser />}
@@ -168,6 +179,7 @@ export default function CreateSurvy({ data }) {
                 height: "58px",
               },
             ]}
+            onClick={(event) => handleSubmit(event)}
           >
             Umfrage aufgeben
           </Button>
