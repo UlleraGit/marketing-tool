@@ -13,12 +13,41 @@ import HeaderAdmin from "/components/HeaderAdmin";
 import FooterUser from "/components/FooterUser";
 
 export default function CreateSurvy({ data }) {
-  
+  const titleRef = React.useRef();
+  const questionRef = React.useRef();
+  const answerARef = React.useRef();
+  const answerBRef = React.useRef();
+  const ageMinRef = React.useRef();
+  const ageMaxRef = React.useRef();
+  const countryRef = React.useRef();
+  const [questNum, setQuestNum] = React.useState();
+  const [gender, setGender] = React.useState();
+  const [fastSurv, setFastSurv] = React.useState();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("/api/private/startcampagne")
+    fetch("/api/private/camprequest", {
+      method: "POST",
+      body: JSON.stringify({
+        collection: "adRequests",
+        task: "set",
+        data: {
+          user: data.username,
+          title: titleRef.current.value,
+          question: questionRef.current.value,
+          answerA: answerARef.current.value,
+          answerB: answerBRef.current.value,
+          ageMin: ageMinRef.current.value,
+          ageMax: ageMaxRef.current.value,
+          country: countryRef.current.value,
+          questionedNum: questNum,
+          gender: gender,
+          fastSurvey: fastSurv,
+        },
+      }),
+    })
       .then((response) => {
-        console.log(response)
+        console.log(response);
       })
       .catch((err) => {
         setErr(err.err);
@@ -26,7 +55,7 @@ export default function CreateSurvy({ data }) {
   };
   return (
     <div style={{ backgroundColor: "#f2f2f2" }}>
-      {data ? <HeaderAdmin /> : <HeaderUser />}
+      {data.state ? <HeaderAdmin /> : <HeaderUser />}
       <Container>
         <Box
           component="form"
@@ -60,6 +89,7 @@ export default function CreateSurvy({ data }) {
               id="title"
               label="Tietel der Umfrage"
               name="title"
+              inputRef={titleRef}
               sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
             />
           </Box>
@@ -71,6 +101,7 @@ export default function CreateSurvy({ data }) {
               name="question"
               label="Fragestellung"
               id="question"
+              inputRef={questionRef}
               sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
             />
           </Box>
@@ -83,6 +114,7 @@ export default function CreateSurvy({ data }) {
                 name="answer1"
                 label="Antwortmöglichkeit A"
                 id="answer1"
+                inputRef={answerARef}
                 sx={{
                   my: "10px",
                   backgroundColor: "#fff",
@@ -95,6 +127,7 @@ export default function CreateSurvy({ data }) {
                 name="answer2"
                 label="Antwortmöglichkeit B"
                 id="answer2"
+                inputRef={answerBRef}
                 sx={{
                   my: "10px",
                   backgroundColor: "#fff",
@@ -113,6 +146,7 @@ export default function CreateSurvy({ data }) {
                   name="agemin"
                   label="Alter (von)"
                   id="agemin"
+                  inputRef={ageMinRef}
                   sx={{
                     my: "10px",
                     backgroundColor: "#fff",
@@ -125,6 +159,7 @@ export default function CreateSurvy({ data }) {
                   name="agemax"
                   label="Alter (bis)"
                   id="agemax"
+                  inputRef={ageMaxRef}
                   sx={{
                     my: "10px",
                     backgroundColor: "#fff",
@@ -141,6 +176,7 @@ export default function CreateSurvy({ data }) {
                 name="locations"
                 label="Land/Region"
                 id="locations"
+                inputRef={countryRef}
                 sx={{
                   my: "10px",
                   backgroundColor: "#fff",
@@ -151,17 +187,34 @@ export default function CreateSurvy({ data }) {
           </Box>
           <Box>
             <Typography variant="h5">Anzahl der Befragten</Typography>
-            <ToggleButton value={["1000+", "2500+", "5000+", "10000+"]} />
+            <ToggleButton
+              onChange={(state) => {
+                setQuestNum(state);
+              }}
+              value={["1000+", "2500+", "5000+", "10000+"]}
+            />
           </Box>
           <Box>
             <Typography variant="h5">Geschlecht der Befragten</Typography>
-            <ToggleButton value={["Männlich", "Weiblich", "Alle"]} />
+            <ToggleButton
+              onChange={(state) => {
+                setGender(state);
+              }}
+              value={["Männlich", "Weiblich", "Alle"]}
+            />
           </Box>
           <Box>
             <Typography variant="h5">Fast Survey</Typography>
             <FormControlLabel
               control={
-                <Checkbox value="remember" color="primary" size="large" />
+                <Checkbox
+                  onChange={(event) => {
+                    setFastSurv(event.target.checked);
+                  }}
+                  value="remember"
+                  color="primary"
+                  size="large"
+                />
               }
               label="Mit der Fast Survey Option können Sie innerhalb von 24 Stunden Ihre Daten erheben."
             />
@@ -191,6 +244,9 @@ export default function CreateSurvy({ data }) {
 }
 
 export async function getServerSideProps(context) {
-  let data = context.req.headers["x-admin-state"];
+  let data = {
+    state: context.req.headers["x-admin-state"],
+    username: context.req.headers["x-username"],
+  };
   return { props: { data } };
 }
