@@ -10,7 +10,7 @@ import ToggleButton from "/components/ToggleButton";
 import Link from "next/link";
 import HeaderUser from "/components/HeaderUser";
 import HeaderAdmin from "/components/HeaderAdmin";
-import FooterUser from "/components/FooterUser";
+import FooterAdmin from "/components/FooterAdmin";
 
 export default function CreateSurvy({ data }) {
   const titleRef = React.useRef();
@@ -248,7 +248,7 @@ export default function CreateSurvy({ data }) {
           </Button>
         </Box>
       </Container>
-      <FooterUser />
+      <FooterAdmin />
     </div>
   );
 }
