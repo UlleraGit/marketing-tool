@@ -8,7 +8,7 @@ import FooterAdmin from "/components/FooterAdmin";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import connection from '../../lib/mongodbConnect';
+import connection from '../../lib/mongodb';
 export default function Dashboard({ data }) {
     return (
         <div style={{ backgroundColor: "#f2f2f2", display: "felx", flexDirection: "column" }}>
