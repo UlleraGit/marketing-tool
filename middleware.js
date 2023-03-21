@@ -8,7 +8,7 @@ export async function middleware(request) {
   const verifier = await CognitoJwtVerifier.create({
     userPoolId: "eu-central-1_HYkj5z08r",
     tokenUse: "access",
-    clientId: "6gapt5uqq79fome27kngjuetht",
+    clientId: "8g7ht3oqdb8li32kfj4ha5uba",
   });
   let tokenValid;
   let res;

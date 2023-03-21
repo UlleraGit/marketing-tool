@@ -1,5 +1,4 @@
 import PieChart from "../../components/PieChart"
-import HeaderAdmin from "/components/HeaderAdmin"
 import FooterAdmin from "/components/FooterAdmin"
 import BarChart from "../../components/BarChart"
 import Button from "@mui/material/Button"
@@ -8,25 +7,9 @@ import Link from "next/link"
 import jsPDF from "jspdf";
 
 export default () => {
-    const pdfRef = useRef(null);
-
-    const handleGeneratePdf = () => {
-        const doc = new jsPDF("p","px");
-
-        // Adding the fonts
-        doc.setFont("Anton-Regular", "normal");
-
-        doc.html(pdfRef.current, {
-            async callback(doc) {
-                // save the document as a PDF with name of Memes
-                doc.save("Statistik");
-            }
-        });
-    };
 
     return (
         <div>
-            <HeaderAdmin />
             <div style={{ display: "flex", marginLeft: "12.5%", marginRight: "12.5%", justifyContent: "space-between", marginTop: "10px", marginBottom: "10px" }}>
                 <Link href="/u/dashboard" style={{ color: "#000" }}>
                     zurück
@@ -87,7 +70,7 @@ export default () => {
                             Geschlecht:
                         </p>
                         <div style={{ height: "400px", width: "400px", }}>
-                                <PieChart data={[70, 30]} labels={["Männer", "Frauen"]} />
+                            <PieChart data={[70, 30]} labels={["Männer", "Frauen"]} />
                         </div>
                     </div>
                     <div>
@@ -104,8 +87,3 @@ export default () => {
         </div>
     )
 }
-/*
-export async function getServerSideProps({query}){
-
-return {props:{data}}
-}*/
