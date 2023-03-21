@@ -13,10 +13,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Image from 'next/image'
 import icon from '/public/iconn.svg'
+import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const provider = new CognitoIdentityProvider({ region: "eu-central-1" });
+  const router = useRouter();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +30,10 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleLogOut = () =>{
+     provider.globalSignOut(getCookie("AccessToken"));
+     router.reload();
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" >
@@ -59,7 +67,7 @@ export default function MenuAppBar() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Abmelden</MenuItem>
+              <MenuItem onClick={handleLogOut}>Abmelden</MenuItem>
               <MenuItem onClick={handleClose}>Hilfe</MenuItem>
             </Menu>
           </div>

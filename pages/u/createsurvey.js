@@ -22,7 +22,7 @@ export default function CreateSurvy({ data }) {
   const countryRef = React.useRef();
   const [questNum, setQuestNum] = React.useState();
   const [gender, setGender] = React.useState();
-  const [fastSurv, setFastSurv] = React.useState();
+  const [fastSurv, setFastSurv] = React.useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -33,6 +33,7 @@ export default function CreateSurvy({ data }) {
         task: "set",
         data: {
           user: data.username,
+          status: "ÜBERPRÜFUNG",
           title: titleRef.current.value,
           question: questionRef.current.value,
           answerA: answerARef.current.value,
@@ -69,9 +70,11 @@ export default function CreateSurvy({ data }) {
             mb: "2%",
           }}
         >
-          <Link href="/u/dashboard" style={{ color: "#000" }}>
-            zurück
-          </Link>
+          <Box>
+            <Link href="/u/dashboard" style={{ color: "#000" }}>
+              zurück
+            </Link>
+          </Box>
           <Typography
             component="h3"
             variant="h3"
@@ -138,7 +141,10 @@ export default function CreateSurvy({ data }) {
           </Box>
           <Box sx={{ display: "flex", gap: "3%" }}>
             <Box sx={{ width: "50%" }}>
-              <Typography variant="h5">Alter</Typography>
+              <Box sx={{ display: "flex", gap: "5px", alignItems: "end" }}>
+                <Typography variant="h5">Alter</Typography>
+                <Typography variant="caption">Verwenden Sie nur Zahlen bei der Angabe!</Typography>
+              </Box>
               <Box sx={{ display: "flex", gap: "3%" }}>
                 <TextField
                   margin="normal"
@@ -146,7 +152,9 @@ export default function CreateSurvy({ data }) {
                   name="agemin"
                   label="Alter (von)"
                   id="agemin"
+                  type="number"
                   inputRef={ageMinRef}
+                  required
                   sx={{
                     my: "10px",
                     backgroundColor: "#fff",
@@ -159,6 +167,7 @@ export default function CreateSurvy({ data }) {
                   name="agemax"
                   label="Alter (bis)"
                   id="agemax"
+                  required
                   inputRef={ageMaxRef}
                   sx={{
                     my: "10px",
@@ -176,6 +185,7 @@ export default function CreateSurvy({ data }) {
                 name="locations"
                 label="Land/Region"
                 id="locations"
+                required
                 inputRef={countryRef}
                 sx={{
                   my: "10px",
@@ -188,7 +198,7 @@ export default function CreateSurvy({ data }) {
           <Box>
             <Typography variant="h5">Anzahl der Befragten</Typography>
             <ToggleButton
-              onChange={(state) => {
+              onClick={(state) => {
                 setQuestNum(state);
               }}
               value={["1000+", "2500+", "5000+", "10000+"]}
@@ -197,7 +207,7 @@ export default function CreateSurvy({ data }) {
           <Box>
             <Typography variant="h5">Geschlecht der Befragten</Typography>
             <ToggleButton
-              onChange={(state) => {
+              onClick={(state) => {
                 setGender(state);
               }}
               value={["Männlich", "Weiblich", "Alle"]}

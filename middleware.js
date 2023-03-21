@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 import { CognitoIdentityProvider } from "@aws-sdk/client-cognito-identity-provider";
-import UserPool from "./util/UserPool";
 
 export async function middleware(request) {
   const requestHeaders = new Headers(request.headers);
@@ -25,13 +24,12 @@ export async function middleware(request) {
   }
   if (tokenValid) {
     if (tokenValid) {
+      requestHeaders.set("x-username", res.Username);
       if (res.UserAttributes[1].Value) {
         requestHeaders.set("x-admin-state", true);
-        requestHeaders.set("x-username", res.Username);
         return NextResponse.next({ request: { headers: requestHeaders } });
       } else {
         requestHeaders.set("x-admin-state", false);
-        requestHeaders.set("x-username", res.Username);
         return NextResponse.next({ request: { headers: requestHeaders } });
       }
     }

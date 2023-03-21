@@ -4,7 +4,6 @@ import Pool from '../util/UserPool';
 const AccountContext = React.createContext();
 
 const Account = (props) => {
-
     const getSession = async () => {
         return await new Promise((resolve, reject) => {
             const user = Pool.getCurrentUser();
@@ -21,7 +20,6 @@ const Account = (props) => {
             }
         })
     }
-
     const authenticate = async (Username, Password) => {
         return await new Promise((resolve, reject) => {
             const user = new CognitoUser({ Username, Pool });

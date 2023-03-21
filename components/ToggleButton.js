@@ -7,7 +7,7 @@ export default function NewToggleButton(props) {
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
-    props.onChange(alignment);
+    props.onClick(newAlignment);
   };
 
   return (
