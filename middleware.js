@@ -6,9 +6,9 @@ export async function middleware(request) {
   const requestHeaders = new Headers(request.headers);
   const provider = new CognitoIdentityProvider({ region: "eu-central-1" });
   const verifier = await CognitoJwtVerifier.create({
-    userPoolId: "eu-central-1_HYkj5z08r",
+    userPoolId: "eu-central-1_Ijwy5O5t1",
     tokenUse: "access",
-    clientId: "8g7ht3oqdb8li32kfj4ha5uba",
+    clientId: "3k6bj2r7tnkkmque5l4v67a6be",
   });
   let tokenValid;
   let res;

@@ -1,23 +1,12 @@
 import PieChart from "../../components/PieChart"
 import FooterAdmin from "/components/FooterAdmin"
-import BarChart from "../../components/BarChart"
-import Button from "@mui/material/Button"
-import { useRef } from "react"
-import Link from "next/link"
-import jsPDF from "jspdf";
 
 export default () => {
 
     return (
         <div>
-            <div style={{ display: "flex", marginLeft: "12.5%", marginRight: "12.5%", justifyContent: "space-between", marginTop: "10px", marginBottom: "10px" }}>
-                <Link href="/u/dashboard" style={{ color: "#000" }}>
-                    zurück
-                </Link>
-                <Button variant="contained" onClick={handleGeneratePdf} >PDF erstellen</Button>
-            </div>
             <div style={{ marginLeft: "12.5%", marginRight: "12.5%", width: "430px" }}>
-                <div ref={pdfRef} style={{ display: "flex", flexDirection: "column", gap: "80px", paddingLeft: "8px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "80px", paddingLeft: "8px" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <p style={{ textDecoration: "underline" }}  >
@@ -77,9 +66,7 @@ export default () => {
                         <p style={{ textDecoration: "underline" }} >
                             Herkunft der Befragten:
                         </p>
-                        <div style={{ height: "300px", width: "600px", }}>
-                            <BarChart data={[0.1, 0.4, 0.4, 0.4, 0.3, 0.5, 0.8]} labels={["January", "Feb", "March", "Apr", "May", "May", "May"]} style={{ backgroundColor: '#fff' }} />
-                        </div>
+                        
                     </div>
                 </div>
             </div>
