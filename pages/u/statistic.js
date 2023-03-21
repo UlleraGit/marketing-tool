@@ -1,7 +1,7 @@
 import PieChart from "../../components/PieChart"
 import FooterAdmin from "/components/FooterAdmin"
 
-export default () => {
+export default function statistic(){
 
     return (
         <div>
