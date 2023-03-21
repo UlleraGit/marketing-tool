@@ -8,7 +8,7 @@ import FooterAdmin from "/components/FooterAdmin";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import connection from '../../lib/mongodb';
+import connection from '../../lib/mongodbConnect';
 export default function Dashboard({ data }) {
     return (
         <div style={{ backgroundColor: "#f2f2f2", display: "felx", flexDirection: "column" }}>
@@ -27,7 +27,7 @@ export default function Dashboard({ data }) {
                         </Button>
                     </Link>
                 </Box>
-                <DataGrid value={data.tableData} state={data.state}/>
+                <DataGrid value={data.tableData} state={data.state} />
             </Container>
             <FooterAdmin />
         </div>
