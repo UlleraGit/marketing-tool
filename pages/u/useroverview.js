@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import HeaderAdmin from "/components/HeaderAdmin"
-import UserGrid from "/components/UserGrid";
-import FooterAdmin from "/components/FooterAdmin";
+import HeaderAdmin from "../../components/HeaderAdmin";
+import UserGrid from "../../components/UsersGrid";
+import FooterAdmin from "../../components/FooterAdmin";
 import Link from 'next/link'
 import Box from "@mui/material/Box";
 
