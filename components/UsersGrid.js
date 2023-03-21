@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import CloseIcon from '@mui/icons-material/Close';
 import Link from "next/link";
-export default (props) => {
+export default function userGrid(props) {
   let rows = [];
   const [pageSize, setPageSize] = React.useState(10);
   const columns = [

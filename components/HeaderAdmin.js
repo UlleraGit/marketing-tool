@@ -15,7 +15,7 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { deleteCookie } from 'cookies-next';
 
-export default function MenuAppBar() {
+export default function headerAdmin() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const router = useRouter()
   const handleMenu = (event) => {

@@ -9,7 +9,7 @@ import {
 } from "chart.js"
 import { Bar } from "react-chartjs-2";
 
-export default (props) => {
+export default function barChart(props){
 
     Chartjs.register(
         CategoryScale,

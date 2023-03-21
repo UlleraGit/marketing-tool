@@ -12,7 +12,7 @@ import {
 } from "chart.js"
 import { Pie } from "react-chartjs-2";
 
-export default (props) => {
+export default function pieChart(props) {
 
     Chartjs.register(
         ArcElement,

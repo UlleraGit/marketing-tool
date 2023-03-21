@@ -17,7 +17,7 @@ import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provid
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 
-export default function MenuAppBar() {
+export default function headerUser() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const provider = new CognitoIdentityProvider({ region: "eu-central-1" });
   const router = useRouter();

@@ -3,7 +3,7 @@ import { Box } from "@mui/system"
 
 
 
-export default () => {
+export default function footerUser() {
     return (
         <Box sx={{ flexGrow: 1}}>
             <BottomNavigation  sx={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor:"#EB0388", height:"30px" }}>
