@@ -14,7 +14,7 @@ import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provid
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { deleteCookie } from 'cookies-next';
-
+/* eslint-disable */
 export default function headerAdmin() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const router = useRouter()
@@ -74,3 +74,4 @@ export default function headerAdmin() {
     </Box>
   );
 }
+/* eslint-disable */

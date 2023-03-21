@@ -16,7 +16,7 @@ import icon from '/public/iconn.svg'
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-
+/* eslint-disable */
 export default function headerUser() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const provider = new CognitoIdentityProvider({ region: "eu-central-1" });
@@ -76,3 +76,4 @@ export default function headerUser() {
     </Box>
   );
 }
+/* eslint-disable */

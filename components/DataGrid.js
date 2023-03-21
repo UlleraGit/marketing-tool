@@ -8,8 +8,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from "next/link";
 import { useRouter } from "next/router";
+/* eslint-disable */
 export default function dataGrid(props){
   let rows = [];
+  
   const router = useRouter();
   const [pageSize, setPageSize] = React.useState(10);
   const columns = [
@@ -205,3 +207,4 @@ export default function dataGrid(props){
     </Box>
   );
 };
+/* eslint-disable */

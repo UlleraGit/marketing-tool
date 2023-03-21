@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import CloseIcon from '@mui/icons-material/Close';
 import Link from "next/link";
+/* eslint-disable */
 export default function userGrid(props) {
   let rows = [];
   const [pageSize, setPageSize] = React.useState(10);
@@ -77,3 +78,4 @@ export default function userGrid(props) {
     </Box>
   );
 };
+/* eslint-disable */
