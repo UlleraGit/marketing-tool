@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import HeaderAdmin from "/components/HeaderAdmin"
+import HeaderUser from "/components/HeaderUser"
 import DataGrid from "/components/DataGrid";
 import FooterAdmin from "/components/FooterAdmin";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
