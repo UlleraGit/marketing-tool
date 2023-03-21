@@ -12,7 +12,7 @@ import connection from '../../lib/mongodb';
 export default function Dashboard({ data }) {
     return (
         <div style={{ backgroundColor: "#f2f2f2", display: "felx", flexDirection: "column" }}>
-            {data.state ? <HeaderAdmin /> : <HeaderUser />}
+            {data.state == "true" ? <HeaderAdmin /> : <HeaderUser />}
             <Container sx={{ minHeight: "86.7vh", mt: 3 }}>
                 <Typography component="h3" variant="h3" fontWeight="bold" sx={{ mt: "10px", mb: "12.5px" }}>
                     Hey. Schön, dass du da bist!

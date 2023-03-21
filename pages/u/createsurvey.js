@@ -23,7 +23,7 @@ export default function CreateSurvy({ data }) {
   const [questNum, setQuestNum] = React.useState();
   const [gender, setGender] = React.useState();
   const [fastSurv, setFastSurv] = React.useState(false);
-
+  console.log(data)
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch("/api/private/camprequest", {
@@ -56,7 +56,7 @@ export default function CreateSurvy({ data }) {
   };
   return (
     <div style={{ backgroundColor: "#f2f2f2" }}>
-      {data.state ? <HeaderAdmin /> : <HeaderUser />}
+      {data.state == "true" ? <HeaderAdmin /> : <HeaderUser />}
       <Container>
         <Box
           component="form"

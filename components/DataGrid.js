@@ -8,9 +8,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import Link from "next/link";
 import { useRouter } from "next/router";
 /* eslint-disable */
-export default function dataGrid(props){
+export default function dataGrid(props) {
   let rows = [];
-  
+  let adminState;
+  (props.state === "true") ? adminState = true : adminState = false;
   const router = useRouter();
   const [pageSize, setPageSize] = React.useState(10);
   const columns = [
@@ -105,7 +106,7 @@ export default function dataGrid(props){
       sortable: false,
       width: 70,
       renderCell: (params) => {
-        if (params.row.status === "ÜBERPRÜFUNG" && props.state) {
+        if (params.row.status === "ÜBERPRÜFUNG" && props.state === "true") {
           return (
             <>
               <Link onClick={() => handleConfirm(params.id)} href={"/u/dashboard"}>
@@ -193,8 +194,8 @@ export default function dataGrid(props){
         rows={rows}
         columns={columns}
         columnVisibilityModel={{
-          answerA: props.state,
-          answerB: props.state,
+          answerA: adminState,
+          answerB: adminState,
         }}
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

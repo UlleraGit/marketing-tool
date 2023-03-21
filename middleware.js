@@ -25,7 +25,7 @@ export async function middleware(request) {
   if (tokenValid) {
     if (tokenValid) {
       requestHeaders.set("x-username", res.Username);
-      if (res.UserAttributes[1].Value) {
+      if (res.UserAttributes[1].Value == "1") {
         requestHeaders.set("x-admin-state", true);
         return NextResponse.next({ request: { headers: requestHeaders } });
       } else {
