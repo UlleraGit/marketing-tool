@@ -2,7 +2,6 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,8 +9,6 @@ import Menu from '@mui/material/Menu';
 import Image from 'next/image'
 import icon from '/public/iconwhiteonpink.png';
 import Link from 'next/link';
-import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
-import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { deleteCookie } from 'cookies-next';
 /* eslint-disable */

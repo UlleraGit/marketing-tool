@@ -13,7 +13,6 @@ import {
 import { Pie } from "react-chartjs-2";
 
 export default function pieChart(props) {
-
     Chartjs.register(
         ArcElement,
         Tooltip,
@@ -26,12 +25,10 @@ export default function pieChart(props) {
         Legend,
         Filler,
     )
-
     const data = {
         labels: props.labels,
         datasets: [
             {
-                
                 data: props.data,
                 backgroundColor:[
                     "rgba(255,0, 0, 0.2)",

@@ -8,9 +8,7 @@ import {
     Legend,
 } from "chart.js"
 import { Bar } from "react-chartjs-2";
-
 export default function barChart(props){
-
     Chartjs.register(
         CategoryScale,
         LinearScale,
@@ -19,7 +17,6 @@ export default function barChart(props){
         Tooltip,
         Legend,
     )
-
     const options = {
         responsive: true,
         plugins: {
@@ -38,6 +35,5 @@ export default function barChart(props){
             }
         ]
     };
-
     return (<Bar data={data} height={100} options={options} />);
 }

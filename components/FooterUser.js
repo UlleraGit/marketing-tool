@@ -1,8 +1,5 @@
 import { BottomNavigation, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system"
-
-
-
 export default function footerUser() {
     return (
         <Box sx={{ flexGrow: 1}}>
