@@ -37,7 +37,6 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL("http://localhost:3000/"));
   }
 }
-
 export const config = {
   matcher: ["/u/:path*", "/api/private/:path*"],
 };

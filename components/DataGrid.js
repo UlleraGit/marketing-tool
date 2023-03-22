@@ -140,7 +140,7 @@ export default function dataGrid(props) {
     })
   }
   const handleDecline = (id) => {
-    fetch("http://localhost:3000/api/private/decline", {
+    fetch("/api/private/decline", {
       method: "POST",
       body: JSON.stringify(
         props.value[id]
