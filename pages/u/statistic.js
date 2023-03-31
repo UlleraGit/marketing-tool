@@ -1,8 +1,7 @@
 import PieChart from "../../components/PieChart"
 import FooterAdmin from "/components/FooterAdmin"
 
-export default function statistic(){
-
+export default function statistic() {
     return (
         <div>
             <div style={{ marginLeft: "12.5%", marginRight: "12.5%", width: "430px" }}>
@@ -66,11 +65,10 @@ export default function statistic(){
                         <p style={{ textDecoration: "underline" }} >
                             Herkunft der Befragten:
                         </p>
-                        
                     </div>
                 </div>
             </div>
             <FooterAdmin />
-        </div>
+        </div >
     )
 }

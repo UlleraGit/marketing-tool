@@ -1,124 +1,71 @@
-const bizSdk = require("facebook-nodejs-business-sdk");
-export default async function campaignCreator(name) {
+import * as bizSdk from "facebook-nodejs-business-sdk"
+export default async function campaignCreator(input) {
   const AdAccount = bizSdk.AdAccount;
-  /*const access_token = process.env.ACCESS_TOKEN;
-    const app_secret = process.env.APP_SECRET;
-    const app_id = process.env.APP_ID;
-    const id = process.env.ID;*/
-
   const access_token =
     "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
-  const app_secret = "6f9c20a5232c83f4cc8352202284308a";
-  const app_id = "1824124084589157";
   const id = "act_394803416105034";//"act_2219999991505258"
-
   const api = bizSdk.FacebookAdsApi.init(access_token);
-  const showDebugingInfo = true; // Setting this to true shows more debugging info.
-  if (showDebugingInfo) {
-    api.setDebug(true);
-  }
-
-  const logApiCallResult = (apiCallName, data) => {
-    console.log(apiCallName);
-    if (showDebugingInfo) {
-      console.log("Data:" + JSON.stringify(data));
-    }
-  };
 
   let fields, params;
   fields = [];
   params = {
-    name: name,
-    objective: "REACH",
-    status: "PAUSED",
+    name: input.title + " - " + input.user,
+    objective: "BRAND_AWARENESS",
+    status: "ACTIVE",
     special_ad_categories: [],
   };
   const campaigns = await new AdAccount(id).createCampaign(fields, params);
-  await adSetCreator(campaigns._data.id);
-  //logApiCallResult('campaigns api call complete.', campaigns);
+  await adSetCreator(campaigns._data.id, input);
 }
 
-async function adSetCreator(campagne_id) {
+async function adSetCreator(campagne_id, searchData) {
   const AdAccount = bizSdk.AdAccount;
   const access_token =
     "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
-
-  const app_secret = "6f9c20a5232c83f4cc8352202284308a";
-  const app_id = "1824124084589157";
   const id = "act_394803416105034";;
-
   const api = bizSdk.FacebookAdsApi.init(access_token);
-
   const showDebugingInfo = true; // Setting this to true shows more debugging info.
   if (showDebugingInfo) {
     api.setDebug(true);
   }
 
-  const logApiCallResult = (apiCallName, data) => {
-    console.log(apiCallName);
-    if (showDebugingInfo) {
-      console.log("Data:" + JSON.stringify(data));
-    }
-  };
-
   let fields, params;
   fields = [];
 
   params = {
-    name: "AdTest",
+    name: input.title + " - " + input.user,
     bid_strategy: "LOWEST_COST_WITHOUT_CAP",
     daily_budget: "500",
     billing_event: "IMPRESSIONS",
-    optimization_goal: "REACH",
+    optimization_goal: "AD_RECALL_LIFT",
     campaign_id: campagne_id,
     promoted_object: { page_id: "101217845351407" },
     targeting: {
-      geo_locations: { countries: ["AT", "DE", "CH"] },
-      age_min: 13,
-      age_max: 27,
+      geo_locations: searchData.geo_locations,
+      age_min: searchData.age_min,
+      age_max: searchData.age_max,
+      genders: searchData.gender,
       publisher_platforms: ["instagram"],
       instagram_positions: ["story"],
     },
-    status: "PAUSED",
   };
 
   const adset = await new AdAccount(id).createAdSet(fields, params);
 
-  await adCreativeCreator(adset._data.id);
+  await adCreativeCreator(adset._data.id, searchData);
 }
 
-async function adCreativeCreator(adset_id) {
+async function adCreativeCreator(adset_id, searchData) {
   const AdAccount = bizSdk.AdAccount;
   const access_token =
     "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
-
-  const app_secret = "6f9c20a5232c83f4cc8352202284308a";
-  const app_id = "1824124084589157";
   const id = "act_394803416105034";
-
   const api = bizSdk.FacebookAdsApi.init(access_token);
-
-  const showDebugingInfo = true; // Setting this to true shows more debugging info.
-  if (showDebugingInfo) {
-    api.setDebug(true);
-  }
-
-  const logApiCallResult = (apiCallName, data) => {
-    console.log(apiCallName);
-    if (showDebugingInfo) {
-      console.log("Data:" + JSON.stringify(data));
-    }
-  };
-
   let fields, params;
   fields = [];
 
   params = {
-    name: "My Ad",
-    //'adset_id': adcreative_id,
-    //'creative': { 'instagram_actor_id':'3604386419647806', 'page_id': '101217845351407' },
-    //'ad_format': 'FACEBOOK_STORY_MOBILE',
-    //'status': 'PAUSED',
+    name: input.title + " - " + input.user,
     body: "Like My Page",
     object_story_spec: {
       page_id: "101217845351407",
@@ -131,14 +78,14 @@ async function adCreativeCreator(adset_id) {
       "components": [{
         "type": "poll",
         "poll_spec": {
-          "question_text": "Which option do you like?",
-          "option_a_text": "NONE",
-          "option_b_text": "ALL",
+          "question_text": searchData.question_text,
+          "option_a_text": searchData.answerA,
+          "option_b_text": searchData.answerB,
         },
         "position_spec": {
           "x": 0.5,
           "y": 0.5,
-          "width": 0.5,
+          "width": 0.75,
           "height": 0.2,
           "rotation": 0,
         }
@@ -147,10 +94,10 @@ async function adCreativeCreator(adset_id) {
   };
 
   const adcreative = await new AdAccount(id).createAdCreative(fields, params);
-  await adCreator(adcreative._data.id, adset_id);
+  await adCreator(adcreative._data.id, adset_id, searchData);
 }
 
-async function adCreator(adcreative_id, adset_id) {
+async function adCreator(adcreative_id, adset_id, searchData) {
   const AdAccount = bizSdk.AdAccount;
 
   const access_token =
@@ -162,27 +109,15 @@ async function adCreator(adcreative_id, adset_id) {
 
   const api = bizSdk.FacebookAdsApi.init(access_token);
 
-  const showDebugingInfo = true; // Setting this to true shows more debugging info.
-  if (showDebugingInfo) {
-    api.setDebug(true);
-  }
-
-  const logApiCallResult = (apiCallName, data) => {
-    console.log(apiCallName);
-    if (showDebugingInfo) {
-      console.log("Data:" + JSON.stringify(data));
-    }
-  };
-
   let fields, params;
   fields = [];
   params = {
-    name: "My Ad",
+    name: input.title + " - " + input.user,
     adset_id: adset_id,
     creative: { creative_id: adcreative_id },
-    status: "PAUSED",
+    status: "ACTIVE",
   };
   const ads = await new AdAccount(id).createAd(fields, params);
-
+  return ads
   //logApiCallResult('ads api call complete.', ads);
 }

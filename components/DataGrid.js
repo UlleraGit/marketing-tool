@@ -5,8 +5,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { PartyModeSharp } from "@mui/icons-material";
 /* eslint-disable */
 export default function dataGrid(props) {
   let rows = [];
@@ -118,6 +120,13 @@ export default function dataGrid(props) {
             </>
           )
         }
+        else if (params.row.status === "ABGELEHNT") {
+          return (
+            <Link onClick={()=>handleDelete(params.id)} href={"/u/dashboard"}>
+              <DeleteIcon />
+            </Link>
+          )
+        }
         else {
           return (
             <Link id={params.id} href={{ pathname: "/u/statistic" }}>
@@ -132,15 +141,23 @@ export default function dataGrid(props) {
   ];
 
   const handleConfirm = (id) => {
-    fetch("http://localhost:3000/api/private/confirm", {
+    fetch("/api/private/confirm", {
       method: "POST",
       body: JSON.stringify(
         props.value[id]
-      ),
+      ).then(router.reload()),
     })
   }
   const handleDecline = (id) => {
     fetch("/api/private/decline", {
+      method: "POST",
+      body: JSON.stringify(
+        props.value[id]
+      ),
+    }).then(router.reload())
+  }
+  const handleDelete = (id) => {
+    fetch("/api/private/delete", {
       method: "POST",
       body: JSON.stringify(
         props.value[id]
@@ -157,7 +174,7 @@ export default function dataGrid(props) {
       question: props.value[i].question,
       answerA: props.value[i].answerA,
       answerB: props.value[i].answerB,
-      region: props.value[i].country,
+      region: props.value[i].country[0].name,
       numbertoask: props.value[i].questionedNum,
       age: props.value[i].ageMin + " - " + props.value[i].ageMax,
     })
@@ -188,6 +205,10 @@ export default function dataGrid(props) {
           backgroundColor: "#f52525",
           border: "2px solid #f52525",
         },
+        "& .facebook-data-inreview":{
+          backgroundColor: "#e6e2d8",
+          border: "2px solid ##e6e2d8"
+        }
       }}
     >
       <DataGrid

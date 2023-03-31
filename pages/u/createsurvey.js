@@ -11,6 +11,8 @@ import Link from "next/link";
 import HeaderUser from "/components/HeaderUser";
 import HeaderAdmin from "/components/HeaderAdmin";
 import FooterAdmin from "/components/FooterAdmin";
+import Autocomplete from "../../components/Autocomplete";
+import {useRouter} from "next/router";
 
 export default function CreateSurvy({ data }) {
   const titleRef = React.useRef();
@@ -19,11 +21,11 @@ export default function CreateSurvy({ data }) {
   const answerBRef = React.useRef();
   const ageMinRef = React.useRef();
   const ageMaxRef = React.useRef();
-  const countryRef = React.useRef();
+  const [country, setCountry] = React.useState();
   const [questNum, setQuestNum] = React.useState();
   const [gender, setGender] = React.useState();
   const [fastSurv, setFastSurv] = React.useState(false);
-  console.log(data)
+  const router = useRouter();
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch("/api/private/camprequest", {
@@ -40,15 +42,15 @@ export default function CreateSurvy({ data }) {
           answerB: answerBRef.current.value,
           ageMin: ageMinRef.current.value,
           ageMax: ageMaxRef.current.value,
-          country: countryRef.current.value,
           questionedNum: questNum,
+          country: country,
           gender: gender,
           fastSurvey: fastSurv,
         },
       }),
     })
       .then((response) => {
-        console.log(response);
+        router.push("/u/dashboard");
       })
       .catch((err) => {
         setErr(err.err);
@@ -178,21 +180,7 @@ export default function CreateSurvy({ data }) {
               </Box>
             </Box>
             <Box sx={{ width: "50%" }}>
-              <Typography variant="h5">Land/Region</Typography>
-              <TextField
-                margin="normal"
-                fullWidth
-                name="locations"
-                label="Land/Region"
-                id="locations"
-                required
-                inputRef={countryRef}
-                sx={{
-                  my: "10px",
-                  backgroundColor: "#fff",
-                  borderRadius: "4px",
-                }}
-              />
+              <Autocomplete onChange={(event, value) => setCountry(value)} />
             </Box>
           </Box>
           <Box>
