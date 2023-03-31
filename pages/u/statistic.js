@@ -1,10 +1,10 @@
 import PieChart from "../../components/PieChart"
 import FooterAdmin from "/components/FooterAdmin"
 
-export default function statistic() {
+export default function statistic({props}) {
     return (
         <div>
-            <div style={{ marginLeft: "12.5%", marginRight: "12.5%", width: "430px" }}>
+            <div style={{ margin:"auto", width: "430px" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "80px", paddingLeft: "8px" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -17,7 +17,7 @@ export default function statistic() {
                                 Veröffentlichungsdatum:
                             </p>
                             <p >
-                                dd.mm.yyyy
+                                31.03.2023
                             </p>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -25,7 +25,7 @@ export default function statistic() {
                                 Erhebungszeitraum
                             </p>
                             <p>
-                                30 Tage
+                                2 Tage
                             </p>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -33,7 +33,7 @@ export default function statistic() {
                                 Anzahl der Befragten:
                             </p>
                             <p>
-                                1000
+                                91
                             </p>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -47,10 +47,10 @@ export default function statistic() {
                     </div>
                     <div>
                         <p style={{ textDecoration: "underline" }} >
-                            Statistik:
+                            Resultat:
                         </p>
                         <div style={{ height: "400px", width: "400px", }}>
-                            <PieChart data={[50, 50]} labels={["Männer", "Frauen"]} />
+                            <PieChart data={[33,58]} labels={["JA","Nein"]} />
                         </div>
                     </div>
                     <div>
@@ -58,13 +58,16 @@ export default function statistic() {
                             Geschlecht:
                         </p>
                         <div style={{ height: "400px", width: "400px", }}>
-                            <PieChart data={[70, 30]} labels={["Männer", "Frauen"]} />
+                            <PieChart data={[0, 100]} labels={["Männer", "Frauen"]} />
                         </div>
                     </div>
                     <div>
                         <p style={{ textDecoration: "underline" }} >
-                            Herkunft der Befragten:
+                            Altersverteilung:
                         </p>
+                        <div style={{ height: "400px", width: "400px", }}>
+                            <PieChart data={[52,37,2]} labels={["18-24", "25-34", "35-44"]} />
+                        </div>
                     </div>
                 </div>
             </div>
