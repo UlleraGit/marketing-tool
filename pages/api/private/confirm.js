@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             answerB: data.answerB,
             gender: gender
         })
-        //await connection({ task: "change", find: data, change: { status: "INREVIEW" }, collection: "adRequests" });
+        await connection({ task: "change", find: data, change: { status: "INREVIEW" }, collection: "adRequests" });
         res.status(200).json({ "result": "success" });
     }
     catch (err) {
