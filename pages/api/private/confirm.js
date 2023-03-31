@@ -1,12 +1,11 @@
 import campagneCreator from "../../../util/campagne"
+import connection from "../../../lib/mongodb";
 export default async function handler(req, res) {
     const data = await JSON.parse(req.body)
-    console.log(data)
     let locationData = { geo_locations: { countries: [], regions: [], cities: [] } };
     let gender;
     try {
         for (let i = 0; i < data.country.length; i++) {
-            console.log(data.country[i].type)
             switch (data.country[i].type) {
                 case 'country':
                     locationData.geo_locations.countries.push(data.country[i].country_code);
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
                     break
             }
         }
-        switch (data.gender){
+        switch (data.gender) {
             case 'Weiblich':
                 gender = [2]
                 break;
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
                 gender = [1]
                 break;
             case 'Alle':
-                gender = [1,2]
+                gender = [1, 2]
                 break;
         }
         await campagneCreator({
@@ -41,7 +40,8 @@ export default async function handler(req, res) {
             answerB: data.answerB,
             gender: gender
         })
-        res.status(200).json({ "result":"success" });
+        //await connection({ task: "change", find: data, change: { status: "INREVIEW" }, collection: "adRequests" });
+        res.status(200).json({ "result": "success" });
     }
     catch (err) {
         console.log(err)

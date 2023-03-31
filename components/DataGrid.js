@@ -38,6 +38,8 @@ export default function dataGrid(props) {
             return "facebook-data-verifying";
           case "ABGELEHNT":
             return "facebook-data-declined";
+          case "INREVIEW":
+            return "facebook-data-inreview";
           default:
             return "";
         }
@@ -127,6 +129,12 @@ export default function dataGrid(props) {
             </Link>
           )
         }
+        else if (params.row.status === "INREVIEW"){
+          return(
+            <>
+            </>
+          )
+        }
         else {
           return (
             <Link id={params.id} href={{ pathname: "/u/statistic" }}>
@@ -141,11 +149,11 @@ export default function dataGrid(props) {
   ];
 
   const handleConfirm = (id) => {
-    fetch("/api/private/confirm", {
+    fetch("http://localhost:3000/api/private/confirm", {
       method: "POST",
       body: JSON.stringify(
         props.value[id]
-      ).then(router.reload()),
+      )
     })
   }
   const handleDecline = (id) => {

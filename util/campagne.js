@@ -5,7 +5,6 @@ export default async function campaignCreator(input) {
     "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
   const id = "act_394803416105034";//"act_2219999991505258"
   const api = bizSdk.FacebookAdsApi.init(access_token);
-
   let fields, params;
   fields = [];
   params = {
@@ -33,7 +32,7 @@ async function adSetCreator(campagne_id, searchData) {
   fields = [];
 
   params = {
-    name: input.title + " - " + input.user,
+    name: searchData.title + " - " + searchData.user,
     bid_strategy: "LOWEST_COST_WITHOUT_CAP",
     daily_budget: "500",
     billing_event: "IMPRESSIONS",
@@ -65,7 +64,7 @@ async function adCreativeCreator(adset_id, searchData) {
   fields = [];
 
   params = {
-    name: input.title + " - " + input.user,
+    name: searchData.title + " - " + searchData.user,
     body: "Like My Page",
     object_story_spec: {
       page_id: "101217845351407",
@@ -112,7 +111,7 @@ async function adCreator(adcreative_id, adset_id, searchData) {
   let fields, params;
   fields = [];
   params = {
-    name: input.title + " - " + input.user,
+    name: searchData.title + " - " + searchData.user,
     adset_id: adset_id,
     creative: { creative_id: adcreative_id },
     status: "ACTIVE",
