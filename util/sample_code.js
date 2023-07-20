@@ -73,7 +73,7 @@ const bizSdk = require('facebook-nodejs-business-sdk');
 const AdAccount = bizSdk.AdAccount;
 const AdsInsights = bizSdk.AdsInsights;
 
-let access_token = 'EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4';
+let access_token = 'EAAZA7BZCwWkmUBAMGKaoVn34zccGOGByTPZAdK0ZAW7OB3bYx2BINqCMDiZAWJTGyrqmqn4BmB6yHv88ZCkNEEX7BXAuyWeZAfmD2G5gUv65TSg91KZCUz2JBJUbZCosquBUlI2zBKi4mvBbX5ZByEymhtn7ItivQQCNyr5bqHIdRYPkRFT79lTFiD';
 let ad_account_id = 'act_394803416105034';
 let app_secret = '6f9c20a5232c83f4cc8352202284308a';
 let app_id = '1824124084589157';
@@ -96,14 +96,9 @@ const logApiCallResult = (apiCallName, data) => {
 const fields = [
   'interactive_component_tap',
   'campaign_name',
-  'reach',
-  'impressions',
-  'estimated_ad_recallers',
-  'estimated_ad_recall_rate',
-  'clicks',
 ];
 const params = {
-  'time_range' : {'since':'2023-02-01','until':'2023-04-01'},
+  'time_range' : {'since':'2023-02-01','until':'2023-08-01'},
   'filtering' : [],
   'level' : 'ad',
   'breakdowns' : ['age','gender'],

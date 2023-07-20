@@ -20,7 +20,6 @@ export default function dataGrid(props) {
       field: "user",
       headerName: "Auftraggeber",
       width: 90,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
@@ -48,28 +47,24 @@ export default function dataGrid(props) {
       field: "title",
       headerName: "Titel der Umfrage",
       width: 150,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
       field: "question",
       headerName: "Fragestellung",
       width: 150,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
       field: "answerA",
       headerName: "Antwort A",
       width: 150,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
       field: "answerB",
       headerName: "Antwort B",
       width: 150,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
@@ -77,14 +72,12 @@ export default function dataGrid(props) {
       headerName: "Alter",
       type: "number",
       width: 110,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
       field: "region",
       headerName: "Land/Region",
       width: 160,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
@@ -92,7 +85,6 @@ export default function dataGrid(props) {
       headerName: "Anzahl der Befragten (n)",
       type: "number",
       width: 200,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
@@ -100,7 +92,6 @@ export default function dataGrid(props) {
       headerName: "Anzahl der zu Befragenden",
       type: "number",
       width: 200,
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
     {
@@ -142,7 +133,6 @@ export default function dataGrid(props) {
           )
         }
       },
-      headerClassName: "super-app-theme--header",
       headerAlign: "center",
     },
   ];

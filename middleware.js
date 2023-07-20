@@ -3,12 +3,11 @@ import { CognitoJwtVerifier } from "aws-jwt-verify";
 import { CognitoIdentityProvider } from "@aws-sdk/client-cognito-identity-provider";
 
 export async function middleware(request) {
-  const requestHeaders = new Headers(request.headers);
   const provider = new CognitoIdentityProvider({ region: "eu-central-1" });
   const verifier = await CognitoJwtVerifier.create({
-    userPoolId: "eu-central-1_Ijwy5O5t1",
+    userPoolId: "eu-central-1_mU2eOQo0o",
     tokenUse: "access",
-    clientId: "3k6bj2r7tnkkmque5l4v67a6be",
+    clientId: "5ng3u55q2mhjn2kpdgk6rvvnk0",
   });
   let tokenValid;
   let res;
@@ -23,16 +22,7 @@ export async function middleware(request) {
     console.log(e);
   }
   if (tokenValid) {
-    if (tokenValid) {
-      requestHeaders.set("x-username", res.Username);
-      if (res.UserAttributes[1].Value == "1") {
-        requestHeaders.set("x-admin-state", true);
-        return NextResponse.next({ request: { headers: requestHeaders } });
-      } else {
-        requestHeaders.set("x-admin-state", false);
-        return NextResponse.next({ request: { headers: requestHeaders } });
-      }
-    }
+        return NextResponse.next({ /*request: { headers: requestHeaders }*/ });
   } else {
     return NextResponse.redirect(new URL("http://localhost:3000/"));
   }

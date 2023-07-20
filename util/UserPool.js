@@ -1,8 +1,8 @@
 import { CognitoUserPool,CookieStorage } from "amazon-cognito-identity-js";
 
 const poolData = {
-    UserPoolId:'eu-central-1_Ijwy5O5t1',
-    ClientId: '3k6bj2r7tnkkmque5l4v67a6be',
+    UserPoolId:'eu-central-1_mU2eOQo0o',
+    ClientId: '5ng3u55q2mhjn2kpdgk6rvvnk0',
     cookieStorage: {
         domain: 'localhost',
         secure: false,

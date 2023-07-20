@@ -29,7 +29,7 @@ export default function headerUser() {
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" >
+      <AppBar position="static" sx={{backgroundColor:'#fff'}} >
         <Toolbar sx={{display:"flex", justifyContent:"space-between", mx:"10%"}}>
           <Image src={icon} width={30} height={30} style={{alignSelf:"center"}}/>
           <Typography sx={{fontSize:"21px"}}>Zgefragt.</Typography>

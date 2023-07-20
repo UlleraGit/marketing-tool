@@ -1,43 +1,70 @@
-import Link from 'next/link'
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import HeaderAdmin from "/components/HeaderAdmin"
-import HeaderUser from "/components/HeaderUser"
-import DataGrid from "/components/DataGrid";
-import FooterAdmin from "/components/FooterAdmin";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Header from "../../components/Header"
+import FooterAdmin from "../../components/FooterAdmin";
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import connection from '../../lib/mongodb';
-export default function Dashboard({ data }) {
+import ChatIcon from '@mui/icons-material/Chat';
+import PieChartIcon from '@mui/icons-material/PieChart';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import CampaignIcon from '@mui/icons-material/Campaign';
+import Link from "next/link";
+export default function dashboard() {
     return (
-        <div style={{ backgroundColor: "#f2f2f2", display: "felx", flexDirection: "column" }}>
-            {data.state == "true" ? <HeaderAdmin /> : <HeaderUser />}
-            <Container sx={{ minHeight: "86.7vh", mt: 3 }}>
-                <Typography component="h3" variant="h3" fontWeight="bold" sx={{ mt: "10px", mb: "12.5px" }}>
-                    Hey. Schön, dass du da bist!
+        <div style={{ backgroundColor: "#f2f2f2", display: "felx", minHeight: "100vh", flexDirection: "column" }}>
+            <Header />
+            <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh" }}>
+                <Typography component="h5" variant="h5" sx={{ mt: "7%", mb: "3%" }}>
+                    Hey. Schön, dass Sie da sind!
                 </Typography>
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", my: "5px" }}>
-                    <Typography component="h5" variant="h5" >
-                        Übersicht
-                    </Typography>
-                    <Link href="/u/createsurvey" passHref>
-                        <Button variant="contained" >
-                            <AddCircleOutlineIcon sx={{ mr: 1 }} /> Umfrage erstellen
-                        </Button>
+                <Typography component="h4" variant="h4" fontWeight="bold" sx={{ mt: "0", mb: "0" }}>
+                    Wie können wir Ihnen helfen?
+                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center", width: "100%", mt: "15px", justifyContent: "space-between", }}>
+                    <Link href="/surveyselect"  style={{ textDecoration: 'none', color:"#000" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+                            <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
+                                <CampaignIcon sx={{ fontSize: 60, color: "#fff", }} />
+                            </Box>
+                            <Typography component="p" variant="p">
+                                Neue Umfrage erstellen
+                            </Typography>
+                        </Box>
+                    </Link>
+                    <Link href="/surveystodo"  style={{ textDecoration: 'none', color:"#000" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+                            <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
+                                <ChatIcon sx={{ fontSize: 60, color: "#fff" }} />
+                            </Box>
+                            <Typography component="p" variant="p">
+                                Bei Umfrage teilnehmen
+                            </Typography>
+                        </Box>
+                    </Link>
+                    <Link href="/results"  style={{ textDecoration: 'none', color:"#000" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+                            <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
+                                <PieChartIcon sx={{ fontSize: 60, color: "#fff" }} />
+                            </Box>
+                            <Typography component="p" variant="p">
+                                Ergebnisse ansehen
+                            </Typography>
+                        </Box>
+                    </Link>
+                    <Link href="/"  style={{ textDecoration: 'none', color:"#000" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+                            <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
+                                <Box>
+                                    <FindInPageIcon sx={{ fontSize: 60, color: "#fff" }} />
+                                </Box>
+                            </Box>
+                            <Typography component="p" variant="p">
+                                zur Datenpalttform
+                            </Typography>
+                        </Box>
                     </Link>
                 </Box>
-                <DataGrid value={data.tableData} state={data.state} />
             </Container>
             <FooterAdmin />
         </div>
     );
-}
-export async function getServerSideProps(context) {
-    let getData = await connection({ task: "get", user: context.req.headers["x-username"], collection: "adRequests" }).then(result => { return result })
-    let data = {
-        state: context.req.headers["x-admin-state"],
-        tableData: getData
-    }
-    return { props: { data } };
 }

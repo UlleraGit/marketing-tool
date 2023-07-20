@@ -1,26 +1,24 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import backgroundPicture from "../public/ZgefragtHintergrund.png";
+import backgroundPicture from "../public/DCHintergrund.png";
 import Cookies from "js-cookie";
 
 function Copyright(props) {
   return (
     <Typography
       variant="body2"
-      color="text.secondary"
+      color="#fff"
       align="center"
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://zgefragt.com">
-        Zgefragt
+      <Link color="inherit" href="https://datacircle.com">
+        datacircle GmbH
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -52,6 +50,7 @@ export default function SignIn() {
         } else if (response.state == "success") {
           Cookies.set("AccessToken", response.accessToken);
           Cookies.set("RefreshToken", response.refreshToken);
+          Cookies.set("IdToken",response.idToken)
           window.location.replace("/u/dashboard");
         }
       })
@@ -132,8 +131,8 @@ export default function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={[
-                  { "&:hover": { backgroundColor: "#FF54BD" } },
-                  { mt: 3, mb: 2, backgroundColor: "#EB0388" },
+                  { "&:hover": { backgroundColor: "#1E90FF" } },
+                  { mt: 3, mb: 2, backgroundColor: "#0000FF" },
                 ]}
                 onClick={handleNewPassword}
               >
@@ -186,8 +185,8 @@ export default function SignIn() {
                 variant="contained"
                 onClick={handleSubmit}
                 sx={[
-                  { "&:hover": { backgroundColor: "#FF54BD" } },
-                  { mt: 3, mb: 2, backgroundColor: "#EB0388" },
+                  { "&:hover": { backgroundColor: "#1E90FF" } },
+                  { mt: 3, mb: 2, backgroundColor: "#0000FF" },
                 ]}
               >
                 Login

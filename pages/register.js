@@ -1,0 +1,169 @@
+import React, { useState } from 'react';
+import { Button, Autocomplete, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import berufe from '../util/berufe'
+import universities from '../util/universities';
+
+export default function RegisterPage() {
+    var utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [birthday, setBirthday] = useState(utc);
+    const [selectedBeruf, setSelectedBeruf] = React.useState('');
+    const [selectedUniversity, setSelectedUniversity] = React.useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [ageError, setAgeError] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const today = new Date();
+        const selectedDate = new Date(birthday);
+        const age = today.getFullYear() - selectedDate.getFullYear();
+
+        // Check if age is less than 16
+        if (age < 16) {
+            setAgeError('You must be at least 16 years old to register.');
+            return;
+        }
+
+        const formData = {
+            firstName,
+            lastName,
+            birthday,
+            password,
+            email,
+            address,
+            selectedBeruf,
+            selectedUniversity
+        };
+        // Password validation
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(password);
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+
+        if (!hasNumber || !hasSpecialChar || !hasUppercase || !hasLowercase) {
+            setPasswordError('Password must contain at least 1 number, 1 special character, 1 uppercase letter, and 1 lowercase letter.');
+            return;
+        }
+
+        fetch('api/public/register', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Form submitted successfully');
+                sessionStorage.setItem('currentUser', JSON.stringify(data.user));
+                window.location.href = '/verification'
+            })
+            .catch((error) => {
+                console.error('Error submitting form:', error);
+            });
+    };
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+            <form onSubmit={handleSubmit} style={{ width: '400px' }}>
+                <Typography variant="h5" gutterBottom>
+                    Register
+                </Typography>
+
+                <TextField
+                    label="First Name"
+                    value={firstName}
+                    onChange={(event) => setFirstName(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+
+                <TextField
+                    label="Last Name"
+                    value={lastName}
+                    onChange={(event) => setLastName(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+
+                <TextField
+                    label="Birthday"
+                    type="date"
+                    value={birthday}
+                    onChange={(event) => { setBirthday(event.target.value.toString()) }}
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+
+                {ageError && <Typography color="error">{ageError}</Typography>}
+
+                <Autocomplete
+                    options={berufe}
+                    getOptionLabel={(option) => option.name}
+                    //value={selectedBeruf}
+                    onChange={(event, newValue) => {
+                        setSelectedBeruf(event.target.textContent);
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Beruf" />}
+                    required
+                />
+
+                {selectedBeruf == "Student" ? (
+                    <FormControl fullWidth margin="normal">
+                        <Autocomplete
+                            options={universities}
+                            getOptionLabel={(option) => option.name}
+                            //value={selectedBeruf}
+                            onChange={(event, newValue) => {
+                                setSelectedUniversity(event.target.textContent);
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Universitäten" />}
+                        />
+                    </FormControl>
+                ) : ''}
+
+                <TextField
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+                {passwordError && <p className="error-message">{passwordError}</p>}
+
+                <TextField
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+
+                <TextField
+                    label="Address"
+                    value={address}
+                    onChange={(event) => setAddress(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    multiline
+                    required
+                />
+
+                <Button type="submit" variant="contained" color="primary">
+                    Register
+                </Button>
+            </form>
+        </div>
+    );
+};

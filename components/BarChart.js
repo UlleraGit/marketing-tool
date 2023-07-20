@@ -18,11 +18,17 @@ export default function barChart(props){
         Legend,
     )
     const options = {
+        maintainAspectRatio: false,
         responsive: true,
         plugins: {
             legend: {
                 display:false
             },
+        },
+        scales: {
+            y: {
+              beginAtZero: true
+            }
         }
     };
 
@@ -30,10 +36,10 @@ export default function barChart(props){
         labels: props.labels,
         datasets: [
             {
-                data: props.data,
+                ...props.data,
                 backgroundColor:'rgba(0, 0, 255, 1)'
             }
         ]
     };
-    return (<Bar data={data} height={100} options={options} />);
+    return (<Bar data={data} options={options} width={props.width} height={props.height} />);
 }

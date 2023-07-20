@@ -2,7 +2,7 @@ import * as React from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 export default function NewToggleButton(props) {
-  const [alignment, setAlignment] = React.useState('');
+  const [alignment, setAlignment] = React.useState(props.startingValue);
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
     props.onClick(newAlignment);

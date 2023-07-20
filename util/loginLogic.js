@@ -60,3 +60,62 @@ export class Authentication {
     });
   }
 }
+
+/*
+import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import UserPool from "./UserPool";
+
+export class Authentication {
+  constructor() {
+    this.cognitoUser = null;
+  }
+
+  authenticate(username, password) {
+    const authenticationData = {
+      Username: username,
+      Password: password,
+    };
+    const authenticationDetails = new AuthenticationDetails(authenticationData);
+    const userData = {
+      Username: username,
+      Pool: UserPool,
+    };
+    this.cognitoUser = new CognitoUser(userData);
+
+    return new Promise((resolve, reject) => {
+      this.cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: (result) => {
+          const accessToken = result.getAccessToken().getJwtToken();
+          const idToken = result.getIdToken().getJwtToken();
+          const refreshToken = result.getRefreshToken().getToken();
+          resolve({ state: "success", accessToken, idToken, refreshToken });
+        },
+        onFailure: (err) => {
+          reject(err); // Use reject instead of resolve for errors
+        },
+        newPasswordRequired: (userAttributes) => {
+          delete userAttributes.email_verified;
+          resolve({ state: "newpassword", userAttributes });
+        },
+      });
+    });
+  }
+
+  handleNewPassword(newPassword, sessionUserAttributes) {
+    return new Promise((resolve, reject) => {
+      this.cognitoUser.completeNewPasswordChallenge(
+        newPassword,
+        sessionUserAttributes,
+        {
+          onSuccess: (result) => {
+            resolve({ state: "successNewPassword", result });
+          },
+          onFailure: (err) => {
+            reject(err); // Use reject instead of resolve for errors
+          },
+        }
+      );
+    });
+  }
+}
+*/
