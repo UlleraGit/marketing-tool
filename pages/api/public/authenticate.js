@@ -17,6 +17,6 @@ export default async function handler(req, res) {
         refreshToken: result.refreshToken,
       });
   } else {
-    res.status(501).json(result.err);
+    res.status(401).json(result.err);
   }
 }

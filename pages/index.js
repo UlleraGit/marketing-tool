@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -48,18 +48,22 @@ export default function SignIn() {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.state == "newpassword") {
-          setNewPasswordRequired(true);
-          setUserAttributes(response.userAttributes);
-        } else if (response.state == "success") {
-          Cookies.set("AccessToken", response.accessToken);
-          Cookies.set("RefreshToken", response.refreshToken);
-          Cookies.set("IdToken", response.idToken)
-          router.push("/u/dashboard")
+        if (response.ok) {
+          if (response.state == "newpassword") {
+            setNewPasswordRequired(true);
+            setUserAttributes(response.userAttributes);
+          } else if (response.state == "success") {
+            Cookies.set("AccessToken", response.accessToken);
+            Cookies.set("RefreshToken", response.refreshToken);
+            Cookies.set("IdToken", response.idToken)
+            router.push("/u/dashboard")
+          }
         }
+        setErr("Falscher Benutzername oder flasches Passwort!");
       })
       .catch((err) => {
-        setErr(err.err);
+        console.log(err)
+        setErr("Fehler beim Aufbau einer Verbindung! Versuche es nochmal.");
       });
   };
   const handleNewPassword = (event) => {
@@ -196,7 +200,8 @@ export default function SignIn() {
                 Login
               </Button>
             </Box>
-            <Link style={{color:"#fff"}} href="/register">
+            {err && <Typography color="error">{err}</Typography>}
+            <Link style={{ color: "#fff" }} href="/register">
               registrieren
             </Link>
           </Box>
