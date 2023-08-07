@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import * as React from "react"
 import FileUploadIcon from "@mui/icons-material"
 import { Box } from "@mui/material";

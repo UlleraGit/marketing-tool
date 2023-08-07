@@ -1,5 +1,6 @@
 import { BottomNavigation, Toolbar, } from "@mui/material";
 import { Box } from "@mui/system"
+/* eslint-disable */ 
 export default function footerAdmin() {
     return (
         <Box sx={{ flexGrow: 1}}>

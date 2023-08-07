@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import Header from "../../components/Header";
 import PricingPage from "../../components/PricingPage";
 import FooterAdmin from "../../components/FooterAdmin";

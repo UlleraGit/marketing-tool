@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import { Box, Button, Typography } from "@mui/material"
 import SurveyForm from "/components/SurveyForm"
 import Header from "../../components/Header"

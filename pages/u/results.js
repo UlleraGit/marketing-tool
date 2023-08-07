@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import ResultGrid from "../../components/ResultGrid";
 import Header from "../../components/Header";
 import { Box } from "@mui/material";

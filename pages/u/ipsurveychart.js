@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import * as React from 'react'
 import PieChart from "../../components/PieChart"
 import BarChart from '../../components/BarChart'

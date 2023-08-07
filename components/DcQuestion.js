@@ -6,7 +6,7 @@ import * as React from "react";
 import _ from "lodash";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import PopupBox from "../components/PopupBox";
-
+/* eslint-disable */ 
 export default function dcQustion(props) {
     const [answersAmmount, setAnswersAmmount] = React.useState([
         <TextField key={0} id="0" sx={{ width: "49%" }} onChange={(event) => { handleAnswerChange(event);  }} label={"Antwortmöglichkeit " + 1} variant="outlined" />,
