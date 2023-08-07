@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Autocomplete, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, Autocomplete, FormControl, FormControlLabel, Checkbox, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import berufe from '../util/berufe'
 import universities from '../util/universities';
 
@@ -15,7 +15,13 @@ export default function RegisterPage() {
     const [address, setAddress] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [ageError, setAgeError] = useState('');
+    const [isAccepted, setIsAccepted] = useState(false);
+    const [checkboxError, setCheckboxError] = useState('')
 
+    const handleCheckboxChange = (event) => {
+      setIsAccepted(event.target.checked);
+    };
+  
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -25,10 +31,13 @@ export default function RegisterPage() {
 
         // Check if age is less than 16
         if (age < 16) {
-            setAgeError('You must be at least 16 years old to register.');
+            setAgeError('Du must mindestens 16 Jahre alt sein um dich registrien zu können.');
             return;
         }
-
+        if(!isAccepted){
+            setCheckboxError('Du must die AGBs akzeptieren!')
+            return;
+        }
         const formData = {
             firstName,
             lastName,
@@ -159,6 +168,19 @@ export default function RegisterPage() {
                     multiline
                     required
                 />
+
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={isAccepted}
+                            onChange={handleCheckboxChange}
+                            name="acceptTerms"
+                            color="primary"
+                        />
+                    }
+                    label="Ich bin mit den AGBs einverstanden."
+                />
+                {checkboxError && <Typography color="error">{checkboxError}</Typography>}
 
                 <Button type="submit" variant="contained" color="primary">
                     Register

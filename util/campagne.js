@@ -1,15 +1,14 @@
 import * as bizSdk from "facebook-nodejs-business-sdk"
 export default async function campaignCreator(input) {
   const AdAccount = bizSdk.AdAccount;
-  const access_token =
-    "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
+  const access_token = process.env.FACEBOOK_API_KEY;
   const id = "act_394803416105034";//"act_2219999991505258"
   const api = bizSdk.FacebookAdsApi.init(access_token);
   let fields, params;
   fields = [];
   params = {
-    name: input.title + " - " + input.user,
-    objective: "BRAND_AWARENESS",
+    name: input.title + " " + input.hash,
+    objective: "OUTCOME_AWARENESS",
     status: "ACTIVE",
     special_ad_categories: [],
   };
@@ -19,8 +18,7 @@ export default async function campaignCreator(input) {
 
 async function adSetCreator(campagne_id, searchData) {
   const AdAccount = bizSdk.AdAccount;
-  const access_token =
-    "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
+  const access_token = process.env.FACEBOOK_API_KEY;
   const id = "act_394803416105034";;
   const api = bizSdk.FacebookAdsApi.init(access_token);
   const showDebugingInfo = true; // Setting this to true shows more debugging info.
@@ -32,13 +30,14 @@ async function adSetCreator(campagne_id, searchData) {
   fields = [];
 
   params = {
-    name: searchData.title + " - " + searchData.user,
+    name: searchData.title + " " + input.hash,
     bid_strategy: "LOWEST_COST_WITHOUT_CAP",
     daily_budget: "500",
     billing_event: "IMPRESSIONS",
     optimization_goal: "AD_RECALL_LIFT",
     campaign_id: campagne_id,
     promoted_object: { page_id: "101217845351407" },
+    blame_field_specs: [["datacircle GmbH"]],
     targeting: {
       geo_locations: searchData.geo_locations,
       age_min: searchData.age_min,
@@ -56,15 +55,14 @@ async function adSetCreator(campagne_id, searchData) {
 
 async function adCreativeCreator(adset_id, searchData) {
   const AdAccount = bizSdk.AdAccount;
-  const access_token =
-    "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
+  const access_token = process.env.FACEBOOK_API_KEY;
   const id = "act_394803416105034";
   const api = bizSdk.FacebookAdsApi.init(access_token);
   let fields, params;
   fields = [];
 
   params = {
-    name: searchData.title + " - " + searchData.user,
+    name: searchData.title + " " + input.hash,
     body: "Like My Page",
     object_story_spec: {
       page_id: "101217845351407",
@@ -99,9 +97,7 @@ async function adCreativeCreator(adset_id, searchData) {
 async function adCreator(adcreative_id, adset_id, searchData) {
   const AdAccount = bizSdk.AdAccount;
 
-  const access_token =
-    "EAAZA7BZCwWkmUBAFSNHmKErBdUt8d3ZA2YW3pkg0EirUW7qVQALGXlcs9Noj1rWTDeB5E51JiUUHTnoJUCx3ya857w7u2awlHixPpBv77NSXb1yZCJysDlKnAkyxPBWXqUL4AuGBYr9ahX0EcUND77JWqIUnm5ME5o5XOvw6xtdkBN26KJL4";
-
+  const access_token = process.env.FACEBOOK_API_KEY;
   const app_secret = "6f9c20a5232c83f4cc8352202284308a";
   const app_id = "1824124084589157";
   const id = "act_394803416105034";
@@ -111,7 +107,7 @@ async function adCreator(adcreative_id, adset_id, searchData) {
   let fields, params;
   fields = [];
   params = {
-    name: searchData.title + " - " + searchData.user,
+    name: searchData.title + " " + input.hash,
     adset_id: adset_id,
     creative: { creative_id: adcreative_id },
     status: "ACTIVE",

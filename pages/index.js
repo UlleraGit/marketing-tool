@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import backgroundPicture from "../public/DCHintergrund.png";
 import Cookies from "js-cookie";
+import CookieBanner from "../components/CookieBanner";
+import { useRouter } from "next/router";
 
 function Copyright(props) {
   return (
@@ -27,6 +29,7 @@ function Copyright(props) {
 }
 
 export default function SignIn() {
+  const router = useRouter();
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
@@ -50,8 +53,8 @@ export default function SignIn() {
         } else if (response.state == "success") {
           Cookies.set("AccessToken", response.accessToken);
           Cookies.set("RefreshToken", response.refreshToken);
-          Cookies.set("IdToken",response.idToken)
-          window.location.replace("/u/dashboard");
+          Cookies.set("IdToken", response.idToken)
+          router.push("/u/dashboard")
         }
       })
       .catch((err) => {
@@ -192,8 +195,12 @@ export default function SignIn() {
                 Login
               </Button>
             </Box>
+            <Link style={{color:"#fff"}} href="/register">
+              registrieren
+            </Link>
           </Box>
         )}
+        <CookieBanner />
         <Copyright sx={{ mt: 4, mb: 4 }} />
       </Container>
     </div>

@@ -33,7 +33,8 @@ export default function pieChart(props) {
                 backgroundColor:[
                     "rgba(255,0, 0, 0.2)",
                     "rgba(0, 0, 255, 1)"
-                ]
+                ],
+                backgroundColor: ['#0000FF','#FBBD00','#FFC0CB'], 
             },
         ],
     };

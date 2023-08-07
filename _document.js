@@ -6,12 +6,16 @@ import createEmotionCache from '../util/createEmotionCache';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en" style={{backgroundColor: "#f2f2f2"}}>
+      <Html lang="en" style={{ backgroundColor: "#f2f2f2" }}>
         <Head>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <script
+            async
+            src="https://js.stripe.com/v3/pricing-table.js">
+          </script>
         </Head>
         <body>
           <Main />

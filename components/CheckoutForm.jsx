@@ -5,6 +5,7 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { FormControlLabel,Checkbox,Typography } from "@mui/material";
 
 export default function CheckoutForm(props) {
   const stripe = useStripe();
@@ -13,6 +14,12 @@ export default function CheckoutForm(props) {
   const [email, setEmail] = React.useState('');
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isAccepted, setIsAccepted] = React.useState(false);
+  const [checkboxError, setCheckboxError] = React.useState('')
+
+  const handleCheckboxChange = (event) => {
+    setIsAccepted(event.target.checked);
+  };
 
   React.useEffect(() => {
     if (!stripe) {
@@ -53,14 +60,17 @@ export default function CheckoutForm(props) {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
+    if (!isAccepted) {
+      setCheckboxError('Du must die Verzichtserklärung akzeptieren!')
+      return;
+    }
     setIsLoading(true);
 
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/thankyou",
+        return_url: "http://localhost:3000/u/thankyou",
         receipt_email: email,
       },
     });
@@ -90,6 +100,19 @@ export default function CheckoutForm(props) {
         onChange={(e) => setEmail(e.value.email)}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isAccepted}
+            onChange={handleCheckboxChange}
+            name="acceptTerms"
+            color="primary"
+          />
+        }
+        label="Ich verzichte hiermit auf den Wiederruf."
+      />
+      {checkboxError && <Typography color="error">{checkboxError}</Typography>}
+
       <button disabled={isLoading || !stripe || !elements} style={{
         marginTop: "10px",
         backgroundColor: '#0000ff',
@@ -108,7 +131,6 @@ export default function CheckoutForm(props) {
           {isLoading ? <div className="spinner" id="spinner"></div> : "Zahle " + props.price + "€"}
         </span>
       </button>
-      {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
   );

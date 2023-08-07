@@ -25,9 +25,7 @@ export default async function handler(req, res) {
           hash: hash,
           answeredSurveys:[],
           numberOfAnsweredSurveys:0
-        },
-        collection: "users",
-        task: 'set'
+        }
       })).then((user) => {
         res.status(201).json({ message: 'User registered successfully', user });
       }).catch((error) => {

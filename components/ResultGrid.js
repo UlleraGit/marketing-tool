@@ -66,14 +66,14 @@ export default function resultGrid(props) {
                 if (params.row.status === "FERTIG" || params.row.status === "AKTIV") {
                     if (params.row.type === 'dcsurvey') {
                         return (
-                            <Link id={params.id} href={{ pathname: `/dcsurveychart` , query: { slected_survey: params.row._id }}}>
+                            <Link id={params.id} href={{ pathname: '/u/dcsurveychart', query: { selected_survey: params.row._id } }}>
                                 <ArrowForwardIcon style={{ color: "#0000ff" }} />
                             </Link>
                         )
                     }
                     else if (params.row.type === "ipsurvey") {
                         return (
-                            <Link id={params.id} href={{ pathname: `/ipsurveychart`, query: { slected_survey: params.row._id } }}>
+                            <Link id={params.id} href={{ pathname: `/u/ipsurveychart`, query: { selected_survey: params.row._id } }}>
                                 <ArrowForwardIcon style={{ color: "#0000ff" }} />
                             </Link>
                         )
@@ -132,7 +132,6 @@ export default function resultGrid(props) {
                 rowsPerPageOptions={[5, 10, 20]}
                 pagination
                 disableSelectionOnClick
-
                 sx={{ borderRadius: "10px", boxShadow: " 0 3px 10px rgb(0 0 0 / 1)", "& .MuiSvgIcon-root": { color: "#fff" } }}
             />
         </Box>

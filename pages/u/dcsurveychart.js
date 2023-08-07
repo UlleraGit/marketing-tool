@@ -1,24 +1,23 @@
 import * as React from 'react';
 import Box from "@mui/material/Box"
-import BarChart from '../components/BarChart';
+import BarChart from '../../components/BarChart';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Link from 'next/link';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import useSWR from 'swr';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/router';
+import { Typography } from '@mui/material';
 
 export default function dcSurveyChart(props) {
+    const router = useRouter()
+    const id = router.asPath.split('=')[1];
+    const [collapse, setCollapse] = React.useState([]);
 
-    let id
-    React.useEffect(() => {
-        id = new URLSearchParams(window.location.search).get(
-            "selected_survey"
-        );
-    }, [])
     const fetcher = (...args) => fetch(...args, {
         method: "POST",
-        body: JSON.stringify({ id: "64a899f44665db59084031fa" }),
+        body: JSON.stringify({ id: id }),
     }).then(res => res.json())
         .then(r => {
             let temp = r.survey.map(a => ({ ...a, A: [...a.A] }));
@@ -29,17 +28,19 @@ export default function dcSurveyChart(props) {
                     result[f][a]++
                 })
             })
+            console.log(r.survey.length)
+            setCollapse(() => { let t = []; for (let i = 0; i < r.survey.length; i++) { t.push(false) }; return (t) })
             return ({ result, survey: r.survey })
         })
-    const { data, error, isLoading, isValidating } = useSWR('/api/public/getdcsurvey', fetcher)
+    const { data, error, isLoading, isValidating } = useSWR('/api/private/getdcsurvey', fetcher, {
+        revalidateOnFocus: false,
+    })
 
-    const [collapse, setCollapse] = React.useState([true, false]);
     const handleCollapseClosed = (e) => {
         setCollapse((old) => {
             old[e.target.id] = true;
             return ([...old])
         })
-        console.log(collapse)
     }
     const handleCollapseOpen = (e) => {
         setCollapse((old) => {
@@ -47,6 +48,7 @@ export default function dcSurveyChart(props) {
             return ([...old])
         })
     }
+
     if (error) {
         return <div>Error occurred while fetching data.</div>;
     }
@@ -61,13 +63,12 @@ export default function dcSurveyChart(props) {
     return (
         <Box sx={{ display: "flex", minWidth: "100vw", minHeight: "100vh", width: "100%", height: "100%", flexDirection: "column", py: "2%", px: "2%", alignItems: "center", rowGap: "20px" }}>
             <Box sx={{ width: "100%", }}>
-                <Link href="/results" style={{ color: "#000" }}>
+                <Link href="/u/results" style={{ color: "#000" }}>
                     <KeyboardBackspaceIcon fontSize='large' />
                 </Link>
             </Box>
             {
                 collapse.map((answer, index) => {
-                    console.log(data)
                     if (answer) {
                         return (
                             <Box sx={{ display: "flex", width: "100%", height: "100%", flexDirection: "column", boxShadow: "0 3px 10px rgb(0 0 0 / 1)", }}>
@@ -77,6 +78,9 @@ export default function dcSurveyChart(props) {
                                     </Box>
                                 </Box>
                                 <Box sx={{ display: "flex", minWidth: "100%", minHeight: "100%", flexDirection: "column", alignItems: "center", justifyContent: "center", alignContent: "center" }}>
+                                    <Typography>
+                                        {data.survey[index].Q}
+                                    </Typography>
                                     <Box sx={{ width: "90vw", height: "60vh" }}>
                                         <BarChart
                                             labels={data.survey[index].A}
@@ -92,6 +96,9 @@ export default function dcSurveyChart(props) {
                         return (
                             <Box sx={{ display: "flex", width: "100%", height: "100%", flexDirection: "column", boxShadow: "0 3px 10px rgb(0 0 0 / 1)", }}>
                                 <Box sx={{ display: "flex", justifyContent: "flex-end", justifyItems: "center", alignItems: "center" }}>
+                                <Typography>
+                                        {data.survey[index].Q}
+                                    </Typography>
                                     <Box id={index} sx={{ display: "flex", justifyItems: "center", alignItems: "center" }} onClick={handleCollapseClosed}>
                                         <KeyboardArrowRightIcon id={index} fontSize='large' />
                                     </Box>

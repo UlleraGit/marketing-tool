@@ -8,11 +8,12 @@ export default function PopupBox(props) {
   const { mutate } = useSWRConfig()
   const fetcher = (...args) => fetch(...args, {
     method: "POST",
-    body: JSON.stringify({ search: keyword }),
+    body: JSON.stringify({ search: sessionStorage.getItem("search") }),
   }).then(res => res.json())
-  const { data, error, isLoading, isValidating } = useSWR('/api/public/unsplash', fetcher)
+  const { data, error, isLoading, isValidating } = useSWR('/api/private/unsplash', fetcher, {
+    
+  })
   const [isOpen, setIsOpen] = useState(false);
-  const [keyword, setKeyword] = React.useState("new");
   const handleButtonClick = () => {
     setIsOpen(true);
   };
@@ -21,9 +22,6 @@ export default function PopupBox(props) {
     setIsOpen(false);
   };
 
-  React.useEffect(() => {
-    mutate('/api/public/unsplash')
-  }, [keyword])
   if (error) return (<CircularProgress color="neutral" />)
 
   if (isLoading || isValidating) return (
@@ -40,8 +38,8 @@ export default function PopupBox(props) {
               </span>
             </Box>
             <Box >
-              <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
-                setKeyword(e.target.value);
+              <TextField  label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
+                sessionStorage.setItem("search",e.target.value); mutate('/api/private/unsplash')
               }}>
               </TextField>
             </Box>
@@ -69,7 +67,7 @@ export default function PopupBox(props) {
             </Box>
             <Box >
               <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
-                setKeyword(e.target.value);
+                sessionStorage.setItem("search",e.target.value);  mutate('/api/private/unsplash')
               }}>
               </TextField>
             </Box>

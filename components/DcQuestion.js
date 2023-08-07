@@ -75,16 +75,7 @@ export default function dcQustion(props) {
                         </Box>
                     </Box>
                     <Box sx={{ display: "flex", borderRadius: "0 20px 20px 0", backgroundImage: `url('${image}')`, backgroundSize: "100% 100%", minWidth: "40%", widht: "40%", justifyContent: "center", alignContent: "center", alignItems: "center", gap: "10px 20px" }}>
-                        <Box sx={{ display: "flex", width: "129px", height: "40px", backgroundColor: "#0000ff", borderRadius: '10px', marginRight: "30px", marginBottom: "3px" }}>
-                            <Box sx={{ color: '#fff', height: '100%', width: "49%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                <Box>
-                                    <label htmlFor={`upload-${props.id}`}>
-                                        <FileUploadIcon />
-                                    </label>
-                                    <input id={`upload-${props.id}`} type="file" name="image" accept="image/*" style={{ display: "none" }} onChange={handleFilePreview} />
-                                </Box>
-                            </Box>
-                            <Box sx={{ backgroundColor: "#fff", width: "1%", height: "100%" }} />
+                        <Box sx={{ display: "flex", width: "50px", height: "50px", backgroundColor: "#0000ff", borderRadius: '10px',justifyContent:"center"}}>
                             <PopupBox onClick={(e) => { setImage(e) }} />
                         </Box>
                     </Box>

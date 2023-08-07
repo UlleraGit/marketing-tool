@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
         await connection({ task: "push", collection: "users", find: { _id: user[0]._id }, change: { answeredSurveys: ObjectId(values.id) } })
         await connection({ task: "change", collection: "users", find: { _id: user[0]._id }, change: { numberOfAnsweredSurveys: nOAS } })
-        await connection({ task: "push", collection: "dcSurveys", find: { _id: values.id }, change: { answers: values.answer } })
+        await connection({ task: "push", collection: "dcSurveys", find: { _id: ObjectId(values.id) }, change: { answers: values.answer } })
         console.log("done")
         res.status(200).json({ state: "success" })
     }

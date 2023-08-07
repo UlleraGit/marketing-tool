@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material"
 import SurveyForm from "/components/SurveyForm"
-import Header from "../components/Header"
+import Header from "../../components/Header"
 import * as React from "react"
 import { useRouter } from "next/router"
 import useSWR from 'swr'
@@ -14,30 +14,27 @@ export default function dcSurvey() {
         method: "POST",
         body: JSON.stringify({}),
     }).then(res => res.json()).then(a => { setSurvey(a[0].survey); return (a) })
-    const { data, error } = useSWR('/api/public/requestnewsurvey', fetcher);
+    const { data, error } = useSWR('/api/private/requestnewsurvey', fetcher);
     const isLoading = !data && !error;
 
     const submitForm = (event) => {
+        console.log(data)
         let answers = []
         for (let i = 0; i < survey.length; i++) {
             answers = [...answers, sessionStorage.getItem(`answer-${(i + 1)}`)]
         }
-        fetch("/api/public/handin", {
+        fetch("/api/private/handin", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 answer: answers,
-                id: data._id,
-                email: sessionStorage.getItem("email")
+                id: data[0]._id,
             })
         })
             .then((res) => res.json())
-            .then((data) => router.push('/u/dashboard'));
+            .then(() => router.push('/u/dashboard'));
     }
-    const handleClick = () => {
-        console.log(data)
-    }
-
+    
     if (error) {
         return <div>Error occurred while fetching data.</div>;
     }
@@ -52,7 +49,7 @@ export default function dcSurvey() {
     return (
         <>
             <Header />
-            <button onClick={handleClick}>t</button>
+            
             {survey.map((x, i) => {
                 return (
                     <SurveyForm key={i} id={i + 1} questions={

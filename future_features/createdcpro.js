@@ -6,6 +6,8 @@ import DcQuestion from "../components/DcQuestion";
 import ClearIcon from "@mui/icons-material/Clear";
 import * as React from "react";
 import _ from "lodash";
+import Header from "../components/Header";
+import FooterAdmin from "../components/FooterAdmin";
 import { useRouter } from "next/router";
 
 export default function CreateDcSurvey(props) {
@@ -15,7 +17,7 @@ export default function CreateDcSurvey(props) {
     const router = useRouter();
     const handleAddQuestion = () => {
         const newId = _.uniqueId("question-");
-        if (questions.length < 9) {
+        if (questions.length <= 20) {
             setQuestions((prevQuestions) => [
                 ...prevQuestions,
                 { id: newId, key: newId },
@@ -50,7 +52,7 @@ export default function CreateDcSurvey(props) {
         const formData = new FormData();
         formData.append("image", file);
         try {
-            const response = fetch("/api/public/imageupload", {
+            const response = fetch("/api/private/imageupload", {
                 method: "POST",
                 body: formData,
             });
@@ -68,51 +70,55 @@ export default function CreateDcSurvey(props) {
     const handleSubmit = (uploadData) => {
         const temp = uploadData
         let submitData = temp.map((a, i) => ({ Q: a.Q, A: a.A, img: a.img }))
-        let data = { type: "dcsurvey", title: title , questions: submitData }
+        let data = { type: "dcsurvey", title: title, questions: submitData }
         sessionStorage.setItem('survey', JSON.stringify(data))
-        router.push("/checkout")
+        router.push("/u/dashboard")
     };
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                mx: "10%",
-                minHeight: "100vh",
-                height: "100%",
-                gap: "20px",
-                py: "2%",
-            }}
-        >
-            <Typography
-                component="h5"
-                variant="h5"
-                fontSize="30px"
-                fontWeight="bold"
+        <>
+            <Header />
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    mx: "10%",
+                    minHeight: "100vh",
+                    height: "100%",
+                    gap: "20px",
+                    py: "2%",
+                }}
             >
-                Erstellen wir eine neue Umfrage
-            </Typography>
-            <TextField onChange={(e) => setTitle(e.target.value)} id="" label="Titel" variant="outlined" sx={{ width: "50%" }} />
-            {questions.map((question) => (
-                <Box key={question.key} sx={{ display: "flex", flexDirection: "column" }}>
-                    <ClearIcon
-                        id={question.id}
-                        onClick={() => handleDeleteQuestion(question.id)}
-                    />
-                    <DcQuestion key={question.id} id={question.id} onChange={handleQuestionChange} />
+                <Typography
+                    component="h5"
+                    variant="h5"
+                    fontSize="30px"
+                    fontWeight="bold"
+                >
+                    Erstellen wir eine neue Umfrage
+                </Typography>
+                <TextField onChange={(e) => setTitle(e.target.value)} id="" label="Titel" variant="outlined" sx={{ width: "50%" }} />
+                {questions.map((question) => (
+                    <Box key={question.key} sx={{ display: "flex", flexDirection: "column" }}>
+                        <ClearIcon
+                            id={question.id}
+                            onClick={() => handleDeleteQuestion(question.id)}
+                        />
+                        <DcQuestion key={question.id} id={question.id} onChange={handleQuestionChange} />
+                    </Box>
+                ))}
+                <Box>
+                    <Typography>Price:</Typography>
+                    <Typography>{questions.length * 60 + "€"}</Typography>
                 </Box>
-            ))}
-            <Box>
-                <Typography>Price:</Typography>
-                <Typography>{questions.length * 60 + "€"}</Typography>
+                {questions.length < 20 && (
+                    <Button variant="outlined" onClick={handleAddQuestion}>
+                        + Frage Hinzufügen
+                    </Button>
+                )}
+                <Button onClick={() => handleSubmit(data)} variant="outlined">Einreichen</Button>
             </Box>
-            {questions.length < 9 && (
-                <Button variant="outlined" onClick={handleAddQuestion}>
-                    + Frage Hinzufügen
-                </Button>
-            )}
-            <Button onClick={() => handleSubmit(data)} variant="outlined">Einreichen</Button>
-        </Box>
+            <FooterAdmin />
+        </>
     );
 }

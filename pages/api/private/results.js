@@ -1,8 +1,7 @@
-import { ObjectId } from "mongodb";
 import connection from "../../../lib/mongodb";
+
 var bcrypt = require('bcryptjs');
 export default async function handler(req, res) {
-    let value = JSON.parse(req.body)
     const jwt = require('jsonwebtoken');
     const accessToken = req.cookies.IdToken;
     const decodedToken = jwt.decode(accessToken, { complete: true });
@@ -15,12 +14,13 @@ export default async function handler(req, res) {
         let temp = givenName + familyName + email
         let isUser = await bcrypt.compare(temp, user[0].hash)
         if (isUser) {
-            let result = await connection({ task: "get", collection: "users", find: { email: email } })
-            res.status(200).json(result[0].numberOfAnsweredSurveys)
+            let dcsurveys = await connection({ task: "get", collection: "dcSurveys", find: { issuer: user[0].hash } })
+            let ipsurveys = await connection({ task: "get", collection: "adRequests", find: { issuer: user[0].hash } })
+            let result = [...dcsurveys, ...ipsurveys]
+            console.log(result)
+            res.status(200).json(result)
         }
-        else {
-            res.status(500)
-        }
+        res.status(200)
     }
     catch (err) {
         console.log(err)

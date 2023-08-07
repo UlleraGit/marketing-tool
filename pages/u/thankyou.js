@@ -23,7 +23,7 @@ const ThankYouPage = () => {
         data = JSON.parse(data)
         try {
             if (data.type === "dcsurvey") {
-                fetch("/api/public/createdcsurvey", {
+                fetch("/api/private/createdcsurvey", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -32,6 +32,33 @@ const ThankYouPage = () => {
                         clientSecret,
                         paymentIntent,
                         data
+                    }),
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("Survey data submitted successfully");
+                            sessionStorage.removeItem('survey');
+                            router.push('/u/dashboard')
+                        } else {
+                            return response.json().then(errorData => {
+                                throw new Error(errorData.error);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("An error occurred while submitting the survey data:", error);
+                    });
+            }
+            else if(data.type === "ipsurvey"){
+                fetch("/api/private/createipsurvey", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        clientSecret,
+                        paymentIntent,
+                        ...data
                     }),
                 })
                     .then(response => {

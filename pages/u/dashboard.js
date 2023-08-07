@@ -8,19 +8,42 @@ import PieChartIcon from '@mui/icons-material/PieChart';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import Link from "next/link";
+import Cookies from "js-cookie";
+import * as React from "react"
+
 export default function dashboard() {
+    React.useEffect(() => {
+        try {
+            // Replace 'YOUR_API_ENDPOINT' with your server API endpoint to refresh tokens
+            fetch("/api/private/tokenrefresh", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((response) => response.json())
+                .then((response) => {
+                        Cookies.set("AccessToken", response.newAccessToken);
+                        Cookies.set("IdToken", response.newIdToken)
+                })
+                .catch((err) => {
+                   console.log(err)
+                });
+        } catch (error) {
+            console.error("Error refreshing tokens:", error);
+        }
+    }, []);
     return (
         <div style={{ backgroundColor: "#f2f2f2", display: "felx", minHeight: "100vh", flexDirection: "column" }}>
             <Header />
             <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh" }}>
                 <Typography component="h5" variant="h5" sx={{ mt: "7%", mb: "3%" }}>
-                    Hey. Schön, dass Sie da sind!
+                    Hey. Schön, dass du da bist!
                 </Typography>
                 <Typography component="h4" variant="h4" fontWeight="bold" sx={{ mt: "0", mb: "0" }}>
-                    Wie können wir Ihnen helfen?
+                    Wie können wir dir weiterhelfen?
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center", width: "100%", mt: "15px", justifyContent: "space-between", }}>
-                    <Link href="/surveyselect"  style={{ textDecoration: 'none', color:"#000" }}>
+                    <Link href="/u/surveyselect" style={{ textDecoration: 'none', color: "#000" }}>
                         <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
                             <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
                                 <CampaignIcon sx={{ fontSize: 60, color: "#fff", }} />
@@ -30,7 +53,7 @@ export default function dashboard() {
                             </Typography>
                         </Box>
                     </Link>
-                    <Link href="/surveystodo"  style={{ textDecoration: 'none', color:"#000" }}>
+                    <Link href="/u/surveystodo" style={{ textDecoration: 'none', color: "#000" }}>
                         <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
                             <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
                                 <ChatIcon sx={{ fontSize: 60, color: "#fff" }} />
@@ -40,7 +63,7 @@ export default function dashboard() {
                             </Typography>
                         </Box>
                     </Link>
-                    <Link href="/results"  style={{ textDecoration: 'none', color:"#000" }}>
+                    <Link href="/u/results" style={{ textDecoration: 'none', color: "#000" }}>
                         <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
                             <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
                                 <PieChartIcon sx={{ fontSize: 60, color: "#fff" }} />
@@ -50,7 +73,7 @@ export default function dashboard() {
                             </Typography>
                         </Box>
                     </Link>
-                    <Link href="/"  style={{ textDecoration: 'none', color:"#000" }}>
+                    <Link href="/u/reports" style={{ textDecoration: 'none', color: "#000" }}>
                         <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
                             <Box sx={{ backgroundColor: "blue", borderRadius: "25px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "200px", height: "200px" }}>
                                 <Box>
@@ -58,7 +81,7 @@ export default function dashboard() {
                                 </Box>
                             </Box>
                             <Typography component="p" variant="p">
-                                zur Datenpalttform
+                                Reporte erwerben
                             </Typography>
                         </Box>
                     </Link>

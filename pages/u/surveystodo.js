@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import Header from '../components/Header';
-import FooterAdmin from '../components/FooterAdmin'
+import Header from '../../components/Header';
+import FooterAdmin from '../../components/FooterAdmin'
 import useSWR from 'swr';
 import { CircularProgress } from '@mui/material';
 import Link from 'next/link';
@@ -15,10 +15,8 @@ const Dashboard = () => {
     method: "POST",
     body: JSON.stringify({}),
   }).then(res => res.json()).then(res => setCount(res % 7))
-  const { data, error, isLoading, isValidating } = useSWR('/api/public/getuser', fetcher, {
-    revalidateIfStale: false,
+  const { data, error, isLoading, isValidating } = useSWR('/api/private/getuser', fetcher, {
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
   })
 
   const renderBars = () => {
@@ -69,7 +67,7 @@ const Dashboard = () => {
           {renderBars()}
         </Box>
         <Box>
-          <Link href="/dcsurvey" passHref>
+          <Link href="/u/dcsurvey" passHref>
             <Button variant="contained">
               Umfrage beantworten!
             </Button>
