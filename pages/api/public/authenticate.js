@@ -15,6 +15,7 @@ export default async function handler(req, res) {
         accessToken: result.accessToken,
         idToken: result.idToken,
         refreshToken: result.refreshToken,
+        ok:true
       });
   } else {
     res.status(401).json(result.err);
