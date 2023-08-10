@@ -166,7 +166,7 @@ export default function SignIn() {
                 required
                 fullWidth
                 id="username"
-                label="Username"
+                label="Email"
                 name="Username"
                 autoComplete="username"
                 value={username}
@@ -201,9 +201,14 @@ export default function SignIn() {
               </Button>
             </Box>
             {err && <Typography color="error">{err}</Typography>}
-            <Link style={{ color: "#fff" }} href="/register">
-              registrieren
-            </Link>
+            <Box sx={{display:"flex", justifyContent:"space-between", width:"100%" }}>
+              <Link style={{ color: "#fff",}} href="/register">
+                Registrieren
+              </Link>
+              <Link style={{ color: "#fff", }} href="/forgotcode">
+                Passwort zurücksetzen
+              </Link>
+            </Box>
           </Box>
         )}
         <CookieBanner />

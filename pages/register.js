@@ -1,8 +1,9 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useState } from 'react';
-import { Button, Autocomplete, FormControl, FormControlLabel, Checkbox, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, Autocomplete, FormControl, FormControlLabel, Checkbox, InputLabel, MenuItem, Select, TextField, Typography, Box } from '@mui/material';
 import berufe from '../util/berufe'
 import universities from '../util/universities';
+import Link from 'next/link';
 
 export default function RegisterPage() {
     var utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
@@ -20,9 +21,9 @@ export default function RegisterPage() {
     const [checkboxError, setCheckboxError] = useState('')
 
     const handleCheckboxChange = (event) => {
-      setIsAccepted(event.target.checked);
+        setIsAccepted(event.target.checked);
     };
-  
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -35,7 +36,7 @@ export default function RegisterPage() {
             setAgeError('Du must mindestens 16 Jahre alt sein um dich registrien zu können.');
             return;
         }
-        if(!isAccepted){
+        if (!isAccepted) {
             setCheckboxError('Du must die AGBs akzeptieren!')
             return;
         }
@@ -78,6 +79,9 @@ export default function RegisterPage() {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
             <form onSubmit={handleSubmit} style={{ width: '400px' }}>
+                <Link href={"/"}>
+                    zurück
+                </Link>
                 <Typography variant="h5" gutterBottom>
                     Register
                 </Typography>
@@ -182,10 +186,14 @@ export default function RegisterPage() {
                     label="Ich bin mit den AGBs einverstanden."
                 />
                 {checkboxError && <Typography color="error">{checkboxError}</Typography>}
-
-                <Button type="submit" variant="contained" color="primary">
-                    Register
-                </Button>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Button type="submit" variant="contained" color="primary">
+                        Register
+                    </Button>
+                    <Link href={"/restartverification"}>
+                        Du hast bereits ein verifizierungscode? Hier fortsetzen...
+                    </Link>
+                </Box>
             </form>
         </div>
     );

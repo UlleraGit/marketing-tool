@@ -1,24 +1,35 @@
 /* eslint-disable */
 import { useState } from 'react';
-import { Typography, TextField, Button, Box } from '@mui/material';
+import { Typography, TextField, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 export default function verificationPage() {
     const router = useRouter()
     const [verificationCode, setVerificationCode] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        const currentUser = sessionStorage.getItem('currentUser');
+
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(password);
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+
+        if (!hasNumber || !hasSpecialChar || !hasUppercase || !hasLowercase) {
+            setPasswordError('Password must contain at least 1 number, 1 special character, 1 uppercase letter, and 1 lowercase letter.');
+            return;
+        }
+
         try {
-            fetch('/api/public/verification', {
+            fetch('/api/public/setpassword', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode, username: currentUser.username }),
+                body: JSON.stringify({ code: verificationCode, username: currentUser, password }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful
@@ -36,23 +47,6 @@ export default function verificationPage() {
         }
     };
 
-    const getNewCode = (event) => {
-        event.preventDefault();
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-        try {
-            fetch('/api/public/resendverification', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username: currentUser.username }),
-            })
-        } catch (error) {
-            // Network or server error occurred
-            setError('An error occurred during verification.');
-        }
-    }
-
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
             <Typography variant="h4" gutterBottom>
@@ -60,7 +54,7 @@ export default function verificationPage() {
             </Typography>
             <form onSubmit={handleSubmit} style={{ width: '400px' }}>
                 <TextField
-                    label="Verification Code"
+                    label="Erhaltenen Code hier eingeben!"
                     type="text"
                     value={verificationCode}
                     onChange={(event) => setVerificationCode(event.target.value)}
@@ -68,17 +62,18 @@ export default function verificationPage() {
                     margin="normal"
                     required
                 />
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <Button type="submit" variant="contained" color="primary">
-                        Verify
-                    </Button>
-                    <Button onClick={getNewCode}>
-                        Neuen Code Anfordern.
-                    </Button>
-                </Box>
-                <Link href={"/"} style={{ alignSelf: "start" }}>
-                    zurück
-                </Link>
+                <TextField
+                    label="Neues Passwort hier angeben"
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+                <Button type="submit" variant="contained" color="primary">
+                    Verify
+                </Button>
             </form>
             {error && <Typography variant="body1" color="error">{error}</Typography>}
         </div>

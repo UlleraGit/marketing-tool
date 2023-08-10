@@ -7,18 +7,18 @@ import Link from 'next/link';
 export default function verificationPage() {
     const router = useRouter()
     const [verificationCode, setVerificationCode] = useState('');
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
         try {
             fetch('/api/public/verification', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode, username: currentUser.username }),
+                body: JSON.stringify({ code: verificationCode, username: email }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful
@@ -38,14 +38,21 @@ export default function verificationPage() {
 
     const getNewCode = (event) => {
         event.preventDefault();
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
         try {
             fetch('/api/public/resendverification', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: currentUser.username }),
+                body: JSON.stringify({ username: email }),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Verification successful');
+                } else {
+                    // Error occurred during verification
+                    const data = response.json();
+                    setError(data.message);
+                }
             })
         } catch (error) {
             // Network or server error occurred
@@ -55,10 +62,20 @@ export default function verificationPage() {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
+
             <Typography variant="h4" gutterBottom>
                 Verification Page
             </Typography>
             <form onSubmit={handleSubmit} style={{ width: '400px' }}>
+                <TextField
+                    label="Email"
+                    type="text"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
                 <TextField
                     label="Verification Code"
                     type="text"
