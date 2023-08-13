@@ -60,9 +60,10 @@ const Dashboard = () => {
         justifyContent="center"
         gap="30px"
         minHeight="90vh"
+        sx={{backgroundColor:"#f2f2f2"}}
       >
         <Typography variant="h4" align="center">
-          {barsToFill - filledBars} bars to fill before you get a free survey
+        Noch {barsToFill - filledBars} Umfragen bis zu einer Gratisumfrage.
         </Typography>
         <Box display="flex" alignItems="center" >
           {renderBars()}

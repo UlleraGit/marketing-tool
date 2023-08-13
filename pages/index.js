@@ -20,7 +20,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://datacircle.com">
+      <Link color="inherit" href="https://datacircle.eu">
         datacircle GmbH
       </Link>{" "}
       {new Date().getFullYear()}
@@ -58,8 +58,9 @@ export default function SignIn() {
             Cookies.set("IdToken", response.idToken)
             router.push("/u/dashboard")
           }
+        } else {
+          setErr("Falscher Benutzername oder flasches Passwort!");
         }
-        setErr("Falscher Benutzername oder flasches Passwort!");
       })
       .catch((err) => {
         console.log(err)
@@ -201,8 +202,8 @@ export default function SignIn() {
               </Button>
             </Box>
             {err && <Typography color="error">{err}</Typography>}
-            <Box sx={{display:"flex", justifyContent:"space-between", width:"100%" }}>
-              <Link style={{ color: "#fff",}} href="/register">
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+              <Link style={{ color: "#fff", }} href="/register">
                 Registrieren
               </Link>
               <Link style={{ color: "#fff", }} href="/forgotcode">

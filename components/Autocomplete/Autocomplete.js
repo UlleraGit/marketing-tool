@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 export default function Tags(props) {
     return (
-        <Stack spacing={3} sx={{ width: 500 }}>
+        <Stack spacing={3} sx={{ width:"100%" }}>
             <Autocomplete
                 onChange={props.onChange}
                 multiple
@@ -17,7 +17,7 @@ export default function Tags(props) {
                     <TextField
                         {...params}
                         variant="standard"
-                        label="Multiple values"
+                        label="Länder"
                         placeholder="Länder"
                     />
                 )}

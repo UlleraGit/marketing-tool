@@ -1,93 +1,117 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr'
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button, Popover } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import { useMediaQuery } from '@mui/material';
 
 export default function PopupBox(props) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const phone = useMediaQuery('(max-width:767px)')
   const { mutate } = useSWRConfig()
   const fetcher = (...args) => fetch(...args, {
     method: "POST",
     body: JSON.stringify({ search: sessionStorage.getItem("search") }),
   }).then(res => res.json())
   const { data, error, isLoading, isValidating } = useSWR('/api/private/unsplash', fetcher, {
-    
+    revalidateOnFocus: false,
   })
-  const [isOpen, setIsOpen] = useState(false);
-  const handleButtonClick = () => {
-    setIsOpen(true);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setIsOpen(false);
+    setAnchorEl(null);
   };
 
-  if (error) return (<CircularProgress color="neutral" />)
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
-  if (isLoading || isValidating) return (
-    <Box sx={{ position: "relative", }}>
-      <Button onClick={handleButtonClick} sx={{ color: '#fff', height: '100%', width: "49%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <ImageSearchIcon />
-      </Button>
-      {isOpen ?
-        (<Box sx={{ width: "540px", overflow: "scroll", height: "485px", p: "10px", position: "absolute", top: "-150%", right: "10%", pointerEvents: "auto", boxShadow: " 0 3px 10px rgb(0 0 0 / 1)", backgroundColor: "#fff", zIndex: 1, borderRadius: "4px", }} className="popup-box">
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Box sx={{ display: "flex", alignItems: "center", opacity: "1" }}>
-              <span className="close" onClick={handleClose}>
-                &times;
-              </span>
-            </Box>
-            <Box >
-              <TextField  label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
-                sessionStorage.setItem("search",e.target.value); mutate('/api/private/unsplash')
+  if (phone) {
+    return (
+      <div>
+        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+          <ImageSearchIcon />
+        </Button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Box sx={{ width: "400px", height: "100%" }}>
+            <Box sx={{ my: "5px" }}>
+              <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
+                sessionStorage.setItem("search", e.target.value); mutate('/api/private/unsplash')
               }}>
               </TextField>
             </Box>
-            <Box sx={{ display: "flex", minHeight: "100%", minWidth: "100%", justifyContent: "center", alignItems: "center", flexWrap: "wrap", pt: "10px" }}>
-              <CircularProgress />
+            <Box sx={{ display: "flex", minHeight: "100%", width: "98%", flexWrap: "wrap", pt: "10px", gap: "1px", justifyContent: "center" }}>
+              {
+                (isLoading || isValidating) ? (<CircularProgress />) : (data.map((n, i) =>
+                  <Box key={i} sx={{ display: "flex", flexDirection: "column", width: "33%", height: "100%", alignItems: "center", }}>
+                    <Box key={i} id={i} onClick={(e) => { props.onClick(data[e.target.id].image) }} sx={{ backgroundImage: `url('${n.image}')`, objectFit: "cover", backgroundSize: "100% 100%", width: "100%", height: "64px", objectPosition: "center 0%" }}></Box>
+                    <Typography fontSize="15px">{n.creator}</Typography>
+                  </Box>)
+                )
+              }
             </Box>
           </Box>
-        </Box>) :
-        (<></>)
-      }
-    </Box >)
+        </Popover>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+          <ImageSearchIcon />
+        </Button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
 
-  return (
-    <Box sx={{ position: "relative", }}>
-      <Button onClick={handleButtonClick} sx={{ color: '#fff', height: '100%', width: "49%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <ImageSearchIcon />
-      </Button>
-      {isOpen ?
-        (<Box sx={{ width: "540px", overflow: "scroll", height: "485px", p: "10px", position: "absolute", top: "-150%", right: "10%", pointerEvents: "auto", boxShadow: " 0 3px 10px rgb(0 0 0 / 1)", backgroundColor: "#fff", zIndex: 1, borderRadius: "4px", }} className="popup-box">
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Box sx={{ display: "flex", alignItems: "center", opacity: "1" }}>
-              <span className="close" onClick={handleClose}>
-                &times;
-              </span>
-            </Box>
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Box sx={{ height: "650px", width: "500px" }}>
             <Box >
               <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
-                sessionStorage.setItem("search",e.target.value);  mutate('/api/private/unsplash')
+                sessionStorage.setItem("search", e.target.value); mutate('/api/private/unsplash')
               }}>
               </TextField>
             </Box>
             <Box sx={{ display: "flex", minHeight: "100%", minWidth: "100%", flexWrap: "wrap", pt: "10px", gap: "1px", width: "100%", justifyContent: "center" }}>
               {
-                data.map((n, i) => {
-                  return (
-                    <Box key={i} sx={{ display: "flex", flexDirection: "column", width: "24%", height: "100%", alignItems: "center", }}>
-                      <Box key={i} id={i} onClick={(e) => { props.onClick(data[e.target.id].image)}} sx={{ backgroundImage: `url('${n.image}')`, objectFit: "cover", backgroundSize: "100% 100%", width: "100%", height: "64px", objectPosition: "center 0%" }}></Box>
-                      <Typography fontSize="15px">{n.creator}</Typography>
-                    </Box>
-                  )
-                })
+                (isLoading || isValidating) ? (<CircularProgress />) : (data.map((n, i) =>
+                  <Box key={i} sx={{ display: "flex", flexDirection: "column", width: "24%", height: "100%", alignItems: "center", }}>
+                    <Box key={i} id={i} onClick={(e) => { props.onClick(data[e.target.id].image) }} sx={{ backgroundImage: `url('${n.image}')`, objectFit: "cover", backgroundSize: "100% 100%", width: "100%", height: "64px", objectPosition: "center 0%" }}></Box>
+                    <Typography fontSize="15px">{n.creator}</Typography>
+                  </Box>)
+                )
               }
             </Box>
           </Box>
-        </Box>) :
-        (<></>)
-      }
-    </Box >
-  );
+        </Popover>
+      </div>
+    );
+  }
 };

@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         let isUser = await bcrypt.compare(temp, user[0].hash)
         if (isUser) {
             let dcsurveys = await connection({ task: "get", collection: "adRequests", find: { _id: ObjectId(value.id), issuer: user[0].hash } })
-            res.status(200).json({ answers: dcsurveys[0].answers, question:dcsurveys[0].question, answerA: dcsurveys[0].answerA, answerB: dcsurveys[0].answerB, title: dcsurveys[0].title,type:dcsurveys[0].type })
+            res.status(200).json({ answers: dcsurveys[0].answers, question: dcsurveys[0].question, answerA: dcsurveys[0].answerA, answerB: dcsurveys[0].answerB, title: dcsurveys[0].title, type: dcsurveys[0].type, creationTime: dcsurveys[0].creationTime })
         }
         else {
             res.status(500).json("wrong user")

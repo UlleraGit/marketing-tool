@@ -14,7 +14,7 @@ export default function dcSurvey() {
     const fetcher = (...args) => fetch(...args, {
         method: "POST",
         body: JSON.stringify({}),
-    }).then(res => res.json()).then(a => { setSurvey(a[0].survey); return (a) })
+    }).then(res => res.json()).then( (a) => { console.log(a); setSurvey(a[0].survey); return (a) })
     const { data, error } = useSWR('/api/private/requestnewsurvey', fetcher);
     const isLoading = !data && !error;
 

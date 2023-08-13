@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
         if (Math.floor(user[0].numberOfAnsweredSurveys / 7) >= 1 && isUser) {
             let nOAS = user[0].numberOfAnsweredSurveys - 7
-            connection({ task: "set", collection: "dcSurveys", data: { title: values.title, survey: values.questions, issuer: user[0].hash, status: "AKTIV", type: "dcsurvey", numbertoask: 100 } });
+            connection({ task: "set", collection: "dcSurveys", data: { title: values.title, survey: values.questions, issuer: user[0].hash, status: "AKTIV", answers:[], type: "dcsurvey", numbertoask: 100 } });
             connection({ task: "change", collection: "users", find: { _id: user[0]._id }, change: { numberOfAnsweredSurveys: nOAS } })
             res.status(200).json("success");
         } else {

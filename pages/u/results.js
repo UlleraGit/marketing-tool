@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import ResultGrid from "../../components/ResultGrid";
 import Header from "../../components/Header";
 import { Box } from "@mui/material";
@@ -15,8 +15,12 @@ export default function results(props) {
             return ({ _id: x._id, id: i, type: x.type, status: x.status, title: x.title, numberofasked: x.answers.length, numbertoask: x.numbertoask })
         }
         else {
-            let temp = parseInt(x.answers.answers[1].value) + parseInt(x.answers.answers[0].value)
-            return ({ _id: x._id, id: i, type: x.type, status: x.status, title: x.title, numberofasked: temp, numbertoask: x.numbertoask })
+            if (x.answers === null) {
+                return ({ _id: x._id, id: i, type: x.type, status: x.status, title: x.title, numberofasked: 0, numbertoask: x.numbertoask })
+            } else {
+                let temp = parseInt(x.answers.answers[1].value) + parseInt(x.answers.answers[0].value)
+                return ({ _id: x._id, id: i, type: x.type, status: x.status, title: x.title, numberofasked: temp, numbertoask: x.numbertoask })
+            }
         }
     }))
     const { data, error, isLoading, isValidating } = useSWR('/api/private/results', fetcher, {

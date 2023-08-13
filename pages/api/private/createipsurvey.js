@@ -4,7 +4,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 var bcrypt = require('bcryptjs');
 
 export default async function handler(req, res) {
-    const value = JSON.parse(req.body)
+    const value = req.body
     const jwt = require('jsonwebtoken');
     const accessToken = req.cookies.IdToken;
     const decodedToken = jwt.decode(accessToken, { complete: true });
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
                     answerB: value.answerB,
                     gender: gender
                 })
-                await connection({ task: "set", collection: "adRequests", data:{name: value.title + " " + user[0].hash, issuer: user[0].hash, ...value},});
+                await connection({ task: "set", collection: "adRequests", data: { name: value.title + " " + user[0].hash, status:"AKTIV", issuer: user[0].hash, ...value , answers: [], creationTime: new Date() }});
                 await stripe.paymentIntents.update(
                     value.paymentIntent,
                     { metadata: { delivered: "true" } }

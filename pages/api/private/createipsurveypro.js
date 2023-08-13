@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         let temp = givenName + familyName + email
         let isUser = await bcrypt.compare(temp, user[0].hash)
         if (isUser) {
-            await connection({ task: "set", collection: "ipRequest", data:{ name: value.title + " " + user[0].hash, issuer: user[0].hash, ...value,} });
+            await connection({ task: "set", collection: "ipRequest", data: { name: value.title + " " + user[0].hash, issuer: user[0].hash, ...value, answers: [], creationTime: new Date() } });
             res.status(200).json({ status: "success" })
         }
         else {

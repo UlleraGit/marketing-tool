@@ -8,10 +8,9 @@ export default async function handler(req, res) {
   var temp = values.firstName + values.lastName + values.email
   var hash = bcrypt.hashSync(temp, salt);
   await register(values.firstName, values.lastName, values.password, values.email)
-    .catch((error) => {
-      res.status(500).json({ error: 'Failed to register user' });
-    }).then(
-      await connection({
+    .then((response) => {
+      console.log(response)
+      connection({
         collection: "users",
         task: 'set',
         data: {
@@ -23,12 +22,13 @@ export default async function handler(req, res) {
           university: values.selectedUniversity,
           address: values.address,
           hash: hash,
-          answeredSurveys:[],
-          numberOfAnsweredSurveys:0
+          answeredSurveys: [],
+          numberOfAnsweredSurveys: 0
         }
-      })).then((user) => {
-        res.status(201).json({ message: 'User registered successfully', user });
-      }).catch((error) => {
-        res.status(500).json({ error: 'Failed to register user' });
-      });
+      })
+    }).then((user) => {
+      res.status(201).json({ message: 'User registered successfully', user });
+    }).catch((error) => {
+      res.status(500).json({ error: 'Failed to register user' });
+    });
 }

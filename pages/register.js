@@ -4,8 +4,10 @@ import { Button, Autocomplete, FormControl, FormControlLabel, Checkbox, InputLab
 import berufe from '../util/berufe'
 import universities from '../util/universities';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function RegisterPage() {
+    const router = useRouter()
     var utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -69,7 +71,7 @@ export default function RegisterPage() {
             .then((data) => {
                 console.log('Form submitted successfully');
                 sessionStorage.setItem('currentUser', JSON.stringify(data.user));
-                window.location.href = '/verification'
+                router.push("/verification")
             })
             .catch((error) => {
                 console.error('Error submitting form:', error);

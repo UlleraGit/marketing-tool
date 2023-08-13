@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -10,13 +10,16 @@ import _ from "lodash";
 import Header from "../../components/Header";
 import FooterAdmin from "../../components/FooterAdmin";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mui/material";
 
 export default function CreateDcSurvey(props) {
     const [questions, setQuestions] = React.useState([{ id: "question-0", key: "question-1" }]);
     const [data, setData] = React.useState([{ id: "question-1", Q: "", A: ["", ""], img: "" }])
     const [title, setTitle] = React.useState("")
     const router = useRouter();
-    
+    const phone = useMediaQuery('(max-width:767px)')
+    const tablet = useMediaQuery('(max-width:1024px)')
+
     const handleAddQuestion = () => {
         const newId = _.uniqueId("question-");
         if (questions.length < 9) {
@@ -93,50 +96,98 @@ export default function CreateDcSurvey(props) {
             console.error("An error occurred while uploading the file:", error);
         }
     };
-
-    return (
-        <>
-            <Header />
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    mx: "10%",
-                    minHeight: "100vh",
-                    height: "100%",
-                    gap: "20px",
-                    py: "2%",
-                }}
-            >
-                <Typography
-                    component="h5"
-                    variant="h5"
-                    fontSize="30px"
-                    fontWeight="bold"
+    if (phone) {
+        return (
+            <>
+                <Header />
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        mx: "5%",
+                        minHeight: "100vh",
+                        height: "100%",
+                        gap: "20px",
+                        py: "2%",
+                    }}
                 >
-                    Erstellen wir eine neue Umfrage
-                </Typography>
-                <TextField onChange={(e) => setTitle(e.target.value)} id="" label="Titel" variant="outlined" sx={{ width: "50%" }} />
-                {questions.map((question) => (
-                    <Box key={question.key} sx={{ display: "flex", flexDirection: "column" }}>
-                        <ClearIcon
-                            id={question.id}
-                            onClick={() => handleDeleteQuestion(question.id)}
-                        />
-                        <DcQuestion key={question.id} id={question.id} onChange={handleQuestionChange} />
+                    <Typography
+                        component="h5"
+                        variant="h5"
+                        fontSize="30px"
+                        fontWeight="bold"
+                    >
+                        Erstellen wir eine neue Umfrage
+                    </Typography>
+                    <TextField onChange={(e) => setTitle(e.target.value)} id="" label="Titel" variant="outlined" sx={{ width: "100%" }} />
+                    {questions.map((question) => (
+                        <Box key={question.key} sx={{ display: "flex", flexDirection: "column" }}>
+                            <ClearIcon
+                                id={question.id}
+                                onClick={() => handleDeleteQuestion(question.id)}
+                            />
+                            <DcQuestion key={question.id} id={question.id} onChange={handleQuestionChange} />
+                        </Box>
+                    ))}
+                    <Box>
+                        <Typography>Preis: gratis</Typography>
                     </Box>
-                ))}
-                <Box>
-                    <Typography>Price: gratis</Typography>
+                    {questions.length < 10 && (
+                        <Button variant="outlined" onClick={handleAddQuestion}>
+                            + Frage Hinzufügen
+                        </Button>
+                    )}
+                    <Button onClick={() => handleSubmit(data)} variant="outlined">Einreichen</Button>
                 </Box>
-                {questions.length < 10 && (
-                    <Button variant="outlined" onClick={handleAddQuestion}>
-                        + Frage Hinzufügen
-                    </Button>
-                )}
-                <Button onClick={() => handleSubmit(data)} variant="outlined">Einreichen</Button>
-            </Box>
-            <FooterAdmin />
-        </>
-    );
+                <FooterAdmin />
+            </>
+        );
+    } 
+    else {
+        return (
+            <>
+                <Header />
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        mx: "10%",
+                        minHeight: "100vh",
+                        height: "100%",
+                        gap: "20px",
+                        py: "2%",
+                    }}
+                >
+                    <Typography
+                        component="h5"
+                        variant="h5"
+                        fontSize="30px"
+                        fontWeight="bold"
+                    >
+                        Erstellen wir eine neue Umfrage
+                    </Typography>
+                    <TextField onChange={(e) => setTitle(e.target.value)} id="" label="Titel" variant="outlined" sx={{ width: "50%" }} />
+                    {questions.map((question) => (
+                        <Box key={question.key} sx={{ display: "flex", flexDirection: "column" }}>
+                            <ClearIcon
+                                id={question.id}
+                                onClick={() => handleDeleteQuestion(question.id)}
+                            />
+                            <DcQuestion key={question.id} id={question.id} onChange={handleQuestionChange} />
+                        </Box>
+                    ))}
+                    <Box>
+                        <Typography>Preis: gratis</Typography>
+                    </Box>
+                    {questions.length < 10 && (
+                        <Button variant="outlined" onClick={handleAddQuestion}>
+                            + Frage Hinzufügen
+                        </Button>
+                    )}
+                    <Button onClick={() => handleSubmit(data)} variant="outlined">Einreichen</Button>
+                </Box>
+                <FooterAdmin />
+            </>
+        );
+    }
 }

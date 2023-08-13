@@ -8,7 +8,6 @@ import Head from "next/head";
 const MyApp = ({ Component, pageProps }) => {
   return (<>
     <Head>
-    <link rel="shortcut icon" href="/public/Icon-dc-trans.ico" />
     </Head>
     <div>
       <ThemeProvider theme={lightTheme}>

@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mui/material";
 
 export default function CreateSurvy() {
   const ageRange = Array.from({ length: 65 - 15 }, (_, index) => 16 + index);
@@ -29,6 +30,8 @@ export default function CreateSurvy() {
   const [gender, setGender] = React.useState("Alle");
   const [price, setPrice] = React.useState(0);
   const router = useRouter();
+  const phone = useMediaQuery('(max-width:767px)')
+  const tablet = useMediaQuery('(max-width:1024px)')
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,7 +64,7 @@ export default function CreateSurvy() {
       answerB: answerB,
       ageMin: ageMin,
       ageMax: ageMax,
-      questionedNum: questNum,
+      numbertoask: questNum,
       country: country,
       gender: gender,
     }))
@@ -77,105 +80,99 @@ export default function CreateSurvy() {
       setPrice(questNum * 0.25);
     }
   }, [ageMin, questNum]);
-
-  return (
-    <div style={{ backgroundColor: "#f2f2f2" }}>
-      <Header />
-      <Container>
-        <Box
-          component="form"
-          noValidate
-          onSubmit={handleSubmit}
-          sx={{
-            mt: 3,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: "25px",
-            mb: "2%",
-          }}
-        >
-          <Box>
-            <Link href="/u/dashboard" style={{ color: "#000" }}>
-              zurück
-            </Link>
-          </Box>
-          <Typography
-            component="h3"
-            variant="h3"
-            sx={{ alignSelf: "left", fontWeight: "bold" }}
+  if (tablet) {
+    return (
+      <div style={{ backgroundColor: "#f2f2f2" }}>
+        <Header />
+        <Container>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{
+              mt: 3,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "25px",
+              mb: "2%",
+            }}
           >
-            Erstellen wir eine neue Umfrage.
-          </Typography>
-          <Box>
-            <Typography variant="h5" sx={{ margin: "0" }}>
-              Titel der Umfrage
+            <Box>
+              <Link href="/u/dashboard" style={{ color: "#000" }}>
+                zurück
+              </Link>
+            </Box>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{ alignSelf: "left", fontWeight: "bold" }}
+            >
+              Erstellen wir eine neue Umfrage.
             </Typography>
-            <TextField
-              margin="normal"
-              fullWidth
-              id="title"
-              label="Tietel der Umfrage"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
-            />
-          </Box>
-          <Box>
-            <Typography variant="h5">Fragestellung</Typography>
-            <TextField
-              margin="normal"
-              fullWidth
-              name="question"
-              label="Fragestellung"
-              id="question"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
-            />
-          </Box>
-          <Box>
-            <Typography variant="h5">Antwortmöglichkeiten</Typography>
-            <Box sx={{ display: "flex", gap: "3%" }}>
+            <Box>
+              <Typography variant="h5" sx={{ margin: "0" }}>
+                Titel der Umfrage
+              </Typography>
               <TextField
                 margin="normal"
                 fullWidth
-                name="answer1"
-                label="Antwortmöglichkeit A"
-                id="answer1"
-                value={answerA}
-                onChange={(e) => setAnswerA(e.target.value)}
-                sx={{
-                  my: "10px",
-                  backgroundColor: "#fff",
-                  borderRadius: "4px",
-                }}
-              />
-              <TextField
-                margin="normal"
-                fullWidth
-                name="answer2"
-                label="Antwortmöglichkeit B"
-                id="answer2"
-                value={answerB}
-                onChange={(e) => setAnswerB(e.target.value)}
-                sx={{
-                  my: "10px",
-                  backgroundColor: "#fff",
-                  borderRadius: "4px",
-                }}
+                id="title"
+                label="Titel der Umfrage"
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
               />
             </Box>
-          </Box>
-          <Box sx={{ display: "flex", gap: "3%" }}>
-            <Box sx={{ width: "50%" }}>
-              <Box sx={{ display: "flex", gap: "5px", alignItems: "end" }}>
-                <Typography variant="h5">Alter</Typography>
-                <Typography variant="caption">
-                  Verwenden Sie nur Zahlen bei der Angabe!
-                </Typography>
+            <Box>
+              <Typography variant="h5">Fragestellung</Typography>
+              <TextField
+                margin="normal"
+                fullWidth
+                name="question"
+                label="Fragestellung"
+                id="question"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
+              />
+            </Box>
+            <Box>
+              <Typography variant="h5">Antwortmöglichkeiten</Typography>
+              <Box sx={{ display: "flex", gap: "3%" }}>
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  name="answer1"
+                  label="Antwortmöglichkeit A"
+                  id="answer1"
+                  value={answerA}
+                  onChange={(e) => setAnswerA(e.target.value)}
+                  sx={{
+                    my: "10px",
+                    backgroundColor: "#fff",
+                    borderRadius: "4px",
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  name="answer2"
+                  label="Antwortmöglichkeit B"
+                  id="answer2"
+                  value={answerB}
+                  onChange={(e) => setAnswerB(e.target.value)}
+                  sx={{
+                    my: "10px",
+                    backgroundColor: "#fff",
+                    borderRadius: "4px",
+                  }}
+                />
               </Box>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+              <Typography variant="h5">Alter</Typography>
               <Box sx={{ display: "flex", gap: "3%" }}>
                 <FormControl fullWidth>
                   <InputLabel id="agemin-label">Alter (von)</InputLabel>
@@ -213,53 +210,237 @@ export default function CreateSurvy() {
                 </FormControl>
               </Box>
             </Box>
-            <Box sx={{ width: "50%" }}>
+            <Box sx={{ direction: "flex", flexDirection: "column" }}>
+              <Typography variant="h5">
+                Länder
+              </Typography>
               <Autocomplete onChange={(event, value) => setCountry(value)} />
             </Box>
+            <Box>
+              <Typography variant="h5">Anzahl der Befragten</Typography>
+              <ToggleButton
+                onClick={(state) => {
+                  setQuestNum(state);
+                }}
+                startingValue="1000"
+                value={["1000", "2500", "5000", "10000"]}
+              />
+            </Box>
+            <Box>
+              <Typography variant="h5">Geschlecht der Befragten</Typography>
+              <ToggleButton
+                onClick={(state) => {
+                  setGender(state);
+                }}
+                startingValue="Alle"
+                value={["Männlich", "Weiblich", "Alle"]}
+              />
+            </Box>
+            <Box>
+              <Typography>Preis</Typography>
+              <Typography>{price}</Typography>
+            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={[
+                { "&:hover": { backgroundColor: "#0000ff", color: "#fff" } },
+                {
+                  mb: 5,
+                  backgroundColor: "#0000ff",
+                  color: "#fff",
+                  width: "25%",
+                  height: "58px",
+                },
+              ]}
+            >
+              Umfrage aufgeben
+            </Button>
           </Box>
-          <Box>
-            <Typography variant="h5">Anzahl der Befragten</Typography>
-            <ToggleButton
-              onClick={(state) => {
-                setQuestNum(state);
-              }}
-              startingValue="1000"
-              value={["1000", "2500", "5000", "10000"]}
-            />
-          </Box>
-          <Box>
-            <Typography variant="h5">Geschlecht der Befragten</Typography>
-            <ToggleButton
-              onClick={(state) => {
-                setGender(state);
-              }}
-              startingValue="Alle"
-              value={["Männlich", "Weiblich", "Alle"]}
-            />
-          </Box>
-          <Box>
-            <Typography>Preis</Typography>
-            <Typography>{price}</Typography>
-          </Box>
-          <Button
-            type="submit"
-            variant="contained"
-            sx={[
-              { "&:hover": { backgroundColor: "#0000ff", color: "#fff" } },
-              {
-                mb: 5,
-                backgroundColor: "#0000ff",
-                color: "#fff",
-                width: "25%",
-                height: "58px",
-              },
-            ]}
+        </Container>
+        <FooterAdmin />
+      </div>
+    );
+  }
+  else {
+    return (
+      <div style={{ backgroundColor: "#f2f2f2" }}>
+        <Header />
+        <Container>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{
+              mt: 3,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "25px",
+              mb: "2%",
+            }}
           >
-            Umfrage aufgeben
-          </Button>
-        </Box>
-      </Container>
-      <FooterAdmin />
-    </div>
-  );
+            <Box>
+              <Link href="/u/dashboard" style={{ color: "#000" }}>
+                zurück
+              </Link>
+            </Box>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{ alignSelf: "left", fontWeight: "bold" }}
+            >
+              Erstellen wir eine neue Umfrage.
+            </Typography>
+            <Box>
+              <Typography variant="h5" sx={{ margin: "0" }}>
+                Titel der Umfrage
+              </Typography>
+              <TextField
+                margin="normal"
+                fullWidth
+                id="title"
+                label="Titel der Umfrage"
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
+              />
+            </Box>
+            <Box>
+              <Typography variant="h5">Fragestellung</Typography>
+              <TextField
+                margin="normal"
+                fullWidth
+                name="question"
+                label="Fragestellung"
+                id="question"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                sx={{ my: "10px", backgroundColor: "#fff", borderRadius: "4px" }}
+              />
+            </Box>
+            <Box>
+              <Typography variant="h5">Antwortmöglichkeiten</Typography>
+              <Box sx={{ display: "flex", gap: "3%" }}>
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  name="answer1"
+                  label="Antwortmöglichkeit A"
+                  id="answer1"
+                  value={answerA}
+                  onChange={(e) => setAnswerA(e.target.value)}
+                  sx={{
+                    my: "10px",
+                    backgroundColor: "#fff",
+                    borderRadius: "4px",
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  name="answer2"
+                  label="Antwortmöglichkeit B"
+                  id="answer2"
+                  value={answerB}
+                  onChange={(e) => setAnswerB(e.target.value)}
+                  sx={{
+                    my: "10px",
+                    backgroundColor: "#fff",
+                    borderRadius: "4px",
+                  }}
+                />
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", gap: "3%" }}>
+              <Box sx={{ width: "50%" }}>
+                <Typography variant="h5">Alter</Typography>
+                <Box sx={{ display: "flex", gap: "3%" }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="agemin-label">Alter (von)</InputLabel>
+                    <Select
+                      labelId="agemin-label"
+                      value={ageMin}
+                      onChange={(e) => setAgeMin(e.target.value)}
+                      label="Alter (von)"
+                      fullWidth
+                      sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
+                    >
+                      {ageRange.map((age) => (
+                        <MenuItem key={age} value={age}>
+                          {age}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel id="agemax-label">Alter (bis)</InputLabel>
+                    <Select
+                      labelId="agemax-label"
+                      value={ageMax}
+                      onChange={(e) => setAgeMax(e.target.value)}
+                      label="Alter (bis)"
+                      fullWidth
+                      sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
+                    >
+                      {ageRange.map((age) => (
+                        <MenuItem key={age} value={age}>
+                          {age}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Box>
+              <Box sx={{ width: "50%" }}>
+                <Autocomplete onChange={(event, value) => setCountry(value)} />
+              </Box>
+            </Box>
+            <Box>
+              <Typography variant="h5">Anzahl der Befragten</Typography>
+              <ToggleButton
+                onClick={(state) => {
+                  setQuestNum(state);
+                }}
+                startingValue="1000"
+                value={["1000", "2500", "5000", "10000"]}
+              />
+            </Box>
+            <Box>
+              <Typography variant="h5">Geschlecht der Befragten</Typography>
+              <ToggleButton
+                onClick={(state) => {
+                  setGender(state);
+                }}
+                startingValue="Alle"
+                value={["Männlich", "Weiblich", "Alle"]}
+              />
+            </Box>
+            <Box>
+              <Typography>Preis</Typography>
+              <Typography>{price}</Typography>
+            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={[
+                { "&:hover": { backgroundColor: "#0000ff", color: "#fff" } },
+                {
+                  mb: 5,
+                  backgroundColor: "#0000ff",
+                  color: "#fff",
+                  width: "25%",
+                  height: "58px",
+                },
+              ]}
+            >
+              Umfrage aufgeben
+            </Button>
+          </Box>
+        </Container>
+        <FooterAdmin />
+      </div>
+    );
+  }
 }

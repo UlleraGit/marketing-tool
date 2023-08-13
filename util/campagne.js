@@ -30,7 +30,7 @@ async function adSetCreator(campagne_id, searchData) {
   fields = [];
 
   params = {
-    name: searchData.title + " " + input.hash,
+    name: searchData.title + " " + searchData.hash,
     bid_strategy: "LOWEST_COST_WITHOUT_CAP",
     daily_budget: "500",
     billing_event: "IMPRESSIONS",
@@ -62,7 +62,7 @@ async function adCreativeCreator(adset_id, searchData) {
   fields = [];
 
   params = {
-    name: searchData.title + " " + input.hash,
+    name: searchData.title + " " + searchData.hash,
     body: "Like My Page",
     object_story_spec: {
       page_id: "101217845351407",
@@ -87,7 +87,14 @@ async function adCreativeCreator(adset_id, searchData) {
           "rotation": 0,
         }
       }]
-    }
+    },
+    degrees_of_freedom_spec: {
+      'creative_features_spec': {
+          'standard_enhancements': {
+              'enroll_status': 'OPT_OUT'
+          }
+      }
+  }
   };
 
   const adcreative = await new AdAccount(id).createAdCreative(fields, params);
@@ -107,7 +114,7 @@ async function adCreator(adcreative_id, adset_id, searchData) {
   let fields, params;
   fields = [];
   params = {
-    name: searchData.title + " " + input.hash,
+    name: searchData.title + " " + searchData.hash,
     adset_id: adset_id,
     creative: { creative_id: adcreative_id },
     status: "ACTIVE",

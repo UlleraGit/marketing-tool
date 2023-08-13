@@ -6,7 +6,6 @@ import CheckoutForm from "../../components/CheckoutForm";
 import Header from "../../components/Header";
 import FooterAdmin from "../../components/FooterAdmin"
 
-
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function App() {
