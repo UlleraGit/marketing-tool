@@ -7,11 +7,11 @@ const calculateOrderAmount = (items) => {
     }
     else if (items.type === "ipsurvey") {
         if (items.ageMin > 20 && items.ageMin < 35) {
-            return 5000 + items.questionedNum * 25
+            return 5000 + items.numbertoask * 25
         } else if (items.ageMin >= 35) {
-            return 7500 + items.questionedNum * 25
+            return 7500 + items.numbertoask * 25
         } else {
-            return items.questionedNum * 25
+            return items.numbertoask * 25
         }
     }
 };
