@@ -63,7 +63,7 @@ export default function resultGrid(props) {
             sortable: false,
             width: 70,
             renderCell: (params) => {
-                if (params.row.status === "FERTIG" || params.row.status === "AKTIV") {
+                if ((params.row.status === "FERTIG" || params.row.status === "AKTIV") && params.row.numberofasked != 0) {
                     if (params.row.type === 'dcsurvey') {
                         return (
                             <Link id={params.id} href={{ pathname: '/u/dcsurveychart', query: { selected_survey: params.row._id } }}>

@@ -47,7 +47,7 @@ export default async function handler(req, res) {
                     answerB: value.answerB,
                     gender: gender
                 })
-                await connection({ task: "set", collection: "adRequests", data: { name: value.title + " " + user[0].hash, status:"AKTIV", issuer: user[0].hash, ...value , answers: [], creationTime: new Date() }});
+                await connection({ task: "set", collection: "adRequests", data: { name: value.title + " " + user[0].hash, status: "AKTIV", issuer: user[0].hash, ...value, answers: null, creationTime: new Date() } });
                 await stripe.paymentIntents.update(
                     value.paymentIntent,
                     { metadata: { delivered: "true" } }

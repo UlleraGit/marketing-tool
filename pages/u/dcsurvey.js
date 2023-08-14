@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import { Box, Button, Typography } from "@mui/material"
 import SurveyForm from "/components/SurveyForm"
 import Header from "../../components/Header"
@@ -14,15 +14,22 @@ export default function dcSurvey() {
     const fetcher = (...args) => fetch(...args, {
         method: "POST",
         body: JSON.stringify({}),
-    }).then(res => res.json()).then( (a) => { console.log(a); setSurvey(a[0].survey); return (a) })
+    }).then(res => res.json()).then((a) => { setSurvey(a[0].survey); return (a) })
     const { data, error } = useSWR('/api/private/requestnewsurvey', fetcher);
     const isLoading = !data && !error;
 
     const submitForm = (event) => {
-        console.log(data)
         let answers = []
         for (let i = 0; i < survey.length; i++) {
+            if (sessionStorage.getItem(`answer-${(i + 1)}`) === null) {
+                break
+            }
             answers = [...answers, sessionStorage.getItem(`answer-${(i + 1)}`)]
+        }
+
+        if (data[0].survey.length != answers.length) {
+            alert("Bitte beantworte alle Fragen!")
+            return
         }
         fetch("/api/private/handin", {
             method: "POST",
@@ -35,7 +42,7 @@ export default function dcSurvey() {
             .then((res) => res.json())
             .then(() => router.push('/u/dashboard'));
     }
-    
+
     if (error) {
         return <div>Error occurred while fetching data.</div>;
     }
@@ -50,7 +57,7 @@ export default function dcSurvey() {
     return (
         <>
             <Header />
-            
+
             {survey.map((x, i) => {
                 return (
                     <SurveyForm key={i} id={i + 1} questions={

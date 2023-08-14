@@ -55,14 +55,14 @@ export default function surveyForm(props) {
         return (
             <Box id={"question-" + props.id} sx={{ display: "flex", minWidth: "90vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
                 <Box sx={{ display: "flex", minWidth: "90vw", width: "90vw", height: "90vh", boxShadow: " 0 3px 10px rgb(0 0 0 / 1)", borderRadius: "20px" }}>
-                    <Box sx={{ display: "flex", flexDirection: "column", width: "60%", height: "100%", justifyContent: "center", alignItems: "center", gap: "20px" }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", width: "50%", height: "100%", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                         <Typography component="h5" variant="h5" fontSize="40px" fontWeight="bold" >{props.id + ". " + props.questions.question}</Typography>
-                        <Box sx={{ display: "flex", flexWrap: "wrap", width: "600px", justifyContent: "flex-start", alignContent: "flex-start", height: "250px", gap: "4%", }}>
+                        <Box sx={{ display: "flex", flexWrap: "wrap", width: "90%", justifyContent: "flex-start", alignContent: "flex-start", height: "250px", gap: "4%", }}>
                             {buttons}
                         </Box>
                     </Box>
                     <Box sx={{
-                        display: "flex", borderRadius: "0 20px 20px 0", minWidth: "40%", widht: "40%", backgroundImage: `url(${props.img})`, backgroundSize: "100% 100%", justifyContent: "flex-end", alignContent: "flex-end", alignItems: "flex-end", gap: "10px 20px"
+                        display: "flex", borderRadius: "0 20px 20px 0", minWidth: "50%", widht: "50%", backgroundImage: `url(${props.img})`, backgroundSize: "100% 100%", justifyContent: "flex-end", alignContent: "flex-end", alignItems: "flex-end", gap: "10px 20px"
                     }}>
                         {
                             (props.id == 1) ?

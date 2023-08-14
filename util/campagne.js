@@ -36,7 +36,7 @@ async function adSetCreator(campagne_id, searchData) {
     billing_event: "IMPRESSIONS",
     optimization_goal: "AD_RECALL_LIFT",
     campaign_id: campagne_id,
-    promoted_object: { page_id: "101217845351407" },
+    promoted_object: { page_id: "102211522978226" },
     blame_field_specs: [["datacircle GmbH"]],
     targeting: {
       geo_locations: searchData.geo_locations,
@@ -65,10 +65,10 @@ async function adCreativeCreator(adset_id, searchData) {
     name: searchData.title + " " + searchData.hash,
     body: "Like My Page",
     object_story_spec: {
-      page_id: "101217845351407",
-      "instagram_actor_id": "3604386419647806",
+      page_id: "102211522978226",
+      "instagram_actor_id": "6797456526936756",
       "photo_data": {
-        "image_hash": "93b69941e447390dd4830bd39d7d12cb",
+        "image_hash": "58682b5ccd8a72adf7d8d2dc2eb39147",
       }
     },
     interactive_components_spec: {
