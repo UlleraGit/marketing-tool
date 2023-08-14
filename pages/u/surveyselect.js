@@ -39,10 +39,10 @@ export default function surveySelect() {
             <div style={{ backgroundColor: "#f2f2f2", display: "felx", minHeight: "100vh", flexDirection: "column" }}>
                 <Header />
                 <Container sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", mb: "100px" }}>
-                    <Typography component="h5" variant="h5" sx={{ mt: "7%", mb: "3%" }}>
+                    <Typography component="h6" variant="h6" sx={{ mt: "7%", mb: "3%" }}>
                         Erstellen wir eine neue Umfrage.
                     </Typography>
-                    <Typography component="h4" variant="h4" fontWeight="bold" sx={{ mt: "0", mb: "0" }}>
+                    <Typography component="h6" variant="h6" fontWeight="bold" sx={{ mt: "0", mb: "0" }}>
                         Wähle bitte eine passende Befragungsmethode aus!
                     </Typography>
                     <Box sx={{ display: "flex", flexDirection: "column", width: "100%", mt: "30px", gap: "50px" }}>
@@ -158,7 +158,7 @@ export default function surveySelect() {
                                             Impression Survey
                                         </Typography>
                                         <Typography component="p" variant="p" fontWeight="bold">
-                                            100-10.000 Befragte | 24h-14 Tage Befragungszeitraum
+                                            1.000-10.000 Befragte | 24h-14 Tage Befragungszeitraum
                                         </Typography>
                                         <Typography sx={{ textDecoration: "underline" }}>
                                             Kosten pro Fragestellung ab 300€

@@ -97,16 +97,16 @@ const Header = () => {
             {[{ name: "Tool", adresse: "surveyselect" }, { name: "Umfrage Mitmachen", adresse: "surveystodo" }, { name: "Ergebnisse", adresse: "results" }, { name: "Reports", adresse: "reports" }].map((a, index) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton>
-                  <Link href={`/u/${a.adresse}`} style={{ textDecoration: 'none', color: "#000", fontSize:"40px" }}>
+                  <Link href={`/u/${a.adresse}`} style={{ textDecoration: 'none', color: "#000", fontSize:"30px" }}>
                     {a.name}
                   </Link>
                 </ListItemButton>
               </ListItem>
             ))}
-            <ListItemButton onClick={() => handleNavigate('https://billing.stripe.com/p/login/bIY7vt4QT9kG5Og144')} sx={{fontSize:"40px"}}>
+            <ListItemButton onClick={() => handleNavigate('https://billing.stripe.com/p/login/bIY7vt4QT9kG5Og144')} sx={{fontSize:"30px"}}>
               Report Abos verwalten
             </ListItemButton>
-            <ListItemButton onClick={handleLogout}  sx={{fontSize:"40px"}}>
+            <ListItemButton onClick={handleLogout}  sx={{fontSize:"30px"}}>
               Außloggen
             </ListItemButton>
           </List>

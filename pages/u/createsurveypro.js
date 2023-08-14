@@ -456,7 +456,7 @@ export default function CreateSurvy() {
                                     mb: 5,
                                     backgroundColor: "#0000ff",
                                     color: "#fff",
-                                    width: "25%",
+                                    width: "40%",
                                     height: "58px",
                                 },
                             ]}
