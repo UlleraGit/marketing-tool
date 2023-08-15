@@ -45,7 +45,7 @@ export default function verificationPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: currentUser.username }),
+                body: JSON.stringify({ username: currentUser}),
             })
         } catch (error) {
             // Network or server error occurred
