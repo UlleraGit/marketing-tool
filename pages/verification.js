@@ -18,7 +18,7 @@ export default function verificationPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode, username: currentUser.username }),
+                body: JSON.stringify({ code: verificationCode, username: currentUser }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful
