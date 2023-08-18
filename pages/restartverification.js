@@ -12,13 +12,15 @@ export default function verificationPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        let tempcode = parseInt(verificationCode)
+        console.log(tempcode)
         try {
             fetch('/api/public/verification', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode, username: email }),
+                body: JSON.stringify({ code: tempcode.toString(), username: email }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful
