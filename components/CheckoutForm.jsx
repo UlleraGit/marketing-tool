@@ -131,7 +131,7 @@ export default function CheckoutForm(props) {
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
       }} id="submit">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Zahle " + props.price + "€"}
+          {isLoading ? <div className="spinner" id="spinner"></div> : "Zahle " + props.price + "€ (inkl. Steuer)"}
         </span>
       </button>
       {message && <div id="payment-message">{message}</div>}
