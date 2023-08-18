@@ -8,8 +8,8 @@ export default async function handler(req, res) {
   var temp = values.firstName + values.lastName + values.email
   var hash = bcrypt.hashSync(temp, salt);
   await register(values.firstName, values.lastName, values.password, values.email)
-    .then((response) => {
-      connection({
+    .then(async (response) => {
+     await connection({
         collection: "users",
         task: 'set',
         data: {
