@@ -15,8 +15,10 @@ export default function dcSurvey() {
         method: "POST",
         body: JSON.stringify({}),
     }).then(res => res.json()).then((a) => { setSurvey(a[0].survey); return (a) })
-    const { data, error } = useSWR('/api/private/requestnewsurvey', fetcher);
-    const isLoading = !data && !error;
+    const { data, error, isLoading, isValidating } = useSWR('/api/private/requestnewsurvey', fetcher, {
+        revalidateOnFocus: false,
+    });
+    //const isLoading = !data && !error;
 
     const submitForm = (event) => {
         let answers = []
@@ -44,10 +46,10 @@ export default function dcSurvey() {
     }
 
     if (error) {
-        return <div>Error occurred while fetching data.</div>;
+        return <Box sx={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems:"center" }}><div>Derzeit stehen keine Umfragen zur verfügung. Versuche es später nocheinmal.</div></Box>;
     }
 
-    if (isLoading) {
+    if (isLoading || isValidating) {
         return (
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", mx: "10%", minHeight: "100vh", }}>
                 <CircularProgress />
