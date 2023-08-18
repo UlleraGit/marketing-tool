@@ -21,6 +21,8 @@ export default function RegisterPage() {
     const [ageError, setAgeError] = useState('');
     const [isAccepted, setIsAccepted] = useState(false);
     const [checkboxError, setCheckboxError] = useState('')
+    const [plz, setPlz] = useState('')
+    const [place, setPlace] = useState('')
 
     const handleCheckboxChange = (event) => {
         setIsAccepted(event.target.checked);
@@ -50,7 +52,9 @@ export default function RegisterPage() {
             email,
             address,
             selectedBeruf,
-            selectedUniversity
+            selectedUniversity,
+            plz,
+            place
         };
         // Password validation
         const hasNumber = /\d/.test(password);
@@ -167,9 +171,27 @@ export default function RegisterPage() {
                 />
 
                 <TextField
-                    label="Address"
+                    label="Straße"
                     value={address}
                     onChange={(event) => setAddress(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    multiline
+                    required
+                />
+                <TextField
+                    label="PLZ"
+                    value={plz}
+                    onChange={(event) => setPlz(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    multiline
+                    required
+                />
+                <TextField
+                    label="Ort"
+                    value={place}
+                    onChange={(event) => setPlace(event.target.value)}
                     fullWidth
                     margin="normal"
                     multiline

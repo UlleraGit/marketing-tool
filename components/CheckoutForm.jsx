@@ -2,6 +2,7 @@
 import React from "react";
 import {
   PaymentElement,
+  AddressElement,
   LinkAuthenticationElement,
   useStripe,
   useElements
@@ -96,6 +97,7 @@ export default function CheckoutForm(props) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <AddressElement options={{mode:"billing", fields:{phone:'always'}}} />
       <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(e) => setEmail(e.value.email)}

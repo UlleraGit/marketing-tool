@@ -111,6 +111,9 @@ const ThankYouPage = () => {
             <Typography variant="body1" component="p">
                 Your payment was successful.
             </Typography>
+            <Typography variant="body1" component="p">
+                Bitte das Fenster nicht schließen. Du wirst gleich weitergeleitet.
+            </Typography>
         </Box>
     );
 };
