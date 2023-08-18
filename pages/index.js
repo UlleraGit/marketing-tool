@@ -59,7 +59,7 @@ export default function SignIn() {
             router.push("/u/dashboard")
           }
         } else {
-          setErr("Falscher Benutzername oder flasches Passwort!");
+          setErr("Falscher Benutzername oder falsches Passwort!");
         }
       })
       .catch((err) => {

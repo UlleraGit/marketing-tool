@@ -8,20 +8,23 @@ export default function verificationPage() {
     const router = useRouter()
     const [verificationCode, setVerificationCode] = useState('');
     const [error, setError] = useState('');
+    const [success, setSucccess] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        let tempcode = parseInt(verificationCode)
         try {
             fetch('/api/public/verification', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode, username: currentUser }),
+                body: JSON.stringify({ code: tempcode, username: currentUser }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful
+                    setSucccess(true)
                     console.log('Verification successful');
                     router.push("/")
                 } else {
@@ -45,7 +48,7 @@ export default function verificationPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: currentUser}),
+                body: JSON.stringify({ username: currentUser }),
             })
         } catch (error) {
             // Network or server error occurred
@@ -68,6 +71,7 @@ export default function verificationPage() {
                     margin="normal"
                     required
                 />
+                {(success) ? <Typography>Du hast dich erfolgreich verifiziert! Du wirst gleich weitergeleitet!</Typography> : <></>}
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Button type="submit" variant="contained" color="primary">
                         Verify
