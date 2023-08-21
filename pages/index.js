@@ -9,7 +9,10 @@ import Container from "@mui/material/Container";
 import backgroundPicture from "../public/DCHintergrund.png";
 import Cookies from "js-cookie";
 import CookieBanner from "../components/CookieBanner";
+import { InputAdornment, IconButton } from "@mui/material";
 import { useRouter } from "next/router";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Copyright(props) {
   return (
@@ -34,11 +37,13 @@ export default function SignIn() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
-  const [newPasswordConfirmation, setNewPasswordConfirmation] =
-    React.useState("");
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = React.useState("");
   const [newPasswordRequired, setNewPasswordRequired] = React.useState(false);
   const [err, setErr] = React.useState("");
   const [userAttributes, setUserAttributes] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -181,12 +186,25 @@ export default function SignIn() {
                 fullWidth
                 name="Password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 autoComplete="current-password"
                 onChange={(event) => setPassword(event.target.value)}
                 sx={{ backgroundColor: "#fff", borderRadius: 1 }}
+                InputProps={{ // <-- This is where the toggle button is added.
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
               <Button
                 type="submit"

@@ -19,7 +19,6 @@ export default async function handler(req, res) {
           job: values.selectedBeruf,
           birthday: values.birthday,
           university: values.selectedUniversity,
-          address: values.address,
           plz: values.plz,
           place: values.place,
           hash: hash,

@@ -29,7 +29,7 @@ export default function verificationPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode, username: currentUser, password }),
+                body: JSON.stringify({ code: verificationCode.trim(), username: currentUser.trim(), password: password.trim() }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful

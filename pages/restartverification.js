@@ -9,6 +9,7 @@ export default function verificationPage() {
     const [verificationCode, setVerificationCode] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [codeRequested, setCodeRequested] = useState(false)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -20,7 +21,7 @@ export default function verificationPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: tempcode.toString(), username: email }),
+                body: JSON.stringify({ code: tempcode.toString(), username: email.trim() }),
             }).then((response) => {
                 if (response.ok) {
                     // Verification successful
@@ -49,6 +50,7 @@ export default function verificationPage() {
                 body: JSON.stringify({ username: email }),
             }).then((response) => {
                 if (response.ok) {
+                    setCodeRequested(true)
                     console.log('Verification successful');
                 } else {
                     // Error occurred during verification
@@ -68,34 +70,44 @@ export default function verificationPage() {
             <Typography variant="h4" gutterBottom>
                 Verification Page
             </Typography>
-            <form onSubmit={handleSubmit} style={{ width: '400px' }}>
-                <TextField
-                    label="Email"
-                    type="text"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <TextField
-                    label="Verification Code"
-                    type="text"
-                    value={verificationCode}
-                    onChange={(event) => setVerificationCode(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <Button type="submit" variant="contained" color="primary">
-                        Verify
-                    </Button>
-                    <Button onClick={getNewCode}>
-                        Neuen Code Anfordern.
-                    </Button>
-                </Box>
-                <Link href={"/"} style={{ alignSelf: "start" }}>
+            <form onSubmit={handleSubmit} style={{ width: '400px', display:"flex", flexDirection:"column" }}>
+                {
+                    (codeRequested) ?
+                        (
+                            <>
+                                <TextField
+                                    label="Verification Code"
+                                    type="text"
+                                    value={verificationCode}
+                                    onChange={(event) => setVerificationCode(event.target.value)}
+                                    fullWidth
+                                    margin="normal"
+                                    required
+                                />
+                                <Button type="submit" variant="contained" color="primary">
+                                    Verify
+                                </Button>
+                            </>
+                        )
+                        :
+                        (
+                            <>
+                                <TextField
+                                    label="Email"
+                                    type="text"
+                                    value={email}
+                                    onChange={(event) => setEmail(event.target.value)}
+                                    fullWidth
+                                    margin="normal"
+                                    required
+                                />
+                                <Button variant="contained" onClick={getNewCode}>
+                                    Neuen Code Anfordern.
+                                </Button>
+                            </>
+                        )
+                }
+                <Link href={"/"}>
                     zurück
                 </Link>
             </form>

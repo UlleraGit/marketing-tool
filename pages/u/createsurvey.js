@@ -419,7 +419,7 @@ export default function CreateSurvy() {
             </Box>
             <Box>
               <Typography>Preis</Typography>
-              <Typography>{price}</Typography>
+              <Typography>{price + " €"}</Typography>
             </Box>
             <Button
               type="submit"

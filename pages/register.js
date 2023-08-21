@@ -16,7 +16,6 @@ export default function RegisterPage() {
     const [selectedUniversity, setSelectedUniversity] = React.useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [ageError, setAgeError] = useState('');
     const [isAccepted, setIsAccepted] = useState(false);
@@ -45,16 +44,15 @@ export default function RegisterPage() {
             return;
         }
         const formData = {
-            firstName,
-            lastName,
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
             birthday,
-            password,
-            email,
-            address,
+            password: password.trim(),
+            email: email.trim().toLowerCase(),
             selectedBeruf,
             selectedUniversity,
-            plz,
-            place
+            plz: plz.trim(),
+            place: place.trim()
         };
         // Password validation
         const hasNumber = /\d/.test(password);
@@ -63,7 +61,7 @@ export default function RegisterPage() {
         const hasLowercase = /[a-z]/.test(password);
 
         if (!hasNumber || !hasSpecialChar || !hasUppercase || !hasLowercase) {
-            setPasswordError('Password must contain at least 1 number, 1 special character, 1 uppercase letter, and 1 lowercase letter.');
+            setPasswordError('Passwort muss mindestens 1 Zahl, 1 Sonderzeichen, 1 Großbuchstaben und 1 Kleinbuchstaben enthalten.');
             return;
         }
 
@@ -93,7 +91,7 @@ export default function RegisterPage() {
                 </Typography>
 
                 <TextField
-                    label="First Name"
+                    label="Vorname"
                     value={firstName}
                     onChange={(event) => setFirstName(event.target.value)}
                     fullWidth
@@ -102,7 +100,7 @@ export default function RegisterPage() {
                 />
 
                 <TextField
-                    label="Last Name"
+                    label="Nachname"
                     value={lastName}
                     onChange={(event) => setLastName(event.target.value)}
                     fullWidth
@@ -148,37 +146,6 @@ export default function RegisterPage() {
                         />
                     </FormControl>
                 ) : ''}
-
-                <TextField
-                    label="Password"
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                {passwordError && <p className="error-message">{passwordError}</p>}
-
-                <TextField
-                    label="Email"
-                    type="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-
-                <TextField
-                    label="Straße"
-                    value={address}
-                    onChange={(event) => setAddress(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    multiline
-                    required
-                />
                 <TextField
                     label="PLZ"
                     value={plz}
@@ -197,6 +164,25 @@ export default function RegisterPage() {
                     multiline
                     required
                 />
+                <TextField
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    fullWidth
+                    margin="normal"
+                    required
+                />
+                {passwordError && <p className="error-message">{passwordError}</p>}
 
                 <FormControlLabel
                     control={
@@ -207,7 +193,7 @@ export default function RegisterPage() {
                             color="primary"
                         />
                     }
-                    label="Ich bin mit den AGBs einverstanden."
+                    label={<Typography>Ich bin mit den <a href='https://datacircle.eu/privacy-policy/'> AGBs</a> und der <a href='https://datacircle.eu/terms-conditions/'>Datenschutzvereinbarung</a> einverstanden.</Typography>}
                 />
                 {checkboxError && <Typography color="error">{checkboxError}</Typography>}
                 <Box sx={{ display: "flex", flexDirection: "column" }}>

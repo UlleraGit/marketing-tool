@@ -128,10 +128,10 @@ const Header = () => {
           </Box>
           <Box sx={{ display: 'flex' }}>
             <Link href="/u/surveyselect" style={{ textDecoration: 'none', color: "#000" }} >
-              <Button sx={{ color: "#000" }}>Tool</Button>
+              <Button sx={{ color: "#000" }}>Umfrage erstellen</Button>
             </Link>
             <Link href="/u/surveystodo" style={{ textDecoration: 'none', color: "#000" }}>
-              <Button sx={{ color: "#000" }}>Umfrage Mitmachen</Button>
+              <Button sx={{ color: "#000" }}>Umfrage mitmachen</Button>
             </Link>
             <Link href="/u/results" style={{ textDecoration: 'none', color: "#000" }}>
               <Button sx={{ color: "#000" }}>Ergebnisse</Button>
