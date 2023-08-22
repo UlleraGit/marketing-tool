@@ -25,7 +25,7 @@ export default function surveyForm(props) {
     React.useEffect(() => {
         setButtons(props.questions.answers.map((answer, index) =>
             (selectedAnswer == index) ?
-                <Button sx={{  width: "100%", height: "10%", color: "#0000ff", borderColor: "#0000ff", backgroundColor: "#fff", '&:hover': { backgroundColor: "#0000ff", color: "#fff", borderColor: "#0000ff" }, borderRadius: "10px" }} href={"#question-" + nextId} key={index} variant="outlined" value={index} onClick={(e) => handleChange(e)}>
+                <Button sx={{ width: "100%", height: "10%", color: "#fff", borderColor: "#0000ff", backgroundColor: "#0000ff", '&:hover': { backgroundColor: "#0000ff", color: "#fff", borderColor: "#0000ff" }, borderRadius: "10px" }} href={"#question-" + nextId} key={index} variant="outlined" value={index} onClick={(e) => handleChange(e)}>
                     {answer}
                 </Button>
                 :
@@ -36,17 +36,17 @@ export default function surveyForm(props) {
     }, [selectedAnswer]);
     if (tablet) {
         return (
-            <Box id={"question-" + props.id} sx={{ display: "flex", minWidth: "90vw", my:"10px", height: "100vh", justifyContent: "center", alignItems: "center" }}>
+            <Box id={"question-" + props.id} sx={{ display: "flex", minWidth: "90vw", my: "10px", height: "100vh", justifyContent: "center", alignItems: "center" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", minWidth: "90vw", width: "90vw", height: "100vh", boxShadow: " 0 3px 10px rgb(0 0 0 / 1)", borderRadius: "20px" }}>
                     <Box sx={{
-                        display: "flex", borderRadius: "20px 20px 0 0", minHeight: "50%", height: "50%", backgroundImage: `url(${props.img})`, backgroundSize: "100% 100%", justifyContent: "flex-end", alignContent: "flex-end", alignItems: "flex-end", gap: "10px 20px"
+                        display: "flex", borderRadius: "20px 20px 0 0", minHeight: "40%", height: "40%", backgroundImage: `url(${props.img})`, backgroundSize: "100% 100%", justifyContent: "flex-end", alignContent: "flex-end", alignItems: "flex-end", gap: "10px 20px"
                     }}>
                     </Box>
-                    <Box sx={{ display: "flex", flexDirection: "column", height: "50%", width: "100%", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-                        <Typography component="h6" variant="h6" fontWeight="bold" sx={{height:"10%", fontSize:"20px", px:"5%", alignSelf:"center"}} >{props.id + ". " + props.questions.question}</Typography>
-                        <Box sx={{ display: "flex", flexWrap: "wrap", width: "90%", alignSelf: "center", alignContent: "center", height: "90%", gap: "2.5%", }}>
-                            {buttons}
+                    <Box sx={{ display: "flex", flexDirection: "column", height: "60%", alignSelf: "center", width: "90%", justifyContent: "center", alignItems: "center", gap:"1.1%" }}>
+                        <Box sx={{height:"10%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Typography component="h6" variant="h6" fontWeight="bold" sx={{ fontSize: "20px" }} >{props.id + ". " + props.questions.question}</Typography>
                         </Box>
+                        {buttons}
                     </Box>
                 </Box>
             </Box>

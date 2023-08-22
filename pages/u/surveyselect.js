@@ -77,13 +77,13 @@ export default function surveySelect() {
                                         Impression Survey
                                     </Typography>
                                     <Typography component="p" variant="p" fontWeight="bold">
-                                        1000-10.000 Befragte
+                                        1.000-10.000 Befragte
                                     </Typography>
                                     <Typography component="p" variant="p" fontWeight="bold">
                                         24h-14 Tage Befragungszeitraum
                                     </Typography>
                                     <Typography sx={{ textDecoration: "underline" }}>
-                                        Kosten pro Fragestellung ab 300€
+                                        Kosten pro Fragestellung ab 250€
                                     </Typography>
                                 </Box>
                             </Box>
