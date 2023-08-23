@@ -72,10 +72,10 @@ export default function CreateSurvy() {
   }
 
   React.useEffect(() => {
-    if (ageMin > 20 && ageMin < 35) {
-      setPrice(50 + questNum * 0.25);
+    if (ageMin > 17 && ageMin < 35) {
+      setPrice(50 * (questNum/1000) + questNum * 0.35);
     } else if (ageMin >= 35) {
-      setPrice(75 + questNum * 0.25);
+      setPrice(75 * (questNum/1000) + questNum * 0.35);
     } else {
       setPrice(questNum * 0.25);
     }

@@ -2,18 +2,18 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const calculateOrderAmount = (items) => {
-    if (items.type === "dcsurvey") {
-        return items.questions.length * 6000
-    }
-    else if (items.type === "ipsurvey") {
-        if (items.ageMin > 17 && items.ageMin < 35) {
-            return 5000 + items.numbertoask * 25
-        } else if (items.ageMin >= 35) {
-            return 7500 + items.numbertoask * 25
-        } else {
-            return items.numbertoask * 25
-        }
-    }
+  if (items.type === "dcsurvey") {
+    return items.questions.length * 6000
+  }
+  else if (items.type === "ipsurvey") {
+    if (items.ageMin > 17 && items.ageMin < 35) {
+      return 5000 * (items.numbertoask/1000) + items.numbertoask * 35
+    } else if (items.ageMin >= 35) {
+      return 7500 * (items.numbertoask/1000) + items.numbertoask * 35
+    } else {
+      return items.numbertoask * 25
+    } 
+  }
 };
 
 export default async function handler(req, res) {
