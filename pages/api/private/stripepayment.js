@@ -6,7 +6,7 @@ const calculateOrderAmount = (items) => {
         return items.questions.length * 6000
     }
     else if (items.type === "ipsurvey") {
-        if (items.ageMin > 20 && items.ageMin < 35) {
+        if (items.ageMin > 17 && items.ageMin < 35) {
             return 5000 + items.numbertoask * 25
         } else if (items.ageMin >= 35) {
             return 7500 + items.numbertoask * 25
