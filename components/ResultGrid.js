@@ -101,6 +101,14 @@ export default function resultGrid(props) {
                     borderRadius: "10px 10px 0 0",
                     color: "#fff",
                 },
+                "& .MuiTablePagination-root":{
+                    color:"#fff"
+                },
+                "& .MuiDataGrid-footerContainer": {
+                    backgroundColor: "#212529",
+                    borderRadius: "0 0 10px 10px",
+                    color: "#fff",
+                },
                 "& .facebook-data-finished": {
                     backgroundColor: "#EB0388",
                     border: "2px solid #EB0388",
