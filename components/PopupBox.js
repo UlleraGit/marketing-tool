@@ -10,6 +10,7 @@ export default function PopupBox(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const phone = useMediaQuery('(max-width:767px)')
   const { mutate } = useSWRConfig()
+
   const fetcher = (...args) => fetch(...args, {
     method: "POST",
     body: JSON.stringify({ search: sessionStorage.getItem("search") }),
@@ -28,6 +29,24 @@ export default function PopupBox(props) {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+
+  const debouncedUpdate = debounce(updateDebounceValue, 500);
+
+  function debounce(callback, time) {
+    let debounceTimer;
+
+    return function (...args) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        callback.apply(this, args);
+      }, time);
+    };
+  }
+
+  function updateDebounceValue(e) {
+    sessionStorage.setItem('search', e.target.value);
+    mutate('/api/private/unsplash');
+  }
 
   if (phone) {
     return (
@@ -53,7 +72,7 @@ export default function PopupBox(props) {
           <Box sx={{ width: "400px", height: "100%" }}>
             <Box sx={{ my: "5px" }}>
               <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
-                sessionStorage.setItem("search", e.target.value); mutate('/api/private/unsplash')
+                debouncedUpdate(e);
               }}>
               </TextField>
             </Box>
@@ -94,8 +113,8 @@ export default function PopupBox(props) {
         >
           <Box sx={{ height: "650px", width: "500px" }}>
             <Box >
-              <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={e => {
-                sessionStorage.setItem("search", e.target.value); mutate('/api/private/unsplash')
+              <TextField id="" label="search" variant="outlined" sx={{ width: "100%", height: "100%" }} onChange={(e) => {
+                debouncedUpdate(e);
               }}>
               </TextField>
             </Box>
