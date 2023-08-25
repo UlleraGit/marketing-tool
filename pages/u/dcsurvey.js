@@ -76,7 +76,7 @@ export default function dcSurvey() {
             })}
             <Box id={"question-" + (survey.length + 1)} sx={{ display: "flex", minWidth: "90vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", minWidth: "90vw", width: "90vw", height: "90vh", boxShadow: " 0 3px 10px rgb(0 0 0 / 1)", borderRadius: "20px", justifyContent: "center", alignItems: "center", rowGap: "20px" }}>
-                    <Typography fontWeight="bold" fontSize="60px"> Danke für deine Antworten!</Typography>
+                    <Typography fontWeight="bold" fontSize="45px"> Danke für deine Antworten!</Typography>
                     <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", }}>
                         <Button onClick={(button) ? ((event) => { submitForm(event) }) : ((event) => {event.preventDefault()})} sx={{ width: "700px", height: "30px", color: "#0000ff", borderColor: "#0000ff", backgroundColor: "#fff", '&:hover': { backgroundColor: "#0000ff", color: "#fff", borderColor: "#0000ff" }, borderRadius: "10px", }} variant="outlined">
                             Umfrage Einreichen
