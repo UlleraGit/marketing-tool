@@ -61,7 +61,7 @@ export default function verificationPage() {
             <Typography variant="h4" gutterBottom>
                 Verification Page
             </Typography>
-            <form onSubmit={handleSubmit} style={{ width: '400px' }}>
+            <form style={{ width:"20%" }}>
                 <TextField
                     label="Verification Code"
                     type="text"
@@ -73,7 +73,7 @@ export default function verificationPage() {
                 />
                 {(success) ? <Typography>Du hast dich erfolgreich verifiziert! Du wirst gleich weitergeleitet!</Typography> : <></>}
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
                         Verify
                     </Button>
                     <Button onClick={getNewCode}>

@@ -70,7 +70,7 @@ export default function verificationPage() {
             <Typography variant="h4" gutterBottom>
                 Verification Page
             </Typography>
-            <form onSubmit={handleSubmit} style={{ width: '400px', display:"flex", flexDirection:"column" }}>
+            <form style={{ width: '20%', display:"flex", flexDirection:"column" }}>
                 {
                     (codeRequested) ?
                         (
@@ -84,7 +84,7 @@ export default function verificationPage() {
                                     margin="normal"
                                     required
                                 />
-                                <Button type="submit" variant="contained" color="primary">
+                                <Button onClick={handleSubmit} variant="contained" color="primary">
                                     Verify
                                 </Button>
                             </>

@@ -52,7 +52,7 @@ export default function verificationPage() {
             <Typography variant="h4" gutterBottom>
                 Verification Page
             </Typography>
-            <form onSubmit={handleSubmit} style={{ width: '400px' }}>
+            <form style={{ width: '20%' }}>
                 <TextField
                     label="Erhaltenen Code hier eingeben!"
                     type="text"
@@ -71,7 +71,7 @@ export default function verificationPage() {
                     margin="normal"
                     required
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <Button onClick={handleSubmit} variant="contained" color="primary">
                     Verify
                 </Button>
             </form>
