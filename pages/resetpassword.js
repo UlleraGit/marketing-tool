@@ -2,12 +2,15 @@
 import { useState } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from "@mui/material";
 
 export default function verificationPage() {
     const router = useRouter()
     const [verificationCode, setVerificationCode] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const phone = useMediaQuery('(max-width:767px)')
+    const tablet = useMediaQuery('(max-width:1024px)')
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -47,35 +50,69 @@ export default function verificationPage() {
         }
     };
 
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
-            <Typography variant="h4" gutterBottom>
-                Verification Page
-            </Typography>
-            <form style={{ width: '20%' }}>
-                <TextField
-                    label="Erhaltenen Code hier eingeben!"
-                    type="text"
-                    value={verificationCode}
-                    onChange={(event) => setVerificationCode(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <TextField
-                    label="Neues Passwort hier angeben"
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <Button onClick={handleSubmit} variant="contained" color="primary">
-                    Verify
-                </Button>
-            </form>
-            {error && <Typography variant="body1" color="error">{error}</Typography>}
-        </div>
-    );
+    if (tablet) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
+                <Typography variant="h4" gutterBottom>
+                    Verification Page
+                </Typography>
+                <form style={{ width: '90vw' }}>
+                    <TextField
+                        label="Erhaltenen Code hier eingeben!"
+                        type="text"
+                        value={verificationCode}
+                        onChange={(event) => setVerificationCode(event.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <TextField
+                        label="Neues Passwort hier angeben"
+                        type="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        Verify
+                    </Button>
+                </form>
+                {error && <Typography variant="body1" color="error">{error}</Typography>}
+            </div>
+        )
+    } else {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
+                <Typography variant="h4" gutterBottom>
+                    Verification Page
+                </Typography>
+                <form style={{ width: '20vw' }}>
+                    <TextField
+                        label="Erhaltenen Code hier eingeben!"
+                        type="text"
+                        value={verificationCode}
+                        onChange={(event) => setVerificationCode(event.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <TextField
+                        label="Neues Passwort hier angeben"
+                        type="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        Verify
+                    </Button>
+                </form>
+                {error && <Typography variant="body1" color="error">{error}</Typography>}
+            </div>
+        );
+    }
 }

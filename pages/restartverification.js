@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Typography, TextField, Button, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useMediaQuery } from "@mui/material";
 
 export default function verificationPage() {
     const router = useRouter()
@@ -10,6 +11,8 @@ export default function verificationPage() {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [codeRequested, setCodeRequested] = useState(false)
+    const phone = useMediaQuery('(max-width:767px)')
+    const tablet = useMediaQuery('(max-width:1024px)')
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -63,55 +66,107 @@ export default function verificationPage() {
             setError('An error occurred during verification.');
         }
     }
+    if (tablet) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
 
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
+                <Typography variant="h4" gutterBottom>
+                    Verification Page
+                </Typography>
+                <form style={{ width: '90vw', display: "flex", flexDirection: "column" }}>
+                    {
+                        (codeRequested) ?
+                            (
+                                <>
+                                    <TextField
+                                        label="Verification Code"
+                                        type="text"
+                                        value={verificationCode}
+                                        onChange={(event) => setVerificationCode(event.target.value)}
+                                        fullWidth
+                                        margin="normal"
+                                        required
+                                    />
+                                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                                        Verify
+                                    </Button>
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                    <TextField
+                                        label="Email"
+                                        type="text"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        fullWidth
+                                        margin="normal"
+                                        required
+                                    />
+                                    <Button variant="contained" onClick={getNewCode}>
+                                        Neuen Code Anfordern.
+                                    </Button>
+                                </>
+                            )
+                    }
+                    <Link href={"/"}>
+                        zurück
+                    </Link>
+                </form>
+                {error && <Typography variant="body1" color="error">{error}</Typography>}
+            </div>
+        );
+    } else {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
 
-            <Typography variant="h4" gutterBottom>
-                Verification Page
-            </Typography>
-            <form style={{ width: '20%', display:"flex", flexDirection:"column" }}>
-                {
-                    (codeRequested) ?
-                        (
-                            <>
-                                <TextField
-                                    label="Verification Code"
-                                    type="text"
-                                    value={verificationCode}
-                                    onChange={(event) => setVerificationCode(event.target.value)}
-                                    fullWidth
-                                    margin="normal"
-                                    required
-                                />
-                                <Button onClick={handleSubmit} variant="contained" color="primary">
-                                    Verify
-                                </Button>
-                            </>
-                        )
-                        :
-                        (
-                            <>
-                                <TextField
-                                    label="Email"
-                                    type="text"
-                                    value={email}
-                                    onChange={(event) => setEmail(event.target.value)}
-                                    fullWidth
-                                    margin="normal"
-                                    required
-                                />
-                                <Button variant="contained" onClick={getNewCode}>
-                                    Neuen Code Anfordern.
-                                </Button>
-                            </>
-                        )
-                }
-                <Link href={"/"}>
-                    zurück
-                </Link>
-            </form>
-            {error && <Typography variant="body1" color="error">{error}</Typography>}
-        </div>
-    );
+                <Typography variant="h4" gutterBottom>
+                    Verification Page
+                </Typography>
+                <form style={{ width: '20vw', display: "flex", flexDirection: "column" }}>
+                    {
+                        (codeRequested) ?
+                            (
+                                <>
+                                    <TextField
+                                        label="Verification Code"
+                                        type="text"
+                                        value={verificationCode}
+                                        onChange={(event) => setVerificationCode(event.target.value)}
+                                        fullWidth
+                                        margin="normal"
+                                        required
+                                    />
+                                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                                        Verify
+                                    </Button>
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                    <TextField
+                                        label="Email"
+                                        type="text"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        fullWidth
+                                        margin="normal"
+                                        required
+                                    />
+                                    <Button variant="contained" onClick={getNewCode}>
+                                        Neuen Code Anfordern.
+                                    </Button>
+                                </>
+                            )
+                    }
+                    <Link href={"/"}>
+                        zurück
+                    </Link>
+                </form>
+                {error && <Typography variant="body1" color="error">{error}</Typography>}
+            </div>
+        );
+    }
 }
