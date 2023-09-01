@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mui/material";
 
 export default function VerificationPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const phone = useMediaQuery('(max-width:767px)')
+    const tablet = useMediaQuery('(max-width:1024px)')
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -31,27 +34,53 @@ export default function VerificationPage() {
             setError('An error occurred during verification.');
         }
     };
-
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
-            <Typography variant="h4" gutterBottom>
-                Passwort zurücksetzen
-            </Typography>
-            <form onSubmit={handleSubmit} style={{ width: '400px' }}>
-                <TextField
-                    label="Email"
-                    type="text"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-                <Button type="submit" variant="contained" color="primary">
-                    code beantragen
-                </Button>
-            </form>
-            {error && <Typography variant="body1" color="error">{error}</Typography>}
-        </div>
-    );
+    if (tablet) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
+                <Typography variant="h4" gutterBottom>
+                    Passwort zurücksetzen
+                </Typography>
+                <form style={{ width: '90vw' }}>
+                    <TextField
+                        label="Email"
+                        type="text"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        code beantragen
+                    </Button>
+                </form>
+                {error && <Typography variant="body1" color="error">{error}</Typography>}
+            </div>
+        );
+    } else {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
+                <Typography variant="h4" gutterBottom>
+                    Passwort zurücksetzen
+                </Typography>
+                <form style={{ width: '20vw' }}>
+                    <TextField
+                        label="Email"
+                        type="text"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        code beantragen
+                    </Button>
+                </form>
+                {error && <Typography variant="body1" color="error">{error}</Typography>}
+            </div>
+        );
+    }
 }
+
+

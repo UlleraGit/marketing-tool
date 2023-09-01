@@ -15,7 +15,7 @@ const fields = [
 ];
 function fetchInsightsBatch(allInsights = []) {
   const params = {
-    'time_range': { 'since': '2022-02-01', 'until': '2023-08-01' },
+    'time_range': { 'since': '2022-02-01', 'until': '2023-09-30' },
     'filtering': [],
     "breakdowns": ["age", "gender"],
     'level': 'ad',
@@ -35,7 +35,7 @@ function fetchInsightsBatch(allInsights = []) {
 }
 function fetchInsightsResult(allInsights = []) {
   const params = {
-    'time_range': { 'since': '2022-02-01', 'until': '2023-08-01' },
+    'time_range': { 'since': '2022-02-01', 'until': '2023-09-30' },
     'filtering': [],
     'action_breakdowns': ['interactive_component_sticker_id', 'interactive_component_sticker_response'],
     'level': 'ad',
@@ -53,6 +53,26 @@ function fetchInsightsResult(allInsights = []) {
       }
     });
 }
+/*function fetchInsightsRegion(allInsights = []) {
+  const params = {
+    'time_range': { 'since': '2022-02-01', 'until': '2023-09-30' },
+    'filtering': [],
+    'breakdowns': ['region'],
+    'level': 'ad',
+    'limit': 100, // Set the number of results per page (max: 100)
+  };
+  return account.getInsights(fields, params)
+    .then((insights) => {
+      const updatedInsights = allInsights.concat(insights);
+      const nextUrl = insights.paging && insights.paging.next;
+      if (nextUrl) {
+        const newParams = { ...params, ...getUrlParams(nextUrl) };
+        return fetchInsightsBatch(newParams, updatedInsights);
+      } else {
+        return updatedInsights;
+      }
+    });
+}*/
 
 function getUrlParams(url) {
   const regex = /[?&]([^=#]+)=([^&#]*)/g;
@@ -80,14 +100,18 @@ fetchInsightsBatch()
   }).then(async (res) => {
     const campaigns = new Map();
     let result = await fetchInsightsResult().then(res => { return (JSON.parse(JSON.stringify(res, null, 2))) })
+    //let region = await fetchInsightsRegion().then(res => { return (JSON.parse(JSON.stringify(res, null, 2))) })
     result.map((a, i) => {
-      (campaigns.set(a.campaign_name, { name: a.campaign_name, answers: a.interactive_component_tap, groups: [] }))
+      (campaigns.set(a.campaign_name, { name: a.campaign_name, answers: a.interactive_component_tap, groups: [], region: [] }))
     })
     res.map((a, i) => {
       let t = campaigns.get(a.name);
       t.groups.push({ result: a.result, age: a.age, gender: a.gender });
       campaigns.set(a.name, t)
     })
+   /* region.map((a, i) => {
+      console.log(a)
+    })*/
     return (Array.from(campaigns.values()))
   })
   .then((temp) => {

@@ -82,7 +82,7 @@ export default function RegisterPage() {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-            <form onSubmit={handleSubmit} style={{ width: '400px' }}>
+            <form  style={{ width: '400px' }}>
                 <Link href={"/"}>
                     zurück
                 </Link>
@@ -197,11 +197,11 @@ export default function RegisterPage() {
                 />
                 {checkboxError && <Typography color="error">{checkboxError}</Typography>}
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
                         Register
                     </Button>
                     <Link href={"/restartverification"}>
-                        Du hast bereits ein verifizierungscode? Hier fortsetzen...
+                        Registriert aber keinen Code bekommen? Hier fortsetzten...
                     </Link>
                 </Box>
             </form>

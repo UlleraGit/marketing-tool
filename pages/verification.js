@@ -62,7 +62,7 @@ export default function verificationPage() {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: "10px" }}>
                 <Typography variant="h4" gutterBottom>
-                    Verification Page
+                    Verifikationsseite
                 </Typography>
                 <form style={{ width: "90vw" }}>
                     <TextField
